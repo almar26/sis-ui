@@ -1,7 +1,14 @@
 <template>
   <div>
-   
-    <v-row dense>
+    <BaseBreadcrumb
+      :title="page.title"
+      :icon="page.icon"
+      :breadcrumbs="breadcrumbs"
+    ></BaseBreadcrumb>
+    <v-row v-if="isEmpty">
+        <h1>No Record Found</h1>
+    </v-row>
+    <v-row dense v-else>
       <v-col cols="2">
         <v-list density="compact" nav>
         <v-list-subheader color="green" class="label-header"
@@ -228,6 +235,26 @@ const route = useRoute();
 const studentDetails = ref({});
 const tab = ref(null);
 const ifMajor = ref(false)
+const isEmpty = ref(false);
+const page = ref({
+  title: "Student Details"
+});
+const breadcrumbs = ref([
+  {
+    title: "Dashboard",
+    disabled: false,
+    to: "/"
+  },
+  {
+    title: "Students",
+    disabled: false,
+    to: "/students"
+  },
+  {
+    title: "Details",
+    disabled: true
+  }
+])
 const items = ref([
   {
     icon: 'mdi-account-circle',
@@ -252,6 +279,14 @@ async function initialize() {
     console.log(result);
     if (result) {
       studentDetails.value = result[0];
+      if (result.length == 0) {
+        //console.log("Empty Data")
+        isEmpty.value = true
+      } else {
+       // console.log("has data")
+        isEmpty.value = false
+      }
+      
     }
   } catch (err) {
     console.error("Failed to fetch data: ", err);

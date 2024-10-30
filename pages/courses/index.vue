@@ -1,19 +1,24 @@
 <template>
   <div>
-    <h1>Courses Page</h1>
+    <BaseBreadcrumb
+      :title="page.title"
+      :icon="page.icon"
+      :breadcrumbs="breadcrumbs"
+    ></BaseBreadcrumb>
+    <!-- <h1>Courses Page</h1> -->
     <v-row>
       <v-col>
         <v-btn class="mb-3" color="primary" @click="dialog = true"
           >Add Record</v-btn
         >
         <v-card elevation="0">
-          <v-card-title class="d-flex align-center pe-2">
-            <v-icon icon="mdi-account"></v-icon> &nbsp; Student List
+          <!-- <v-card-title class="d-flex align-center pe-2">
+            <v-icon icon="mdi-book"></v-icon> &nbsp; List of Courses
 
             <v-spacer></v-spacer>
 
            
-          </v-card-title>
+          </v-card-title> -->
 
           <v-divider></v-divider>
           <v-data-table
@@ -130,6 +135,20 @@ const courseDesc = ref("");
 const major = ref("");
 const toast = useToast();
 const courseList = ref([]);
+const page = ref({
+  title: "Courses"
+});
+const breadcrumbs = ref([
+  {
+    title: "Dashboard",
+    disabled: false,
+    to: "/"
+  },
+  {
+    title: "Course",
+    disabled: true
+  }
+])
 const headers = ref([
   {
     title: "Course Code",
@@ -173,6 +192,7 @@ async function createCourse() {
       method: "POST",
       body: payload
     })
+    initialize();
     dialog.value = false
     createCourseForm.value?.reset();
     toast.success("Successfully created!");

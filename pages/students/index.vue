@@ -1,8 +1,10 @@
 <template>
   <div>
-    <!-- <h1>Student Page</h1>
-
-    <v-data-table :items="studentList" :headers="headers"></v-data-table> -->
+    <BaseBreadcrumb
+      :title="page.title"
+      :icon="page.icon"
+      :breadcrumbs="breadcrumbs"
+    ></BaseBreadcrumb>
     <v-row>
       <v-col>
         <v-btn class="mb-3" color="primary" @click="dialog = true"
@@ -10,8 +12,8 @@
         >
         <v-card elevation="0">
           <v-card-title class="d-flex align-center pe-2">
-            <v-icon icon="mdi-account"></v-icon> &nbsp; Student List
-
+           
+            <v-spacer></v-spacer>
             <v-spacer></v-spacer>
 
             <v-text-field
@@ -256,9 +258,27 @@
 
 <script setup>
 const token = useCookie("token");
+import { useToast } from "vue-toastification"
 useHead({
   title: "Account",
 });
+
+const page = ref({
+  title: "Student List"
+});
+const breadcrumbs = ref([
+  {
+    title: "Dashboard",
+    disabled: false,
+    to: "/"
+  },
+  {
+    title: "Students",
+    disabled: true
+  }
+])
+
+const toast = useToast();
 const dialog = ref(false);
 const valid = ref(true);
 const loading = ref(false);
@@ -349,6 +369,7 @@ async function createStudent() {
     });
     dialog.value = false;
     loginForm.value?.reset();
+    toast.success("Successfully created!");
     initialize();
   } else {
     console.log(errors[0].errorMessages[0]);

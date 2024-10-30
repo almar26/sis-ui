@@ -130,8 +130,8 @@ const rail = ref(true);
 const items = ref([
   { title: "Dashboard", route: "/", icon: "mdi-view-dashboard" },
   { title: "Students", route: "/students", icon: "mdi-account" },
-  { title: "Courses", route: "/courses", icon: "mdi-book" },
   { title: "Teachers", route: "/teachers", icon: "mdi-account-supervisor" },
+  { title: "Courses", route: "/courses", icon: "mdi-book" },
   { title: "Curriculumn", route: "/curriculumn", icon: "mdi-card-text" },
 ]);
 
