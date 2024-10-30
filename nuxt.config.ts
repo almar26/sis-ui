@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: `%s %separator %siteName`,
       templateParams: {
-        siteName: 'Student Information System',
+        siteName: 'Student Management System',
         separator: '|'
       },
       charset: 'utf-8',
@@ -15,9 +15,8 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2024-04-03',
   devtools: { enabled: false },
-
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify', 'vue-toastification'],
   },
   ssr: false,
   modules: [
@@ -28,11 +27,7 @@ export default defineNuxtConfig({
     },
     '@pinia/nuxt'
   ],
-  runtimeConfig: {
-    public: {
-      baseURL: process.env.BASE_URL || 'http://localhost:1337',
-    }
-  },
+  
   vite: {
    vue: {
     template: {
@@ -40,4 +35,15 @@ export default defineNuxtConfig({
     }
    }
   },
+
+  typescript: {
+    strict: false,
+  },
+
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL,
+      loginURL: process.env.LOGIN_URL
+    }
+  }
 })

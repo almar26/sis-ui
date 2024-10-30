@@ -1,13 +1,10 @@
 <template>
   <div>
-    <h1>Account Page</h1>
+    <h1>Curriculumn Page</h1>
   </div>
 </template>
 
 <script lang="ts" setup>
-useHead({
-	title: 'Account'
-})
 
 </script>
 

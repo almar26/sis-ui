@@ -1,58 +1,15 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      color="green-darken-2"
-      v-model="drawer"
-      elevation="0"
-      :rail="rail"
-      @click="rail = false"
-    >
-      <div class="image-container">
-        <v-img
-          src="/SNC-Logo.png"
-          alt="Centered Image"
-          class="rounded-image"
-        ></v-img>
-      </div>
-
-      <v-divider></v-divider>
-      <v-list density="compact" nav>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :prepend-icon="item.icon"
-          :title="item.title"
-          :to="item.route"
-        >
-        </v-list-item>
-      </v-list>
-
-      <template v-slot:append>
-        <v-list density="compact" nav>
-          <v-list-item
-            prepend-icon="mdi-logout"
-            title="Logout"
-            @click="logout()"
-          >
-          </v-list-item>
-        </v-list>
-      </template>
-    </v-navigation-drawer>
-    <v-app-bar prominent scroll-behavior="elevate">
+    <v-app-bar  color="green-darken-2" prominent scroll-behavior="elevate">
       <v-app-bar-nav-icon
         variant="text"
         @click.stop="drawer = !drawer"
-        class="d-flex d-sm-none"
       ></v-app-bar-nav-icon>
-      <v-app-bar-nav-icon
-        variant="text"
-        @click.stop="rail = !rail"
-        class="d-none d-sm-flex"
-      ></v-app-bar-nav-icon>
+      
 
 
 
-      <v-toolbar-title>Student Information System</v-toolbar-title>
+      <v-toolbar-title>Student Management System</v-toolbar-title>
 
       <v-spacer></v-spacer>
       <div class="mr-2">
@@ -88,6 +45,66 @@
         </v-menu>
       </div>
     </v-app-bar>
+    <v-navigation-drawer
+     theme="dark"
+      v-model="drawer"
+      elevation="0"
+      :rail="rail"
+      rail-width="120"
+      id="main-sidebar"
+    
+    >
+      <div class="image-container">
+        <v-img
+          src="/SNC-Logo.png"
+          alt="Centered Image"
+          class="rounded-image"
+        ></v-img>
+      </div>
+
+      <v-divider></v-divider>
+      <v-list nav>
+        <!-- <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          :to="item.route"
+          
+        >
+        </v-list-item> -->
+        <v-list-item-group>
+          <v-list-item v-for="(item, i) in items" :key="i" active-class="border" class="logout-border" :to="item.route">
+            <v-list-item-content>
+              <v-icon>{{ item.icon  }}</v-icon>
+              <v-list-item-subtitle>{{ item.title }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+
+      <template v-slot:append>
+        <v-list density="compact" nav>
+          <!-- <v-list-item
+            prepend-icon="mdi-logout"
+            title="Logout"
+            @click="logout()"
+          >
+          </v-list-item> -->
+          <v-list-item-group>
+            <v-list-item class="logout-border" @click="logout()">
+              <v-list-item-content>
+                <v-icon>mdi-logout</v-icon>
+                <v-list-item-subtitle>
+                  Logout
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </template>
+    </v-navigation-drawer>
+    
     <v-main>
       <v-container fluid>
         <slot />
@@ -109,12 +126,13 @@ const { userInfo } = storeToRefs(useMyAuthStore());
 const userData = ref(userInfo?.value.user);
 const cookie = useCookie("token");
 const drawer = ref(true);
-const rail = ref(false);
+const rail = ref(true);
 const items = ref([
-  { title: "Dashboard", route: "/", icon: "mdi-view-dashboard-outline" },
-  { title: "Account", route: "/account", icon: "mdi-account-outline" },
-  { title: "Users", route: "/users", icon: "mdi-account-group-outline" },
-  { title: "Settings", route: "/settings", icon: "mdi-cog-outline" },
+  { title: "Dashboard", route: "/", icon: "mdi-view-dashboard" },
+  { title: "Students", route: "/students", icon: "mdi-account" },
+  { title: "Courses", route: "/courses", icon: "mdi-book" },
+  { title: "Teachers", route: "/teachers", icon: "mdi-account-supervisor" },
+  { title: "Curriculumn", route: "/curriculumn", icon: "mdi-card-text" },
 ]);
 
 const logout = () => {
@@ -123,10 +141,43 @@ const logout = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.v-application--is-ltr
+  .v-list--dense.v-list--nav
+  .v-list-group--no-action
+  > .v-list-group__items
+  > .v-list-item {
+  padding: 0 0 9px 8px;
+  color: #fff;
+}
+
+#main-sidebar {
+  box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  -webkit-box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
+  .v-navigation-drawer__border {
+    display: none;
+  }
+ 
+}
+.border {
+  margin: 5px 8px 5px 8px;
+  border-radius: 10px;
+  border-bottom: 2px solid #4CAF50 !important;
+  text-decoration: none;
+  //color: #4CAF50 ;
+}
+
+.logout-border {
+  margin: 5px 8px 5px 8px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
 .image-container {
-  width: 40%;
-  margin: 10px auto;
+  width: 50%;
+  margin: 15px auto;
+  
 }
 .rounded-image {
   border-radius: 50%;

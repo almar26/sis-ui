@@ -19,7 +19,8 @@ export const useMyAuthStore = defineStore({
     // Login Function
     async authenticateUser({ identifier, password }: UserPayloadInterface) {
       const baseUrl = useRuntimeConfig().public.baseURL;
-      const { data, pending, error }: any = await useFetch(`${baseUrl}/api/auth/local`, {
+      const loginUrl = useRuntimeConfig().public.loginURL
+      const { data, pending, error }: any = await useFetch(`${loginUrl}`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: {
@@ -30,6 +31,12 @@ export const useMyAuthStore = defineStore({
       this.loading = pending;
 
       if (data.value) {
+      let userRole = data?.value?.user.role_view;
+        console.log("User data: ", userRole);
+        // if (userRole !== 'admin' && userRole !== 'basic') {
+        //   console.log("Invalid account type!");
+        //   return alert("Invalid account type")
+        // }
         localStorage.setItem("user-info", JSON.stringify(data.value)); // set user-info data to local storage
         const token = useCookie('token'); // useCookie new hook in nuxt 3
         token.value = data?.value?.jwt; // set token to cookie
