@@ -15,8 +15,8 @@
 
 
 			<v-form ref="loginForm" v-model="valid" lazy-validation class="mx-10 mt-4">
-				<v-text-field v-model="user.identifier" :rules="emailRules" variant="outlined" label="Email"
-					prepend-inner-icon="mdi-email" outlined required></v-text-field>
+				<v-text-field v-model="user.identifier" :rules="usernameRules" variant="outlined" label="Username"
+					prepend-inner-icon="mdi-account" outlined required></v-text-field>
 				<v-text-field v-model="user.password" :rules="passwordRules" variant="outlined" label="Password"
 					type="password" prepend-inner-icon="mdi-lock" outlined required></v-text-field>
 
@@ -84,9 +84,9 @@ const user = ref({
 	password: ''
 })
 const loginForm = ref(null);
-const emailRules = [
-	(v) => !!v || 'Email is required',
-	(v) => /.+@.+\..+/.test(v) || "E-mail must be valid"
+const usernameRules = [
+	(v) => !!v || 'Username is required',
+	// (v) => /.+@.+\..+/.test(v) || "E-mail must be valid"
 ];
 const passwordRules = [(v) => !!v || 'Password is required'];
 const snackbar = ref(false);
