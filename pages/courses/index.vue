@@ -2,7 +2,6 @@
   <div>
     <BaseBreadcrumb
       :title="page.title"
-      :icon="page.icon"
       :breadcrumbs="breadcrumbs"
     ></BaseBreadcrumb>
     <!-- <h1>Courses Page</h1> -->
@@ -34,7 +33,7 @@
               <v-tooltip text="View Profile" location="top">
                 <template v-slot:activator="{ props }">
                   <v-btn
-                    :to="`/students/${item.documentId}`"
+                    :to="`/courses/${item.documentId}`"
                     variant="plain"
                     v-bind="props"
                     icon="mdi-open-in-new"
