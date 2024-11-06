@@ -132,7 +132,7 @@ const items = ref([
   { title: "Students", route: "/students", icon: "mdi-account" },
   { title: "Teachers", route: "/teachers", icon: "mdi-account-supervisor" },
   { title: "Courses", route: "/courses", icon: "mdi-book" },
-  { title: "Curriculumn", route: "/curriculumn", icon: "mdi-card-text" },
+  { title: "Curriculum", route: "/curriculum", icon: "mdi-card-text" },
 ]);
 
 const logout = () => {

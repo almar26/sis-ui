@@ -30,6 +30,7 @@
 
           <v-divider></v-divider>
           <v-data-table
+          density="compact"
             v-model:search="search"
             :items="studentList"
             :headers="headers"
@@ -43,6 +44,7 @@
               <v-tooltip text="View Profile" location="top">
                 <template v-slot:activator="{ props }">
                   <v-btn
+                  size="small"
                     :to="`/students/${item.documentId}`"
                     variant="plain"
                     v-bind="props"
@@ -55,6 +57,7 @@
               <v-tooltip text="Delete Profile" location="top">
                 <template v-slot:activator="{ props }">
                   <v-btn
+                  size="small"
                     icon="mdi-delete"
                     v-bind="props"
                     variant="plain"
@@ -442,5 +445,24 @@ onMounted(async () => {
 .v-field__outline__end {
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
+}
+
+:deep() .v-table .v-table__wrapper > table > thead > tr > th {
+  border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
+  border-bottom: thick solid
+    rgba(var(--v-border-color), var(--v-border-opacity));
+  font-weight: bold;
+  /* background-color: #04aa6d;
+  color: white; */
+}
+:deep() .v-table .v-table__wrapper > table > tbody > tr > td:not(:last-child),
+.v-table .v-table__wrapper > table > tbody > tr > th:not(:last-child) {
+  border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
+}
+:deep() .v-table .v-table__wrapper > table > tbody > tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+:deep() .v-table .v-table__wrapper > table > tbody > tr:hover {
+  background-color: #f2f2f2;
 }
 </style>

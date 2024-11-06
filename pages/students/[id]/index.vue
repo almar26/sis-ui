@@ -60,7 +60,7 @@
             color="primary"
           >
             <v-tab prepend-icon="mdi-account" :value="1">Information</v-tab>
-            <v-tab prepend-icon="mdi-school" :value="2">Education</v-tab>
+            <v-tab prepend-icon="mdi-school" :value="2">Education {{  studentDetails.student_no }}</v-tab>
           </v-tabs>
 
           <v-tabs-window v-model="tab">

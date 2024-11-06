@@ -14,13 +14,13 @@
 			</v-card-text> -->
 
 
-			<v-form ref="loginForm" v-model="valid" lazy-validation class="mx-10 mt-4">
+			<v-form ref="loginForm" v-model="valid" lazy-validation class="mx-10 mt-4" @submit.prevent="login">
 				<v-text-field v-model="user.identifier" :rules="usernameRules" variant="outlined" label="Username"
 					prepend-inner-icon="mdi-account" outlined required></v-text-field>
 				<v-text-field v-model="user.password" :rules="passwordRules" variant="outlined" label="Password"
 					type="password" prepend-inner-icon="mdi-lock" outlined required></v-text-field>
 
-				<v-btn :disabled="!valid" color="#673AB7" size="large" block @click.prevent="login">
+				<v-btn :disabled="!valid" color="#673AB7" size="large" block type="submit">
 					Sign In
 				</v-btn>
 			</v-form>
@@ -47,7 +47,7 @@
 
 		</v-card>
 
-		<v-snackbar v-model="snackbar" location="top" color="red">
+		<v-snackbar v-model="snackbar" location="top" color="red" variant="tonal">
 			{{ text }}
 
 			<template v-slot:actions>

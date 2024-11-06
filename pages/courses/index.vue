@@ -21,7 +21,9 @@
 
           <v-divider></v-divider>
           <v-data-table
-          :items="courseList"
+            density="compact"
+            class="custom-grid"
+            :items="courseList"
             :headers="headers"
             :loading="loading"
           >
@@ -33,6 +35,7 @@
               <v-tooltip text="View Profile" location="top">
                 <template v-slot:activator="{ props }">
                   <v-btn
+                    size="small"
                     :to="`/courses/${item.documentId}`"
                     variant="plain"
                     v-bind="props"
@@ -45,6 +48,7 @@
               <v-tooltip text="Delete Profile" location="top">
                 <template v-slot:activator="{ props }">
                   <v-btn
+                    size="small"
                     icon="mdi-delete"
                     v-bind="props"
                     variant="plain"
@@ -103,6 +107,17 @@
                   required
                 ></v-text-field>
               </v-col>
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field
+                  label="Year"
+                  v-model="year"
+                  variant="outlined"
+                  :rules="rules.year"
+                  type="number"
+                  required
+                ></v-text-field>
+              </v-col>
             </v-row>
 
             <small class="text-caption text-medium-emphasis"
@@ -114,7 +129,13 @@
         <v-divider></v-divider>
 
         <v-card-actions class="mx-5 my-2">
-          <v-btn block color="green" text="Save" variant="flat" @click="createCourse()"></v-btn>
+          <v-btn
+            block
+            color="green"
+            text="Save"
+            variant="flat"
+            @click="createCourse()"
+          ></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -123,7 +144,7 @@
 
 <script lang="ts" setup>
 //@ts-ignore
-import { useToast } from "vue-toastification"
+import { useToast } from "vue-toastification";
 const dialog = ref(false);
 const valid = ref(true);
 const loading = ref(false);
@@ -132,39 +153,42 @@ const search = ref(null);
 const courseCode = ref("");
 const courseDesc = ref("");
 const major = ref("");
+const year = ref(0);
 const toast = useToast();
 const courseList = ref([]);
 const page = ref({
-  title: "Courses"
+  title: "Courses",
 });
 const breadcrumbs = ref([
   {
     title: "Dashboard",
     disabled: false,
-    to: "/"
+    to: "/",
   },
   {
     title: "Course",
-    disabled: true
-  }
-])
+    disabled: true,
+  },
+]);
 const headers = ref([
   {
     title: "Course Code",
-    sortable: true,
+    sortable: false,
     key: "code",
   },
   { title: "Course Description", key: "description", sortable: false },
   { title: "Major", key: "major", sortable: false },
+  { title: "Year", key: "year", sortable: false },
   { title: "Status", key: "course_status", sortable: false },
- 
-  { title: "", key: "actions", sortable: false },
+
+  { title: "", key: "actions", sortable: false,  },
 ]);
 
 const rules = ref({
   courseCode: [(v) => !!v || "Course code is required"],
-  courseDesc: [(v) => !!v || "Course description is required"]
-})
+  courseDesc: [(v) => !!v || "Course description is required"],
+  year: [(v) => !!v || "Year is required"],
+});
 
 async function initialize() {
   try {
@@ -172,11 +196,11 @@ async function initialize() {
     if (result) {
       courseList.value = result;
     }
-  } catch (err) { 
+  } catch (err) {
     console.error("Failed ot fetch data: ", err);
     throw err;
   }
-};
+}
 
 async function createCourse() {
   const { valid, errors } = await createCourseForm.value?.validate();
@@ -185,14 +209,15 @@ async function createCourse() {
     const payload = {
       course_code: courseCode.value,
       course_description: courseDesc.value,
-      major: major.value
+      major: major.value,
+      year: year.value,
     };
     await $fetch(`/api/course/createCourse`, {
       method: "POST",
-      body: payload
-    })
+      body: payload,
+    });
     initialize();
-    dialog.value = false
+    dialog.value = false;
     createCourseForm.value?.reset();
     toast.success("Successfully created!");
     console.log("Created a Course!", payload);
@@ -203,7 +228,30 @@ async function createCourse() {
 
 onMounted(() => {
   initialize();
-})
+});
 </script>
 
-<style></style>
+<style scoped>
+:root {
+  --v-border-color: grey;
+  --v-border-opacity: 0.5;
+}
+:deep() .v-table .v-table__wrapper > table > thead > tr > th {
+  border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+  border-bottom: thick solid
+    rgba(var(--v-border-color), var(--v-border-opacity));
+  font-weight: bold;
+  /* background-color: #04aa6d;
+  color: white; */
+}
+:deep() .v-table .v-table__wrapper > table > tbody > tr > td:not(:last-child),
+.v-table .v-table__wrapper > table > tbody > tr > th:not(:last-child) {
+  border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
+}
+:deep() .v-table .v-table__wrapper > table > tbody > tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+:deep() .v-table .v-table__wrapper > table > tbody > tr:hover {
+  background-color: #f2f2f2;
+}
+</style>

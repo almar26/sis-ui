@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Curriculumn Page</h1>
+    <h1>Curriculum Page</h1>
   </div>
 </template>
 
