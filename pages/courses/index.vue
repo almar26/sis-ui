@@ -32,10 +32,10 @@
             </template>
 
             <template v-slot:[`item.actions`]="{ item }">
-              <v-tooltip text="View Profile" location="top">
+              <v-tooltip text="View Course" location="top">
                 <template v-slot:activator="{ props }">
                   <v-btn
-                    size="small"
+                    size="medium"
                     :to="`/courses/${item.documentId}`"
                     variant="plain"
                     v-bind="props"
@@ -45,13 +45,14 @@
                   </v-btn>
                 </template>
               </v-tooltip>
-              <v-tooltip text="Delete Profile" location="top">
+              <v-tooltip text="Delete Course" location="top">
                 <template v-slot:activator="{ props }">
                   <v-btn
-                    size="small"
+                    size="medium"
                     icon="mdi-delete"
                     v-bind="props"
                     variant="plain"
+                    color="red"
                   ></v-btn>
                 </template>
               </v-tooltip>
@@ -181,7 +182,7 @@ const headers = ref([
   { title: "Year", key: "year", sortable: false },
   { title: "Status", key: "course_status", sortable: false },
 
-  { title: "", key: "actions", sortable: false,  },
+  { title: "", key: "actions",  sortable: false,  },
 ]);
 
 const rules = ref({

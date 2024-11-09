@@ -9,7 +9,7 @@
         <h1>No Record Found</h1>
     </v-row>
     <v-row dense v-else>
-      <v-col cols="2">
+      <v-col cols="12" md="2">
         <v-list density="compact" nav>
         <v-list-subheader color="green" class="label-header"
           >GENERAL</v-list-subheader
@@ -17,7 +17,7 @@
         <!-- <v-list-item
           prepend-icon="mdi-account-circle"
           title="Account"
-          :to="`/students/${route.params.id}`"
+          :to="`/students/${route.params.id}`" 
         ></v-list-item>
 
         <v-list-item
@@ -45,7 +45,7 @@
       
       </v-list>
       </v-col>
-      <v-col cols="10">
+      <v-col cols="12" md="10">
         <v-card class="elevation-0">
           <!-- <div class="text-button font-weight-bold text-green mx-5">
             <v-icon>mdi-account</v-icon> Personal Information
@@ -60,7 +60,7 @@
             color="primary"
           >
             <v-tab prepend-icon="mdi-account" :value="1">Information</v-tab>
-            <v-tab prepend-icon="mdi-school" :value="2">Education {{  studentDetails.student_no }}</v-tab>
+            <v-tab prepend-icon="mdi-school" :value="2">Education</v-tab>
           </v-tabs>
 
           <v-tabs-window v-model="tab">
