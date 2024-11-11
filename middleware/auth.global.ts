@@ -4,12 +4,40 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const token = useCookie("token"); // get token from cookies
   //@ts-ignore
   const user_info = JSON.parse(localStorage.getItem("user-info")); // get user-info from localStorage
+  // console.log("user account: ", user_info);
+  // console.log("Token: ", token)
 
   // const user_info = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user-info')) : null;
   // const _userinfo = ref(localStorage.getItem("user-info"));
   //console.log("Middleware Log: ", user_info);
   //const userRole = user_info.user.role_view;
 
+  // if (token.value === null && user_info === null) {
+  //   console.log("No user acount")
+  //   //abortNavigation();
+  //   // return console.log("No user acount")
+ 
+  //   throw createError({
+  //     statusCode: 500,
+  //     statusMessage: 'Something bad happened on the server'
+  //   })
+  // }
+  if(token.value == null && user_info) {
+    localStorage.removeItem("user-info")
+    // console.log("Token doesnt exist")
+    console.log("Token doesnt exist but it has data")
+  }
+  // if (user_info) {
+    
+  //   console.log("Token doesnt exist but it has data")
+  // }
+  if (token.value && user_info === null) {
+    console.log("Token exist but no user info details")
+    localStorage.removeItem("user-info")
+    token.value = null
+    authenticated.value = false;
+    //return authenticated.value = false;
+  }
   if (token.value) {
     // check if value exists
     authenticated.value = true; // update the state to authenticated
