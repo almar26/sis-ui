@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
       first_name: body.first_name,
       middle_name: body.middle_name,
       course: body.course,
+      course_code: body.course_code,
       major: body.major,
       gender: body.gender,
       address: body.address,
@@ -20,7 +21,8 @@ export default defineEventHandler(async (event) => {
       age: body.age,
       semester: body.semester,
       school_year_start: body.schoolyearstart,
-      school_year_end: body.schoolyearend
+      school_year_end: body.schoolyearend,
+      course_type: body.course_type
     }
 
     const result = await axios.post(`${BASE_URL}/api/student/create`, myPayload, {

@@ -33,10 +33,12 @@ export const useMyAuthStore = defineStore({
       if (data.value) {
       let userRole = data?.value?.user.role_view;
         //console.log("User data: ", userRole);
-        // if (userRole !== 'admin' && userRole !== 'basic') {
-        //   console.log("Invalid account type!");
-        //   return alert("Invalid account type")
-        // }
+        if (userRole !== 'admin' && userRole !== 'ched' && userRole !== 'tesda') {
+          // console.log("Invalid account type!");
+          // return alert("Invalid account type")
+          this.errorLogin = true;
+          return error;
+        }
         localStorage.setItem("user-info", JSON.stringify(data.value)); // set user-info data to local storage
         const token = useCookie('token'); // useCookie new hook in nuxt 3
         token.value = data?.value?.jwt; // set token to cookie

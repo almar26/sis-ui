@@ -127,8 +127,12 @@ async function login() {
     if (errorLogin.value == true) {
       console.log(errorLogin.value);
       snackbar.value = true;
-      text.value = errorMessage.value;
-      //console.log("Error Signing in!", errorLogin.value);
+      if (errorMessage.value == "") {
+        text.value = "Invalid identifier or password";
+      } else {
+        text.value = errorMessage.value;
+      }
+
     }
   }
 }

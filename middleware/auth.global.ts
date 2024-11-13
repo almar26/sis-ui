@@ -16,25 +16,21 @@ export default defineNuxtRouteMiddleware((to, from) => {
   //   console.log("No user acount")
   //   //abortNavigation();
   //   // return console.log("No user acount")
- 
+
   //   throw createError({
   //     statusCode: 500,
   //     statusMessage: 'Something bad happened on the server'
   //   })
   // }
-  if(token.value == null && user_info) {
-    localStorage.removeItem("user-info")
+  if (token.value == null && user_info) {
+    localStorage.removeItem("user-info");
     // console.log("Token doesnt exist")
-    console.log("Token doesnt exist but it has data")
+    console.log("Token doesnt exist but it has data");
   }
-  // if (user_info) {
-    
-  //   console.log("Token doesnt exist but it has data")
-  // }
   if (token.value && user_info === null) {
-    console.log("Token exist but no user info details")
-    localStorage.removeItem("user-info")
-    token.value = null
+    console.log("Token exist but no user info details");
+    localStorage.removeItem("user-info");
+    token.value = null;
     authenticated.value = false;
     //return authenticated.value = false;
   }
@@ -43,20 +39,19 @@ export default defineNuxtRouteMiddleware((to, from) => {
     authenticated.value = true; // update the state to authenticated
     userInfo.value = user_info; // update the userInfo state
 
-  // if (token.value && user_info.user.role_view === "admin") {
-  //   console.log("Admin Account");
-  //     if (token.value && to.path !== "/admin") {
-  //     return navigateTo("/admin");
-  //   }
-  //   console.log("Admin Account 2");
-  // } else if (token.value && user_info.user.role_view === "basic") {
-  //   console.log("Basic Account");
-  //   if (to.meta.layout === "admin" || to.meta.layout === "auth") {
-  //     return navigateTo("/");
-  //   }
-  //   console.log("Basic Account 2");
-  // }
-    
+    // if (token.value && user_info.user.role_view === "admin") {
+    //   console.log("Admin Account");
+    //     if (token.value && to.path !== "/admin") {
+    //     return navigateTo("/admin");
+    //   }
+    //   console.log("Admin Account 2");
+    // } else if (token.value && user_info.user.role_view === "basic") {
+    //   console.log("Basic Account");
+    //   if (to.meta.layout === "admin" || to.meta.layout === "auth") {
+    //     return navigateTo("/");
+    //   }
+    //   console.log("Basic Account 2");
+    // }
   }
 
   // if (token.value && user_info.user.role_view === "admin") {
@@ -72,29 +67,33 @@ export default defineNuxtRouteMiddleware((to, from) => {
   //   }
   // }
 
-
   if (token.value && user_info.user.role_view === "admin") {
     console.log("Admin Account");
     if (token.value && to.path !== "/admin") {
       return navigateTo("/admin");
     }
-  } else if (token.value && user_info.user.role_view === "basic") {
+  } else if (token.value && user_info.user.role_view === "ched" && user_info.user.role_view == 'tesda') {
     console.log("Basic Account");
 
-    if (to.meta.layout === 'admin' || to.meta.layout === 'auth' || to.meta.layout === 'student') {
+    if (
+      to.meta.layout === "admin" ||
+      to.meta.layout === "auth" ||
+      to.meta.layout === "student"
+    ) {
       return navigateTo("/");
     }
     //console.log("Basic Account");
-  } else if (token.value && user_info.user.role_view === 'student') {
-    console.log("Student Account")
-    // if (to.meta.layout === 'default' || to.meta.layout === 'auth' || to.meta.layout === 'admin') {
-    //   return navigateTo("/admin2")
-    // }
-    if (to.path !== "/admin2") {
-      return navigateTo("/admin2");
-    }
-    console.log("Student Account 2")
-  }
+  } 
+  // else if (token.value && user_info.user.role_view === "student") {
+  //   console.log("Student Account");
+  //   // if (to.meta.layout === 'default' || to.meta.layout === 'auth' || to.meta.layout === 'admin') {
+  //   //   return navigateTo("/admin2")
+  //   // }
+  //   if (to.path !== "/admin2") {
+  //     return navigateTo("/admin2");
+  //   }
+  //   console.log("Student Account 2");
+  // }
 
   // // if token exists and layout is auth redirect to homepage
   // if (token.value && to.meta.layout === 'auth') {

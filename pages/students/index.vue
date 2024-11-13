@@ -1,37 +1,72 @@
 <template>
   <div>
-    <BaseBreadcrumb :title="page.title" :icon="page.icon" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+    <BaseBreadcrumb
+      :title="page.title"
+      :icon="page.icon"
+      :breadcrumbs="breadcrumbs"
+    ></BaseBreadcrumb>
+    <!-- <h1>{{ userData }}</h1> -->
     <v-row>
       <v-col>
-        <v-btn class="mb-3" color="primary" @click="dialog = true">Add Record</v-btn>
+        <v-btn class="mb-3" color="primary" @click="dialog = true"
+          >Add Record</v-btn
+        >
         <v-card elevation="0">
           <v-card-title class="d-flex align-center pe-2">
-
             <v-spacer></v-spacer>
             <v-spacer></v-spacer>
 
-            <v-text-field v-model="search" density="compact" label="Search" prepend-inner-icon="mdi-magnify"
-              variant="solo-filled" flat hide-details single-line></v-text-field>
+            <v-text-field
+              v-model="search"
+              density="compact"
+              label="Search"
+              prepend-inner-icon="mdi-magnify"
+              variant="solo-filled"
+              flat
+              hide-details
+              single-line
+            ></v-text-field>
           </v-card-title>
 
           <v-divider></v-divider>
-          <v-data-table density="compact" v-model:search="search" :items="studentList" :headers="headers"
-            :loading="loading">
+          <v-data-table
+            density="compact"
+            v-model:search="search"
+            :items="studentList"
+            :headers="headers"
+            :loading="loading"
+          >
             <template v-slot:loading>
               <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+            </template>
+            <template v-slot:[`item.sy`]="{ item }">
+              {{ item.school_year_start }}-{{ item.school_year_end }}
             </template>
 
             <template v-slot:[`item.actions`]="{ item }">
               <v-tooltip text="View Profile" location="top">
                 <template v-slot:activator="{ props }">
-                  <v-btn size="medium" :to="`/students/${item.documentId}`" class="mr-1" variant="plain" v-bind="props"
-                    icon="mdi-open-in-new" color="green">
+                  <v-btn
+                    size="medium"
+                    :to="`/students/${item.documentId}`"
+                    class="mr-1"
+                    variant="plain"
+                    v-bind="props"
+                    icon="mdi-open-in-new"
+                    color="green"
+                  >
                   </v-btn>
                 </template>
               </v-tooltip>
               <v-tooltip text="Delete Profile" location="top">
                 <template v-slot:activator="{ props }">
-                  <v-btn size="medium" icon="mdi-delete" color="red" v-bind="props" variant="plain"></v-btn>
+                  <v-btn
+                    size="medium"
+                    icon="mdi-delete"
+                    color="red"
+                    v-bind="props"
+                    variant="plain"
+                  ></v-btn>
                 </template>
               </v-tooltip>
             </template>
@@ -52,71 +87,167 @@
             <v-row dense>
               <v-col cols="4" md="4" sm="6">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
-                <v-select :items="semesterList" label="Semester*" v-model="semester" :rules="rules.semester"
-                  variant="outlined" required></v-select>
+                <v-select
+                  :items="semesterList"
+                  label="Semester*"
+                  v-model="semester"
+                  :rules="rules.semester"
+                  variant="outlined"
+                  required
+                ></v-select>
               </v-col>
               <v-col cols="12" md="2"></v-col>
               <v-col cols="12" md="3" sm="6">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="School Year Start*" :rules="rules.schoolyearstart" v-model="schoolyearstart"
-                  type="number" variant="outlined" required></v-text-field>
+                <v-text-field
+                  label="School Year Start*"
+                  :rules="rules.schoolyearstart"
+                  v-model="schoolyearstart"
+                  type="number"
+                  variant="outlined"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12" md="3" sm="6">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="School Year End*" type="number" :rules="rules.schoolyearend"
-                  v-model="schoolyearend" variant="outlined" required></v-text-field>
+                <v-text-field
+                  label="School Year End*"
+                  type="number"
+                  :rules="rules.schoolyearend"
+                  v-model="schoolyearend"
+                  variant="outlined"
+                  required
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row dense>
               <v-col cols="12" md="4" sm="6">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field color="primary" label="Student No.*" :rules="rules.studentno" v-model="studentno"
-                  variant="outlined" retu required></v-text-field>
+                <v-text-field
+                  color="primary"
+                  label="Student No.*"
+                  :rules="rules.studentno"
+                  v-model="studentno"
+                  variant="outlined"
+                  retu
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12" md="8" sm="6">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
-                <v-select color="primary" :items="courses" item-title="description" item-value="code" label="Course*"
-                  v-model="course" :rules="rules.course" variant="outlined" required></v-select>
-                <v-select v-if="selectedBA" color="primary" :items="majorList" item-title="major_desc"
-                  item-value="major_code" label="Major" v-model="major" variant="outlined"></v-select>
+                <v-select
+                  color="primary"
+                  :items="courses"
+                  item-title="description"
+                  item-value="code"
+                  label="Course*"
+                  v-model="course"
+                  :rules="rules.course"
+                  variant="outlined"
+                  return-object
+                  required
+                ></v-select>
+                <v-select
+                  v-if="selectedBA"
+                  color="primary"
+                  :items="majorList"
+                  item-title="major_desc"
+                  item-value="major_code"
+                  label="Major"
+                  v-model="major"
+                  variant="outlined"
+                ></v-select>
               </v-col>
             </v-row>
             <v-row dense>
               <v-col cols="12" md="4" sm="6">
-                <v-text-field color="primary" v-model="lastname" :rules="rules.lastname" variant="outlined"
-                  label="Last name*"></v-text-field>
+                <v-text-field
+                  color="primary"
+                  v-model="lastname"
+                  :rules="rules.lastname"
+                  variant="outlined"
+                  label="Last name*"
+                ></v-text-field>
               </v-col>
 
               <v-col cols="12" md="4" sm="6">
-                <v-text-field color="primary" label="First name*" :rules="rules.firstname" v-model="firstname"
-                  variant="outlined" persistent-hint required></v-text-field>
+                <v-text-field
+                  color="primary"
+                  label="First name*"
+                  :rules="rules.firstname"
+                  v-model="firstname"
+                  variant="outlined"
+                  persistent-hint
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12" md="4" sm="6">
-                <v-text-field color="primary" label="Middle name*" v-model="middlename" :rules="rules.middlename"
-                  variant="outlined" persistent-hint required></v-text-field>
+                <v-text-field
+                  color="primary"
+                  label="Middle name*"
+                  v-model="middlename"
+                  :rules="rules.middlename"
+                  variant="outlined"
+                  persistent-hint
+                  required
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row dense>
               <v-col>
-                <v-textarea v-model="address" color="primary" label="Address" rows="1" variant="outlined"
-                  :rules="rules.address" auto-grow></v-textarea>
+                <v-textarea
+                  v-model="address"
+                  color="primary"
+                  label="Address"
+                  rows="1"
+                  variant="outlined"
+                  :rules="rules.address"
+                  auto-grow
+                ></v-textarea>
               </v-col>
             </v-row>
             <v-row dense>
               <v-col cols="12" md="4" sm="6">
-                <v-select color="primary" v-model="gender" :items="['male', 'female']" variant="outlined"
-                  :rules="rules.gender" label="Gender*" required></v-select>
+                <v-select
+                  color="primary"
+                  v-model="gender"
+                  :items="['MALE', 'FEMALE']"
+                  variant="outlined"
+                  :rules="rules.gender"
+                  label="Gender*"
+                  required
+                ></v-select>
+
+                <!-- <v-select v-model="selected" :items="courses" :item-title="courses" >
+                  </v-select> -->
+                <!-- <v-select color="primary" :items="courses" item-title="description" item-value="code" label="Course*"
+                  v-model="course" :rules="rules.course" variant="outlined" return-object required></v-select> -->
               </v-col>
               <v-col cols="12" md="4" sm="6">
-                <date-picker v-model="bday" clearable color="primary" variant="outlined" label="Birthday"></date-picker>
+                <date-picker
+                  v-model="bday"
+                  clearable
+                  color="primary"
+                  variant="outlined"
+                  label="Birthday"
+                ></date-picker>
               </v-col>
               <v-col cols="12" md="4" sm="6">
-                <v-text-field color="primary" label="Age" v-model="age" variant="outlined" persistent-hint required
-                  type="number"></v-text-field>
+                <v-text-field
+                  color="primary"
+                  label="Age"
+                  v-model="age"
+                  variant="outlined"
+                  persistent-hint
+                  required
+                  type="number"
+                ></v-text-field>
               </v-col>
             </v-row>
 
-            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+            <small class="text-caption text-medium-emphasis"
+              >*indicates required field</small
+            >
           </v-form>
         </v-card-text>
 
@@ -127,7 +258,12 @@
 
           <v-btn text="Close" variant="plain" @click="dialog = false"></v-btn>
 
-          <v-btn color="green" text="Save" variant="tonal" @click="createStudent()"></v-btn>
+          <v-btn
+            color="green"
+            text="Save"
+            variant="tonal"
+            @click="createStudent()"
+          ></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -135,42 +271,48 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
+import { useMyAuthStore } from "~/stores/auth";
+import { useToast } from "vue-toastification";
+const { userInfo } = storeToRefs(useMyAuthStore());
 const token = useCookie("token");
-import { useToast } from "vue-toastification"
+const userData = ref(userInfo?.value.user);
+
 useHead({
   title: "Account",
 });
 
 const page = ref({
-  title: "Student List"
+  title: "Student List",
 });
 const breadcrumbs = ref([
   {
     title: "Dashboard",
     disabled: false,
-    to: "/"
+    to: "/",
   },
   {
     title: "Students",
-    disabled: true
-  }
-])
+    disabled: true,
+  },
+]);
 
 const toast = useToast();
 const dialog = ref(false);
 const valid = ref(true);
-const loading = ref(false);
+const loading = ref(true);
 const search = ref(null);
 const loginForm = ref(null);
 const studentList = ref([]);
-const selectedBA = ref(false)
+const selectedBA = ref(false);
 
 const studentno = ref("");
 const lastname = ref("");
 const firstname = ref("");
 const middlename = ref("");
 const course = ref("");
-const major = ref("")
+const course_code = ref("");
+const major = ref("");
 const address = ref("");
 const gender = ref("");
 const bday = ref("");
@@ -180,15 +322,16 @@ const schoolyearstart = ref(null);
 const schoolyearend = ref(null);
 
 const courses = ref([]);
-const majorList = ref([{
-  major_code: 'FM',
-  major_desc: 'Financial Management'
-},
-{
-  major_code: 'MM',
-  major_desc: 'Marketing Management'
-}
-])
+const majorList = ref([
+  {
+    major_code: "FM",
+    major_desc: "Financial Management",
+  },
+  {
+    major_code: "MM",
+    major_desc: "Marketing Management",
+  },
+]);
 
 const semesterList = ref(["1st Semester", "2nd Semester", "Summer"]);
 
@@ -204,6 +347,8 @@ const headers = ref([
   { title: "Course", key: "course", sortable: false },
   { title: "Major", key: "major", sortable: false },
   { title: "Gender", key: "gender", sortable: false },
+  { title: "School Year", key: "sy", sortable: false },
+  { title: "Semester", key: "semester", sortable: false },
   { title: "", key: "actions", align: "end", sortable: false },
 ]);
 const rules = ref({
@@ -223,6 +368,7 @@ const rules = ref({
 
 async function createStudent() {
   const { valid, errors } = await loginForm.value?.validate();
+  console.log("Selected: ", course.value);
 
   if (valid) {
     const payload = {
@@ -230,7 +376,8 @@ async function createStudent() {
       last_name: lastname.value,
       first_name: firstname.value,
       middle_name: middlename.value,
-      course: course.value,
+      course: course.value.description,
+      course_code: course.value.code,
       major: major.value,
       address: address.value,
       gender: gender.value,
@@ -239,16 +386,23 @@ async function createStudent() {
       schoolyearstart: schoolyearstart.value,
       schoolyearend: schoolyearend.value,
       semester: semester.value,
+      course_type: userData.value.role_view,
     };
     console.log(payload);
     await $fetch(`/api/student/createStudent`, {
       method: "POST",
       body: payload,
+    }).then((response) => {
+      console.log("Response: ", response);
+      if (response.status == "fail") {
+        toast.error(response.message);
+      } else {
+        dialog.value = false;
+        loginForm.value?.reset();
+        toast.success("Successfully created!");
+        initialize();
+      }
     });
-    dialog.value = false;
-    loginForm.value?.reset();
-    toast.success("Successfully created!");
-    initialize();
   } else {
     console.log(errors[0].errorMessages[0]);
   }
@@ -267,9 +421,10 @@ function getAge(dateString) {
 
 async function initialize() {
   try {
-    let result = await $fetch("/api/student/getStudentList");
+    let result = await $fetch(`/api/student/list/${userData.value.role_view}`);
     if (result) {
       studentList.value = result;
+      loading.value = false;
     }
   } catch (err) {
     console.error("Failed to fetch data: ", err);
@@ -290,14 +445,14 @@ async function getCoursesList() {
 }
 
 watch([course, bday], async () => {
-  console.log(course.value);
-  if (course.value === 'BSBA') {
-    selectedBA.value = true
+  //console.log("Courses", course.value);
+  if (course.value?.code === "BSBA") {
+    selectedBA.value = true;
   } else {
-    selectedBA.value = false
-    major.value = ""
+    selectedBA.value = false;
+    major.value = "";
   }
-  console.log(bday.value);
+  //console.log(bday.value);
   if (bday.value === null) {
     age.value = null;
   } else {
@@ -323,24 +478,25 @@ onMounted(async () => {
   border-bottom-right-radius: inherit;
 }
 
-:deep() .v-table .v-table__wrapper>table>thead>tr>th {
+:deep() .v-table .v-table__wrapper > table > thead > tr > th {
   border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
-  border-bottom: thick solid rgba(var(--v-border-color), var(--v-border-opacity));
+  border-bottom: thick solid
+    rgba(var(--v-border-color), var(--v-border-opacity));
   font-weight: bold;
   /* background-color: #04aa6d;
   color: white; */
 }
 
-:deep() .v-table .v-table__wrapper>table>tbody>tr>td:not(:last-child),
-.v-table .v-table__wrapper>table>tbody>tr>th:not(:last-child) {
+:deep() .v-table .v-table__wrapper > table > tbody > tr > td:not(:last-child),
+.v-table .v-table__wrapper > table > tbody > tr > th:not(:last-child) {
   border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
 }
 
-:deep() .v-table .v-table__wrapper>table>tbody>tr:nth-child(even) {
+:deep() .v-table .v-table__wrapper > table > tbody > tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-:deep() .v-table .v-table__wrapper>table>tbody>tr:hover {
+:deep() .v-table .v-table__wrapper > table > tbody > tr:hover {
   background-color: #f2f2f2;
 }
 </style>
