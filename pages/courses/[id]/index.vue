@@ -478,6 +478,7 @@ async function addSubject() {
       lab: lab.value,
       units: units.value,
       resultant: resultant.value,
+      course_code: courseDetails.value.code,
     };
     console.log("Subject: ", payload);
     await $fetch(`/api/subject/createSubject`, {

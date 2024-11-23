@@ -119,6 +119,17 @@
                   required
                 ></v-text-field>
               </v-col>
+              <v-col>
+                <v-select
+                  color="primary"
+                  v-model="course_type"
+                  :items="['ched', 'tesda']"
+                  variant="outlined"
+                  :rules="rules.gender"
+                  label="Course Type*"
+                  required
+                ></v-select>
+              </v-col>
             </v-row>
 
             <small class="text-caption text-medium-emphasis"
@@ -143,9 +154,12 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-//@ts-ignore
+<script setup>
+import { storeToRefs } from "pinia";
+import { useMyAuthStore } from "~/stores/auth";
 import { useToast } from "vue-toastification";
+const { userInfo } = storeToRefs(useMyAuthStore());
+const userData = ref(userInfo?.value.user);
 const dialog = ref(false);
 const valid = ref(true);
 const loading = ref(false);
@@ -155,6 +169,7 @@ const courseCode = ref("");
 const courseDesc = ref("");
 const major = ref("");
 const year = ref(0);
+const course_type = ref("");
 const toast = useToast();
 const courseList = ref([]);
 const page = ref({
@@ -180,6 +195,7 @@ const headers = ref([
   { title: "Course Description", key: "description", sortable: false },
   { title: "Major", key: "major", sortable: false },
   { title: "Year", key: "year", sortable: false },
+  { title: "Type", key: "course_type", sortable: false },
   { title: "Status", key: "course_status", sortable: false },
 
   { title: "", key: "actions",  sortable: false,  },
@@ -212,6 +228,7 @@ async function createCourse() {
       course_description: courseDesc.value,
       major: major.value,
       year: year.value,
+      course_type: course_type.value
     };
     await $fetch(`/api/course/createCourse`, {
       method: "POST",

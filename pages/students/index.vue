@@ -138,7 +138,7 @@
                 <v-select
                   color="primary"
                   :items="courses"
-                  item-title="description"
+                  item-title="code"
                   item-value="code"
                   label="Course*"
                   v-model="course"
@@ -147,7 +147,7 @@
                   return-object
                   required
                 ></v-select>
-                <v-select
+                <!-- <v-select
                   v-if="selectedBA"
                   color="primary"
                   :items="majorList"
@@ -156,7 +156,15 @@
                   label="Major"
                   v-model="major"
                   variant="outlined"
-                ></v-select>
+                ></v-select> -->
+                <v-text-field v-if="selectedBA"
+                color="primary"
+                label="Major"
+                  v-model="major"
+                  variant="outlined"
+                >
+                  
+                </v-text-field>
               </v-col>
             </v-row>
             <v-row dense>
@@ -446,8 +454,13 @@ async function getCoursesList() {
 
 watch([course, bday], async () => {
   //console.log("Courses", course.value);
-  if (course.value?.code === "BSBA") {
+  if (course.value?.code === "BSBA(MM)" || course.value?.code === "BSBA(FM)") {
     selectedBA.value = true;
+    if (course.value?.code === "BSBA(MM)") {
+      major.value = "Marketing Management"
+    } else if (course.value?.code === "BSBA(FM)") {
+      major.value = "Financial Management"
+    }
   } else {
     selectedBA.value = false;
     major.value = "";

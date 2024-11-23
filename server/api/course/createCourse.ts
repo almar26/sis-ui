@@ -12,7 +12,8 @@ export default defineEventHandler(async (event) => {
       course_code: body.course_code,
       course_description: body.course_description,
       major: body.major,
-      year: body.year
+      year: body.year,
+      course_type: body.course_type
     };
 
     const result = await axios.post(`${BASE_URL}/api/course/create`, myPayload, {
