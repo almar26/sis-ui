@@ -6,7 +6,6 @@ export default defineEventHandler(async (event) => {
   const cookies = parseCookies(event);
   const token = cookies?.token
   try {
-    console.log("Start Updating")
     const body = await readBody(event);
     const myPayload = {
       student_no: body.student_no,
@@ -26,7 +25,6 @@ export default defineEventHandler(async (event) => {
         Authorization: `Bearer ${token}`
       }
     });
-    console.log("Start Updating 2nd phase")
     if (result) {
       return result.data;
     }

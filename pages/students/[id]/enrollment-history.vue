@@ -5,7 +5,20 @@
       :icon="page.icon"
       :breadcrumbs="breadcrumbs"
     ></BaseBreadcrumb>
-    
+    <v-row v-if="isEmpty">
+      <h1>No Record Found</h1>
+    </v-row>
+    <v-row dense v-else>
+      <v-col cols="12" md="2">
+        <StudentSideBar />
+      </v-col>
+      <v-col cols="12" md="10">
+        <v-card class="elevation-0 text-center py-16">
+          <v-icon size="80" color="warning">mdi-alert-outline</v-icon>
+          <div class="service-notif">Service Unavailable</div>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -35,9 +48,11 @@ const breadcrumbs = ref([
     disabled: true,
   },
 ]);
-
 </script>
 
-<style>
-
+<style scoped>
+.service-notif {
+  font-size: 20px;
+  color: grey;
+}
 </style>
