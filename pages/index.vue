@@ -1,57 +1,14 @@
 <template>
   <div>
-    <h1>Dashboard</h1>
-    <v-btn @click="logout()"><v-icon>mdi-logout</v-icon> Logout</v-btn>
 
-    <!-- <VRow no-gutters align="center" justify="center">
-      <VCol cols="12" md="6">
-        <h1>Sign In</h1>
-        <p class="text-medium-emphasis">Enter your details to get started</p>
-
-        <VForm class="mt-7">
-          <div class="mt-1">
-            <label class="label text-grey-darken-2" for="email">Email</label>
-            <VTextField
-              v-model="email"
-              variant="outlined"
-              id="email"
-              name="email"
-              type="email"
-            />
-          </div>
-          <div class="mt-1">
-            <label class="label text-grey-darken-2" for="password"
-              >Password</label
-            >
-            <VTextField
-              v-model="password"
-              variant="outlined"
-              id="password"
-              name="password"
-              type="password"
-            />
-          </div>
-          <div class="mt-5">
-            <VBtn type="submit" block min-height="44" class="gradient primary"
-              >Sign In</VBtn
-            >
-          </div>
-        </VForm>
-        <p class="text-body-2 mt-10">
-          <NuxtLink to="/reset-password" class="font-weight-bold text-primary"
-            >Forgot password?</NuxtLink
-          >
-        </p>
-        <p class="text-body-2 mt-4">
-          <span
-            >Don't have an account?
-            <NuxtLink to="/signup" class="font-weight-bold text-primary"
-              >Sign Up</NuxtLink
-            ></span
-          >
-        </p>
-      </VCol>
-    </VRow> -->
+    <div class="d-flex align-center justify-center" style="height: 80vh">
+      <v-card class="elevation-0 text-center py-16" color="transparent">
+        <!-- <v-icon size="80" color="warning">mdi-alert-outline</v-icon> -->
+         <v-img src="/public/maintenance.png" class="mx-auto" :width="150"></v-img>
+        <!-- <div class="service-notif mt-5">Under Maintenance</div> -->
+        <div class="service-notif mt-5">Service Unavailable</div>
+      </v-card>
+    </div>
   </div>
 </template>
 
@@ -71,3 +28,13 @@ const logout = () => {
   router.push("/auth/signin");
 };
 </script>
+
+<style scoped>
+.service-notif {
+  font-size: 20px;
+  text-align: center;
+  /* font-weight: bold; */
+  color: grey;
+}
+</style>
+

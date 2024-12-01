@@ -1,32 +1,22 @@
 <template>
   <div>
-    <BaseBreadcrumb
-      :title="page.title"
-      :breadcrumbs="breadcrumbs"
-    ></BaseBreadcrumb>
+    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
     <!-- <h1>Courses Page</h1> -->
     <v-row>
       <v-col>
-        <v-btn class="mb-3" color="primary" @click="dialog = true"
-          >Add Record</v-btn
-        >
+        
+        
         <v-card elevation="0">
-          <!-- <v-card-title class="d-flex align-center pe-2">
-            <v-icon icon="mdi-book"></v-icon> &nbsp; List of Courses
+          <v-card-title class="d-flex align-center pe-2">
+            <!-- <v-icon icon="mdi-book"></v-icon> &nbsp; List of Courses -->
 
             <v-spacer></v-spacer>
-
+            <v-btn class="mb-3 text-capitalize" color="primary" @click="dialog = true" prepend-icon="mdi-plus">Create</v-btn>
            
-          </v-card-title> -->
+          </v-card-title>
 
           <v-divider></v-divider>
-          <v-data-table
-            density="compact"
-            class="custom-grid"
-            :items="courseList"
-            :headers="headers"
-            :loading="loading"
-          >
+          <v-data-table density="compact" class="custom-grid" :items="courseList" :headers="headers" :loading="loading">
             <template v-slot:loading>
               <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
             </template>
@@ -34,28 +24,16 @@
             <template v-slot:[`item.actions`]="{ item }">
               <v-tooltip text="View Course" location="top">
                 <template v-slot:activator="{ props }">
-                  <v-btn
-                    size="medium"
-                    :to="`/courses/${item.documentId}`"
-                    variant="plain"
-                    v-bind="props"
-                    icon="mdi-open-in-new"
-                    color="green"
-                  >
+                  <v-btn size="medium" :to="`/courses/${item.documentId}`" variant="text" v-bind="props"
+                    icon="mdi-open-in-new" color="green">
                   </v-btn>
                 </template>
               </v-tooltip>
-              <v-tooltip text="Delete Course" location="top">
+              <!-- <v-tooltip text="Delete Course" location="top">
                 <template v-slot:activator="{ props }">
-                  <v-btn
-                    size="medium"
-                    icon="mdi-delete"
-                    v-bind="props"
-                    variant="plain"
-                    color="red"
-                  ></v-btn>
+                  <v-btn size="medium" icon="mdi-delete" v-bind="props" variant="text" color="red"></v-btn>
                 </template>
-              </v-tooltip>
+              </v-tooltip> -->
             </template>
           </v-data-table>
         </v-card>
@@ -68,7 +46,7 @@
         <!-- <v-card-title><v-icon>mdi-book</v-icon> Add Course <v-spacer></v-spacer> <v-icon>mdi-close</v-icon></v-card-title> -->
         <v-toolbar>
           <v-icon class="ml-4">mdi-book</v-icon>
-          <v-toolbar-title>Add Course</v-toolbar-title>
+          <v-toolbar-title>Create New Course</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon @click="dialog = false">
             <v-icon>mdi-close</v-icon>
@@ -80,74 +58,38 @@
             <v-row dense>
               <v-col cols="12">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
-                <v-text-field
-                  label="Course Code*"
-                  v-model="courseCode"
-                  variant="outlined"
-                  :rules="rules.courseCode"
-                  required
-                ></v-text-field>
+                <v-text-field label="Course Code*" v-model="courseCode" variant="outlined" :rules="rules.courseCode"
+                  required></v-text-field>
               </v-col>
 
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field
-                  label="Course Description*"
-                  v-model="courseDesc"
-                  variant="outlined"
-                  :rules="rules.courseDesc"
-                  required
-                ></v-text-field>
+                <v-text-field label="Course Description*" v-model="courseDesc" variant="outlined"
+                  :rules="rules.courseDesc" required></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field
-                  label="Major"
-                  v-model="major"
-                  variant="outlined"
-                  required
-                ></v-text-field>
+                <v-text-field label="Major" v-model="major" variant="outlined" required></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field
-                  label="Year"
-                  v-model="year"
-                  variant="outlined"
-                  :rules="rules.year"
-                  type="number"
-                  required
-                ></v-text-field>
+                <v-text-field label="Year" v-model="year" variant="outlined" :rules="rules.year" type="number"
+                  required></v-text-field>
               </v-col>
               <v-col>
-                <v-select
-                  color="primary"
-                  v-model="course_type"
-                  :items="['ched', 'tesda']"
-                  variant="outlined"
-                  :rules="rules.gender"
-                  label="Course Type*"
-                  required
-                ></v-select>
+                <v-select color="primary" v-model="course_type" :items="['ched', 'tesda']" variant="outlined"
+                  :rules="rules.courseType" label="Course Type*" required></v-select>
               </v-col>
             </v-row>
 
-            <small class="text-caption text-medium-emphasis"
-              >*indicates required field</small
-            >
+            <small class="text-caption text-medium-emphasis">*indicates required field</small>
           </v-form>
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions class="mx-5 my-2">
-          <v-btn
-            block
-            color="green"
-            text="Save"
-            variant="flat"
-            @click="createCourse()"
-          ></v-btn>
+          <v-btn block color="green" text="Save" variant="flat" @click="createCourse()"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -173,7 +115,7 @@ const course_type = ref("");
 const toast = useToast();
 const courseList = ref([]);
 const page = ref({
-  title: "Courses",
+  title: `${userData.value.role_view} Courses`,
 });
 const breadcrumbs = ref([
   {
@@ -182,7 +124,7 @@ const breadcrumbs = ref([
     to: "/",
   },
   {
-    title: "Course",
+    title: "Courses",
     disabled: true,
   },
 ]);
@@ -198,13 +140,14 @@ const headers = ref([
   { title: "Type", key: "course_type", sortable: false },
   { title: "Status", key: "course_status", sortable: false },
 
-  { title: "", key: "actions",  sortable: false,  },
+  { title: "", key: "actions", sortable: false, },
 ]);
 
 const rules = ref({
   courseCode: [(v) => !!v || "Course code is required"],
   courseDesc: [(v) => !!v || "Course description is required"],
   year: [(v) => !!v || "Year is required"],
+  courseType: [(v) => !!v || "Course type is required"]
 });
 
 async function initialize() {
@@ -233,12 +176,19 @@ async function createCourse() {
     await $fetch(`/api/course/createCourse`, {
       method: "POST",
       body: payload,
-    });
-    initialize();
-    dialog.value = false;
-    createCourseForm.value?.reset();
-    toast.success("Successfully created!");
-    console.log("Created a Course!", payload);
+    })
+      .then(response => {
+        if (response.status == 'fail') {
+          toast.error(response.message);
+        } else {
+          initialize();
+          dialog.value = false;
+          createCourseForm.value?.reset();
+          toast.success("Successfully created!");
+          console.log("Created a Course!", payload);
+        }
+      })
+
   } else {
     console.log(errors[0].errorMessages[0]);
   }
@@ -254,22 +204,25 @@ onMounted(() => {
   --v-border-color: grey;
   --v-border-opacity: 0.5;
 }
-:deep() .v-table .v-table__wrapper > table > thead > tr > th {
+
+:deep() .v-table .v-table__wrapper>table>thead>tr>th {
   border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
-  border-bottom: thick solid
-    rgba(var(--v-border-color), var(--v-border-opacity));
+  border-bottom: thick solid rgba(var(--v-border-color), var(--v-border-opacity));
   font-weight: bold;
   /* background-color: #04aa6d;
   color: white; */
 }
-:deep() .v-table .v-table__wrapper > table > tbody > tr > td:not(:last-child),
-.v-table .v-table__wrapper > table > tbody > tr > th:not(:last-child) {
+
+:deep() .v-table .v-table__wrapper>table>tbody>tr>td:not(:last-child),
+.v-table .v-table__wrapper>table>tbody>tr>th:not(:last-child) {
   border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
 }
-:deep() .v-table .v-table__wrapper > table > tbody > tr:nth-child(even) {
+
+:deep() .v-table .v-table__wrapper>table>tbody>tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-:deep() .v-table .v-table__wrapper > table > tbody > tr:hover {
+
+:deep() .v-table .v-table__wrapper>table>tbody>tr:hover {
   background-color: #f2f2f2;
 }
 </style>

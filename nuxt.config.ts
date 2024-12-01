@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: `%s %separator %siteName`,
       templateParams: {
-        siteName: 'Student Management System',
+        siteName: 'Student Information System',
         separator: '|'
       },
       charset: 'utf-8',

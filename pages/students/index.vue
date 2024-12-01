@@ -8,11 +8,12 @@
     <!-- <h1>{{ userData }}</h1> -->
     <v-row>
       <v-col>
-        <v-btn class="mb-3" color="primary" @click="dialog = true"
-          >Add Record</v-btn
-        >
+        
         <v-card elevation="0">
           <v-card-title class="d-flex align-center pe-2">
+            <v-btn class="mb-3 text-capitalize" color="primary" prepend-icon="mdi-plus" @click="dialog = true"
+          >Create</v-btn
+        >
             <v-spacer></v-spacer>
             <v-spacer></v-spacer>
 
@@ -50,7 +51,7 @@
                     size="medium"
                     :to="`/students/${item.documentId}`"
                     class="mr-1"
-                    variant="plain"
+                    variant="text"
                     v-bind="props"
                     icon="mdi-open-in-new"
                     color="green"
@@ -58,7 +59,7 @@
                   </v-btn>
                 </template>
               </v-tooltip>
-              <v-tooltip text="Delete Profile" location="top">
+              <!-- <v-tooltip text="Delete Profile" location="top">
                 <template v-slot:activator="{ props }">
                   <v-btn
                     size="medium"
@@ -68,7 +69,7 @@
                     variant="plain"
                   ></v-btn>
                 </template>
-              </v-tooltip>
+              </v-tooltip> -->
             </template>
           </v-data-table>
         </v-card>
@@ -77,7 +78,15 @@
 
     <!-- DIALOG BOX -->
     <v-dialog max-width="800" v-model="dialog" scrollable>
-      <v-card prepend-icon="mdi-account" title="Add Student">
+      <v-card>
+        <v-toolbar>
+          <v-icon class="ml-4">mdi-account</v-icon>
+          <v-toolbar-title>Create New Student</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
         <v-divider></v-divider>
         <v-card-text class="mx-5">
           <v-form v-model="valid" ref="loginForm" lazy-validation>
@@ -85,7 +94,7 @@
               PERSONAL INFORMATION
             </p>
             <v-row dense>
-              <v-col cols="4" md="4" sm="6">
+              <v-col cols="12" md="4" sm="6">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
                 <v-select
                   :items="semesterList"
@@ -264,14 +273,17 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text="Close" variant="plain" @click="dialog = false"></v-btn>
+          <!-- <v-btn text="Close" variant="plain" @click="dialog = false"></v-btn> -->
 
           <v-btn
             color="green"
             text="Save"
-            variant="tonal"
+            variant="flat"
+            width="140"
             @click="createStudent()"
+            prepend-icon="mdi-content-save"
           ></v-btn>
+          <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
     </v-dialog>

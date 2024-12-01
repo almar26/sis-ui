@@ -44,6 +44,7 @@
           color="primary"
           class="mt-5"
           size="large"
+          :loading="loading"
           block
           type="submit"
         >
@@ -103,6 +104,7 @@ const { errorLogin } = storeToRefs(useMyAuthStore()); // make errorLogin state r
 const { errorMessage } = storeToRefs(useMyAuthStore()); // make errorMessage state reactive
 
 const valid = ref(true);
+const loading = ref(false);
 const user = ref({
   identifier: "",
   password: "",
@@ -119,13 +121,16 @@ const text = ref("HHHHHH");
 // FUNCTIONS
 async function login() {
   const { valid, errors } = await loginForm.value?.validate();
+  loading.value = true;
   if (valid) {
     await authenticateUser(user.value); // call autheticateUser and pass the user object
     if (authenticated) {
+      loading.value = false;
       router.push("/");
     }
     if (errorLogin.value == true) {
       console.log(errorLogin.value);
+      loading.value = false;
       snackbar.value = true;
       if (errorMessage.value == "") {
         text.value = "Invalid identifier or password";

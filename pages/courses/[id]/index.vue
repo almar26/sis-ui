@@ -18,10 +18,17 @@
                 <v-toolbar-title class="card-title text-body-1">Details
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn color="blue" icon="mdi-pencil" class="text-capitalize">
+                <!-- <v-btn color="blue" icon="mdi-pencil" @click="updateCourseDialog = true" class="text-capitalize">
                 </v-btn>
-                <v-btn color="red" icon="mdi-delete" class="text-capitalize">
-                </v-btn>
+                <v-btn color="red" icon="mdi-delete" @click="deleteCourseDialog = true" class="text-capitalize">
+                </v-btn> -->
+
+                <v-btn color="warning" icon size="small" variant="text" @click="updateCourseDialog = true"><v-icon
+                    size="large">mdi-pencil</v-icon> <v-tooltip activator="parent"
+                    location="top">Edit</v-tooltip></v-btn>
+                <v-btn color="red" icon size="small" variant="text" @click="deleteCourseDialog = true"><v-icon
+                    size="large">mdi-delete</v-icon><v-tooltip activator="parent"
+                    location="top">Delete</v-tooltip></v-btn>
               </v-toolbar>
               <v-divider></v-divider>
               <v-list density="compact">
@@ -53,12 +60,12 @@
                   <v-list-item-title class="desc">{{ courseDetails.year }} Year</v-list-item-title>
                 </v-list-item>
 
-                <v-list-item>
+                <!-- <v-list-item>
                   <v-list-item-subtitle class="title">Status</v-list-item-subtitle>
                   <v-list-item-title class="desc">{{
                     courseDetails.course_status
                   }}</v-list-item-title>
-                </v-list-item>
+                </v-list-item> -->
               </v-list>
               <!-- <v-divider></v-divider>
               <v-card-actions class="py-3">
@@ -80,9 +87,14 @@
               <v-toolbar color="transparent" density="comfortable" class="pr-3">
                 <v-toolbar-title class="card-title text-body-1">Curriculum</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn variant="flat" density="compact" color="primary" icon="mdi-plus" class="text-capitalize"
+                <v-btn variant="flat" density="compact" color="primary" icon class="text-capitalize"
                   @click="createCuriDialog = true">
+                  <v-icon>mdi-plus</v-icon>
+                  <v-tooltip activator="parent" location="top">Add
+                    Curriculum</v-tooltip>
                 </v-btn>
+
+
               </v-toolbar>
               <v-divider></v-divider>
 
@@ -100,20 +112,28 @@
                       $relative(item.createdAt)
                     }}</v-list-item-subtitle> -->
                     <template v-slot:append>
-                      <v-menu>
+                      <!-- <v-menu>
                         <template v-slot:activator="{ props }">
                           <v-btn icon="mdi-dots-vertical" variant="text" v-bind="props"></v-btn>
                         </template>
 
-                        <v-list>
-                          <v-list-item @click="selectedCurricula(item)">
-                            <v-list-item-title>Edit</v-list-item-title>
-                          </v-list-item>
-                          <v-list-item @click="selectedCurricula(item)">
-                            <v-list-item-title>Delete</v-list-item-title>
-                          </v-list-item>
-                        </v-list>
-                      </v-menu>
+<v-list>
+  <v-list-item @click="showUpdateCuriDialog(item)">
+    <v-list-item-title><v-icon size="x-small" start>mdi-pencil</v-icon> Edit</v-list-item-title>
+  </v-list-item>
+  <v-list-item @click="showDeleteCuriDialog(item)">
+    <v-list-item-title>Delete</v-list-item-title>
+  </v-list-item>
+
+</v-list>
+</v-menu> -->
+                      <v-btn color="warning" icon size="x-small" variant="text"
+                        @click="showUpdateCuriDialog(item)"><v-icon size="large">mdi-pencil</v-icon> <v-tooltip
+                          activator="parent" location="top">Edit</v-tooltip></v-btn>
+                      <v-btn color="red" icon size="x-small" variant="text" @click="showDeleteCuriDialog(item)"><v-icon
+                          size="large">mdi-delete</v-icon> <v-tooltip activator="parent"
+                          location="top">Delete</v-tooltip></v-btn>
+
                     </template>
                   </v-list-item>
                   <!-- <v-card elevation="0" link class="mb-3">
@@ -147,26 +167,49 @@
           </v-toolbar>
           <v-divider></v-divider>
           <v-card-text>
-            <v-data-table :items="subjectList" :headers="headers" :loading="loading">
+            <v-data-table density="compact" :items="subjectList" :headers="headers" :loading="loading">
               <template v-slot:[`item.actions`]="{ item }">
 
-               
-                  <v-menu >
-                    <template v-slot:activator="{ props }">
-                      <v-btn icon="mdi-dots-vertical" variant="text" v-bind="props"></v-btn>
-                    </template>
 
-                    <v-list>
-                      <v-list-item >
-                        <v-list-item-title>Edit</v-list-item-title>
-                      </v-list-item>
-                      <v-list-item >
-                        <v-list-item-title>Delete</v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
+                <!-- <v-menu>
+                  <template v-slot:activator="{ props }">
+                    <v-btn icon="mdi-dots-vertical" variant="text" v-bind="props"></v-btn>
+                  </template>
 
-              
+        <v-list>
+          <v-list-item>
+            <v-list-item-title>Edit</v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title>Delete</v-list-item-title>
+          </v-list-item>
+        </v-list>
+        </v-menu> -->
+        
+                <!-- <v-btn color="warning" icon size="x-small" variant="text" @click="showUpdateCuriDialog(item)"><v-icon
+                    size="large">mdi-pencil</v-icon> <v-tooltip activator="parent"
+                    location="top">Edit</v-tooltip></v-btn>
+
+                <v-btn color="red" icon size="x-small" variant="text" @click="showDeleteCuriDialog(item)"><v-icon
+                    size="large">mdi-delete</v-icon> <v-tooltip activator="parent"
+                    location="top">Delete</v-tooltip></v-btn> -->
+
+
+                <v-tooltip text="Edit" location="top">
+                  <template v-slot:activator="{ props }">
+                    <v-btn size="medium" variant="text" v-bind="props"
+                      icon="mdi-pencil" color="green">
+                    </v-btn>
+                  </template>
+                </v-tooltip>
+                <v-tooltip text="Delete" location="top">
+                  <template v-slot:activator="{ props }">
+                    <v-btn size="medium" icon="mdi-delete" v-bind="props" variant="text" color="red"></v-btn>
+                  </template>
+                </v-tooltip>
+
+
+
                 <!-- <v-btn icon="mdi-dots-vertical" variant="text" v-bind="props"></v-btn> -->
 
               </template>
@@ -210,6 +253,39 @@
         <v-divider></v-divider>
         <v-card-actions class="mx-5 my-2">
           <v-btn block color="green" text="Save" variant="flat" @click="addCurriculum()"></v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <!-- Update Curriculum Dialog Box -->
+    <v-dialog max-width="500" v-model="updateCuriDialog" scrollable persistent>
+      <v-card>
+        <!-- <v-card-title><v-icon>mdi-book</v-icon> Add Course <v-spacer></v-spacer> <v-icon>mdi-close</v-icon></v-card-title> -->
+        <v-toolbar>
+          <v-icon class="ml-4">mdi-card-text</v-icon>
+          <v-toolbar-title>Update Curriculum</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="updateCuriDialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card-text class="mx-5">
+          <v-form v-model="valid" ref="updateCurriForm" lazy-validation>
+            <v-row dense>
+              <v-col cols="12">
+                <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
+                <v-text-field label="Effective School Year*" v-model="updateEffectiveSY" variant="outlined"
+                  :rules="rules.effectiveSY" required></v-text-field>
+              </v-col>
+            </v-row>
+
+            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="mx-5 my-2">
+          <v-btn block color="green" text="Save" variant="flat" @click="updateCurriculum()"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -288,6 +364,90 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- Update Course Dialog box -->
+    <v-dialog max-width="500" v-model="updateCourseDialog" scrollable persistent>
+      <v-card>
+        <!-- <v-card-title><v-icon>mdi-book</v-icon> Add Course <v-spacer></v-spacer> <v-icon>mdi-close</v-icon></v-card-title> -->
+        <v-toolbar>
+          <v-icon class="ml-4">mdi-book</v-icon>
+          <v-toolbar-title>Update Course</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="updateCourseDialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card-text class="mx-5">
+          <v-form v-model="valid" ref="updateCourseForm" lazy-validation>
+            <v-row dense>
+              <v-col cols="12">
+                <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
+                <v-text-field label="Course Code*" v-model="courseCode" variant="outlined"
+                  :rules="courseRules.courseCode" required></v-text-field>
+              </v-col>
+
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field label="Course Description*" v-model="courseDesc" variant="outlined"
+                  :rules="courseRules.courseDesc" required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field label="Major" v-model="major" variant="outlined" required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field label="Year" v-model="year" variant="outlined" :rules="courseRules.year" type="number"
+                  required></v-text-field>
+              </v-col>
+              <v-col>
+                <v-select color="primary" v-model="course_type" :items="['ched', 'tesda']" variant="outlined"
+                  :rules="courseRules.courseType" label="Course Type*" required></v-select>
+              </v-col>
+            </v-row>
+
+            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+          </v-form>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions class="mx-5 my-2">
+          <v-btn block color="green" text="Save" variant="flat" @click="updateCourse()"></v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <!-- Delete Course Dialog -->
+    <v-dialog v-model="deleteCourseDialog" width="auto">
+      <v-card class="text-body-2" color="#263238" max-width="400" prepend-icon="mdi-delete"
+        text="Are you sure you want to delete this course?" title="Delete Course">
+        <template v-slot:actions>
+          <v-spacer></v-spacer>
+          <v-btn class="text-none" :loading="loading2" text="Delete" prepend-icon="mdi-delete" color="red"
+            variant="tonal" @click="deleteCourse()"></v-btn>
+          <v-btn class="text-none" text="Cancel" prepend-icon="mdi-close" variant="tonal"
+            @click="deleteCourseDialog = false"></v-btn>
+        </template>
+      </v-card>
+    </v-dialog>
+
+    <!-- Delete Curriculum Dialog -->
+    <v-dialog v-model="deleteCurriDialog" width="auto">
+      <v-card class="text-body-2" color="#263238" max-width="400" prepend-icon="mdi-delete"
+        text="Are you sure you want to delete this curriculum?" :title="`Delete Curriculum ${updateEffectiveSY}`">
+        <template v-slot:actions>
+          <v-spacer></v-spacer>
+          <v-btn class="text-none" :loading="loading3" text="Delete" prepend-icon="mdi-delete" color="red"
+            variant="tonal" @click="deleteCurriculum()"></v-btn>
+          <v-btn class="text-none" text="Cancel" prepend-icon="mdi-close" variant="tonal"
+            @click="deleteCurriDialog = false"></v-btn>
+        </template>
+      </v-card>
+    </v-dialog>
+
+
   </div>
 </template>
 
@@ -297,18 +457,27 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 const route = useRoute();
 const loading = ref(false);
+const loading2 = ref(false);
+const loading3 = ref(false);
 const isEmpty = ref(false);
 const courseDetails = ref({});
 const curriculumList = ref([]);
 const createCuriDialog = ref(false);
+const updateCuriDialog = ref(false);
 const addSubjDialog = ref(false);
+const updateCourseDialog = ref(false);
+const deleteCourseDialog = ref(false);
+const deleteCurriDialog = ref(false);
 const isSelectedCurri = ref(false);
 const documentid = ref("");
 const curriculaYear = ref("");
 
 /// Create Curriculum Variables
 const createCurriForm = ref(null);
+const updateCurriForm = ref(null);
 const effectiveSY = ref("");
+const updateEffectiveSY = ref("");
+const curriDocumentId = ref("");
 
 // Create Subject Variables
 const createSubjForm = ref(null);
@@ -322,6 +491,15 @@ const lab = ref(0);
 const units = ref(0);
 const resultant = ref("None");
 const subjectList = ref([]);
+
+// Update Course
+const updateCourseForm = ref(null)
+const courseCode = ref("");
+const courseDesc = ref("");
+const courseCodeDuplicate = ref("")
+const major = ref("");
+const year = ref(0);
+const course_type = ref("");
 
 const page = ref({
   title: "Course Details",
@@ -368,6 +546,12 @@ const rules = ref({
   units: [(v) => !!v || "Units is required"],
   effectiveSY: [(v) => !!v || "Effective School Year is required"],
 });
+const courseRules = ref({
+  courseCode: [(v) => !!v || "Course code is required"],
+  courseDesc: [(v) => !!v || "Course description is required"],
+  year: [(v) => !!v || "Year is required"],
+  courseType: [(v) => !!v || "Course type is required"]
+});
 
 const itemsCurri = ref([
   { id: 1, text: "2020-2021", createdAt: "10-01-2021", icon: "mdi-account" },
@@ -378,18 +562,77 @@ async function initialize() {
   try {
     let result = await $fetch(`/api/course/${route.params.id}`);
     //console.log(result);
-    if (result) {
+    if (result.length == 0) {
+      isEmpty.value = true;
+    } else {
       courseDetails.value = result[0];
-      // @ts-ignore
-      if (result.length == 0) {
-        //console.log("Empty Data")
-        isEmpty.value = true;
-      } else {
-        // console.log("has data")
-        isEmpty.value = false;
-      }
+      courseCode.value = result[0].code;
+      courseCodeDuplicate.value = result[0].code;
+      courseDesc.value = result[0].description;
+      major.value = result[0].major;
+      year.value = result[0].year;
+      course_type.value = result[0].course_type;
+    }
+    // if (result) {
+
+    //   // @ts-ignore
+    //   if (result.length == 0) {
+    //     //console.log("Empty Data")
+    //     isEmpty.value = true;
+    //   } else {
+    //     // console.log("has data")
+    //     isEmpty.value = false;
+    //   }
+    // }
+  } catch (err) {
+    console.error("Failed to fetch data: ", err);
+    throw err;
+  }
+}
+
+async function updateCourse() {
+  const { valid, errors } = await updateCourseForm.value?.validate();
+  if (valid) {
+    let payload = {
+      course_code: courseCode.value,
+      course_code_duplicate: courseCodeDuplicate.value,
+      course_desc: courseDesc.value,
+      major: major.value,
+      year: year.value,
+      course_type: course_type.value
+    };
+    console.log("Update Course", payload);
+    await $fetch(`/api/course/update/${route.params.id}`, {
+      method: "PUT",
+      body: payload
+    })
+      .then(response => {
+        console.log("Updat Response: ", response);
+        if (response.status == 'fail') {
+          toast.error(response.message);
+        } else {
+          updateCourseDialog.value = false;
+          toast.success(`Course ${courseCode.value} updated!`)
+          initialize();
+        }
+      })
+  } else {
+    console.log(errors[0].errorMessages[0]);
+  }
+}
+
+async function deleteCourse() {
+  try {
+    loading2.value = true;
+    let result = await $fetch(`/api/course/delete/${route.params.id}`);
+    if (result) {
+      loading2.value = false;
+      (deleteCourseDialog.value = false),
+        toast.success(`Course ${courseCode.value} deleted successfully!`);
+      navigateTo("/courses");
     }
   } catch (err) {
+    loading2.value = false;
     console.error("Failed to fetch data: ", err);
     throw err;
   }
@@ -417,7 +660,8 @@ async function addCurriculum(ctx) {
       course_desc: courseDetails.value.description,
       major: courseDetails.value.major,
       effective_sy: effectiveSY.value,
-      course_id: courseDetails.value.documentId,
+      // course_id: courseDetails.value.documentId,
+      course_id: route.params.id,
     };
 
     console.log(payload);
@@ -442,22 +686,89 @@ async function addCurriculum(ctx) {
 }
 
 async function selectedCurricula(curriculum) {
-  console.log("Selected Curri", curriculum);
+  //console.log("Selected Curri", curriculum);
   getCuriSubject(curriculum.documentId);
   documentid.value = curriculum.documentId;
   curriculaYear.value = curriculum.year;
 }
 
+async function showUpdateCuriDialog(curriculum) {
+  console.log("Update selected curri", curriculum)
+  curriDocumentId.value = curriculum.documentId;
+  //curriculaYear.value = curriculum.year;
+  updateEffectiveSY.value = curriculum.year;
+  updateCuriDialog.value = true;
+}
+
+async function updateCurriculum() {
+  console.log("Successfully updated curriculum");
+  console.log("ID: ", curriDocumentId.value)
+  console.log("Effective School Year: ", updateEffectiveSY.value)
+  const { valid, errors } = await updateCurriForm.value?.validate();
+  if (valid) {
+    let payload = {
+      effective_sy: updateEffectiveSY.value,
+      course_id: route.params.id
+    };
+    await $fetch(`/api/curriculum/update/${curriDocumentId.value}`, {
+      method: "PUT",
+      body: payload,
+    })
+      .then(response => {
+        if (response.status == "fail") {
+          toast.error(response.message);
+        } else {
+          updateCuriDialog.value = false;
+          toast.success("Successfully updated!")
+          getCurriculumList();
+        }
+      })
+  } else {
+    console.log(errors[0].errorMessages[0]);
+  }
+}
+
+async function showDeleteCuriDialog(curriculum) {
+  console.log("Delete selected curri", curriculum)
+  curriDocumentId.value = curriculum.documentId;
+  //curriculaYear.value = curriculum.year;
+  updateEffectiveSY.value = curriculum.year;
+  deleteCurriDialog.value = true;
+}
+
+async function deleteCurriculum() {
+  try {
+    loading3.value = true;
+    let result = await $fetch(`/api/curriculum/delete/${curriDocumentId.value}`)
+    if (result) {
+      loading3.value = false;
+      deleteCurriDialog.value = false;
+      toast.success(`Curriculum ${effectiveSY.value} deleted successfully!`);
+      getCurriculumList();
+      isSelectedCurri.value = false;
+    }
+  } catch (err) {
+    loading3.value = false;
+    console.error("Failed to fetch data: ", err);
+    throw err;
+  }
+}
+
+
+
 async function getCuriSubject(curriculumId) {
-  console.log("list of subject: ", curriculumId);
+  //console.log("list of subject: ", curriculumId);
+  loading.value = true;
   isSelectedCurri.value = true;
   try {
     let result = await $fetch(`/api/subject/${curriculumId}`);
-    console.log(result);
+    //console.log(result);
     if (result) {
       subjectList.value = result;
+      loading.value = false;
     }
   } catch (err) {
+    loading.value = false;
     console.error("Failed to fetch data: ", err);
     throw err;
   }
@@ -479,6 +790,7 @@ async function addSubject() {
       units: units.value,
       resultant: resultant.value,
       course_code: courseDetails.value.code,
+      course_id: route.params.id
     };
     console.log("Subject: ", payload);
     await $fetch(`/api/subject/createSubject`, {
@@ -507,6 +819,21 @@ onMounted(() => {
   initialize();
   getCurriculumList();
 });
+
+watch([deleteCourseDialog, deleteCurriDialog, createCuriDialog, updateCuriDialog], async () => {
+  if (deleteCourseDialog.value == false) {
+    //console.log("Delete dialog box closed");
+    loading2.value = false;
+  }
+  if (deleteCurriDialog.value == false) {
+    loading3.value = false
+  }
+
+  if (createCuriDialog.value == false) {
+    console.log("Create curriculum dialog box closed")
+    effectiveSY.value = "";
+  }
+})
 </script>
 
 <style scoped>

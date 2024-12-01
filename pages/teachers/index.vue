@@ -8,7 +8,8 @@
    
     <div class="d-flex align-center justify-center" style="height: 60vh">
       <v-card class="elevation-0 text-center py-16" color="transparent">
-      <v-icon size="80" color="warning">mdi-alert-outline</v-icon>
+      <!-- <v-icon size="80" color="warning">mdi-alert-outline</v-icon> -->
+      <v-img src="/public/maintenance.png" class="mx-auto" :width="130"></v-img>
       <div class="service-notif">Service Unavailable</div>
     </v-card>
     </div>

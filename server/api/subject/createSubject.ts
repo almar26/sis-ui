@@ -17,7 +17,8 @@ export default defineEventHandler(async (event) => {
       lab: body.lab,
       units: body.units,
       resultant: body.resultant,
-      course_code: body.course_code
+      course_code: body.course_code,
+      course_id: body.course_id
     };
 
     const result = await axios.post(`${BASE_URL}/api/subject/create`, myPayload, {
