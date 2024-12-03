@@ -185,7 +185,7 @@
           </v-list-item>
         </v-list>
         </v-menu> -->
-        
+
                 <!-- <v-btn color="warning" icon size="x-small" variant="text" @click="showUpdateCuriDialog(item)"><v-icon
                     size="large">mdi-pencil</v-icon> <v-tooltip activator="parent"
                     location="top">Edit</v-tooltip></v-btn>
@@ -197,14 +197,15 @@
 
                 <v-tooltip text="Edit" location="top">
                   <template v-slot:activator="{ props }">
-                    <v-btn size="medium" variant="text" v-bind="props"
+                    <v-btn size="medium" variant="text" v-bind="props" @click="showUpdateSubjecyDialog(item)"
                       icon="mdi-pencil" color="green">
                     </v-btn>
                   </template>
                 </v-tooltip>
                 <v-tooltip text="Delete" location="top">
                   <template v-slot:activator="{ props }">
-                    <v-btn size="medium" icon="mdi-delete" v-bind="props" variant="text" color="red"></v-btn>
+                    <v-btn size="medium" icon="mdi-delete" v-bind="props" @click="showDeleteSubjectDialog(item)"
+                      variant="text" color="red"></v-btn>
                   </template>
                 </v-tooltip>
 
@@ -285,7 +286,7 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="mx-5 my-2">
-          <v-btn block color="green" text="Save" variant="flat" @click="updateCurriculum()"></v-btn>
+          <v-btn block color="green" text="Update" variant="flat" @click="updateCurriculum()"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -365,6 +366,81 @@
       </v-card>
     </v-dialog>
 
+    <!-- Update Subject to curriculum -->
+    <v-dialog max-width="500" v-model="updateSubjDialog" scrollable persistent>
+      <v-card>
+        <!-- <v-card-title><v-icon>mdi-book</v-icon> Add Course <v-spacer></v-spacer> <v-icon>mdi-close</v-icon></v-card-title> -->
+        <v-toolbar>
+          <v-icon class="ml-4">mdi-card-text</v-icon>
+          <v-toolbar-title>Edit Subject</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="updateSubjDialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card-text class="mx-5">
+          <v-form v-model="valid" ref="updateSubjForm" lazy-validation>
+            <v-row dense>
+              <v-col cols="12">
+                <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
+                <v-text-field label="Subject Code*" v-model="subjCode" variant="outlined" :rules="rules.subjCode"
+                  required></v-text-field>
+              </v-col>
+
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field label="Subject Title*" v-model="subjTitle" variant="outlined" :rules="rules.subjTitle"
+                  required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field label="Year Level*" v-model="yearLevel" variant="outlined" :rules="rules.yearLevel"
+                  required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <!-- <v-text-field
+                  label="Semester*"
+                  v-model="semester"
+                  variant="outlined"
+                  :rules="rules.semester"
+                  required
+                ></v-text-field> -->
+                <v-select variant="outlined" label="Semester" v-model="semester" :rules="rules.semester"
+                  :items="['1st Semester', '2nd Semester', 'Summer']"></v-select>
+              </v-col>
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field label="Lec*" v-model="lec" variant="outlined" :rules="rules.lec" type="number"
+                  required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field label="Lab*" v-model="lab" variant="outlined" :rules="rules.lab" type="number"
+                  required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field label="Units*" v-model="units" variant="outlined" :rules="rules.units" type="number"
+                  required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <!-- <label class="label mb-4" for="email">Student No</label> -->
+                <v-text-field label="Resultant" v-model="resultant" variant="outlined" required></v-text-field>
+              </v-col>
+            </v-row>
+
+            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="mx-5 my-2">
+          <v-btn block color="green" text="Update" variant="flat" @click="updateSubject()"></v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <!-- Update Course Dialog box -->
     <v-dialog max-width="500" v-model="updateCourseDialog" scrollable persistent>
       <v-card>
@@ -414,7 +490,7 @@
         <v-divider></v-divider>
 
         <v-card-actions class="mx-5 my-2">
-          <v-btn block color="green" text="Save" variant="flat" @click="updateCourse()"></v-btn>
+          <v-btn block color="green" text="Update" variant="flat" @click="updateCourse()"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -447,6 +523,20 @@
       </v-card>
     </v-dialog>
 
+    <!-- Delete Subject Dialog -->
+    <v-dialog v-model="deleteSubjDialog" width="auto">
+      <v-card class="text-body-2" color="#263238" max-width="400" prepend-icon="mdi-delete"
+        text="Are you sure you want to delete this subject?" :title="`Delete Subject ${subjCode}`">
+        <template v-slot:actions>
+          <v-spacer></v-spacer>
+          <v-btn class="text-none" :loading="loading3" text="Delete" prepend-icon="mdi-delete" color="red"
+            variant="tonal" @click="deleteSubject()"></v-btn>
+          <v-btn class="text-none" text="Cancel" prepend-icon="mdi-close" variant="tonal"
+            @click="deleteSubjDialog = false"></v-btn>
+        </template>
+      </v-card>
+    </v-dialog>
+
 
   </div>
 </template>
@@ -465,9 +555,11 @@ const curriculumList = ref([]);
 const createCuriDialog = ref(false);
 const updateCuriDialog = ref(false);
 const addSubjDialog = ref(false);
+const updateSubjDialog = ref(false);
 const updateCourseDialog = ref(false);
 const deleteCourseDialog = ref(false);
 const deleteCurriDialog = ref(false);
+const deleteSubjDialog = ref(false);
 const isSelectedCurri = ref(false);
 const documentid = ref("");
 const curriculaYear = ref("");
@@ -491,6 +583,9 @@ const lab = ref(0);
 const units = ref(0);
 const resultant = ref("None");
 const subjectList = ref([]);
+
+// Update Subject Variables
+const updateSubjForm = ref(null);
 
 // Update Course
 const updateCourseForm = ref(null)
@@ -558,6 +653,8 @@ const itemsCurri = ref([
   { id: 2, text: "2023-2024", createdAt: "10-01-2023" },
 ]);
 
+
+// Get course details
 async function initialize() {
   try {
     let result = await $fetch(`/api/course/${route.params.id}`);
@@ -590,6 +687,7 @@ async function initialize() {
   }
 }
 
+// Update Course
 async function updateCourse() {
   const { valid, errors } = await updateCourseForm.value?.validate();
   if (valid) {
@@ -621,6 +719,7 @@ async function updateCourse() {
   }
 }
 
+// Delete Course
 async function deleteCourse() {
   try {
     loading2.value = true;
@@ -638,6 +737,7 @@ async function deleteCourse() {
   }
 }
 
+// Get list of curriculum
 async function getCurriculumList() {
   try {
     let result = await $fetch(`/api/curriculum/course-list/${route.params.id}`);
@@ -651,6 +751,7 @@ async function getCurriculumList() {
   }
 }
 
+// Create new curriculum
 async function addCurriculum(ctx) {
   const { valid, errors } = await createCurriForm.value?.validate();
 
@@ -685,6 +786,7 @@ async function addCurriculum(ctx) {
   }
 }
 
+// Show list of subjects based on selected curriculum
 async function selectedCurricula(curriculum) {
   //console.log("Selected Curri", curriculum);
   getCuriSubject(curriculum.documentId);
@@ -692,6 +794,8 @@ async function selectedCurricula(curriculum) {
   curriculaYear.value = curriculum.year;
 }
 
+
+// Show update curriculum dialog box
 async function showUpdateCuriDialog(curriculum) {
   console.log("Update selected curri", curriculum)
   curriDocumentId.value = curriculum.documentId;
@@ -700,6 +804,8 @@ async function showUpdateCuriDialog(curriculum) {
   updateCuriDialog.value = true;
 }
 
+
+// Update Curriculum
 async function updateCurriculum() {
   console.log("Successfully updated curriculum");
   console.log("ID: ", curriDocumentId.value)
@@ -728,6 +834,7 @@ async function updateCurriculum() {
   }
 }
 
+// Show delete curriculum dialog box
 async function showDeleteCuriDialog(curriculum) {
   console.log("Delete selected curri", curriculum)
   curriDocumentId.value = curriculum.documentId;
@@ -736,6 +843,7 @@ async function showDeleteCuriDialog(curriculum) {
   deleteCurriDialog.value = true;
 }
 
+// Delete Curriculum
 async function deleteCurriculum() {
   try {
     loading3.value = true;
@@ -755,7 +863,7 @@ async function deleteCurriculum() {
 }
 
 
-
+// Get list of subject by curriculum id
 async function getCuriSubject(curriculumId) {
   //console.log("list of subject: ", curriculumId);
   loading.value = true;
@@ -774,6 +882,7 @@ async function getCuriSubject(curriculumId) {
   }
 }
 
+// Create new subject
 async function addSubject() {
   const { valid, errors } = await createSubjForm.value?.validate();
   console.log("Document ID: ", documentid.value);
@@ -815,23 +924,76 @@ async function addSubject() {
   }
 }
 
+// Show update subject dialog box
+async function showUpdateSubjecyDialog(subject) {
+  //console.log("Update selected Subject", subject)
+  subjCode.value = subject.code;
+  subjTitle.value = subject.title;
+  yearLevel.value = subject.year_level;
+  semester.value = subject.semester;
+  lec.value = subject.lec;
+  lab.value = subject.lab;
+  units.value = subject.units;
+  resultant.value = subject.resultant
+  updateSubjDialog.value = true;
+}
+
+
+// Update subject
+async function updateSubject() {
+  let payload = {
+    subj_code: subjCode.value,
+    subj_title: subjTitle.value,
+    year_level: yearLevel.value,
+    semester: semester.value,
+    lec: lec.value,
+    lab: lab.value,
+    units: units.value,
+    resultant: resultant.value,
+  };
+
+  console.log("Update Subject: ", payload);
+}
+
+// Show delete dialog box
+async function showDeleteSubjectDialog(subject) {
+  console.log("Delete selected subj", subject)
+  curriDocumentId.value = subject.documentId;
+  //curriculaYear.value = curriculum.year;
+  subjCode.value = subject.code;
+  deleteSubjDialog.value = true;
+}
+
+// Delete Subject
+async function deleteSubject() {
+  console.log("Deleted Successfully")
+  deleteSubjDialog.value = true;
+}
+
+
 onMounted(() => {
   initialize();
   getCurriculumList();
 });
 
-watch([deleteCourseDialog, deleteCurriDialog, createCuriDialog, updateCuriDialog], async () => {
+watch([deleteCourseDialog, deleteCurriDialog, createCuriDialog, updateCuriDialog, updateSubjDialog], async () => {
   if (deleteCourseDialog.value == false) {
     //console.log("Delete dialog box closed");
     loading2.value = false;
   }
   if (deleteCurriDialog.value == false) {
+    //console.log("Delete curriculum dialog box closed")
     loading3.value = false
   }
 
   if (createCuriDialog.value == false) {
-    console.log("Create curriculum dialog box closed")
+    //console.log("Create curriculum dialog box closed")
     effectiveSY.value = "";
+  }
+
+  if (updateSubjDialog.value == false) {
+    //console.log("Update subject dialog box closed")
+    updateSubjForm.value?.reset()
   }
 })
 </script>

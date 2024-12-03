@@ -152,7 +152,11 @@ const rules = ref({
 
 async function initialize() {
   try {
-    let result = await $fetch("/api/course/getCourseList");
+    // let result = await $fetch("/api/course/getCourseList");
+    // if (result) {
+    //   courseList.value = result;
+    // }
+    let result = await $fetch(`/api/course/type/${userData.value.role_view}`);
     if (result) {
       courseList.value = result;
     }

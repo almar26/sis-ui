@@ -89,7 +89,7 @@
         </v-toolbar>
         <v-divider></v-divider>
         <v-card-text class="mx-5">
-          <v-form v-model="valid" ref="loginForm" lazy-validation>
+          <v-form v-model="valid" ref="createStudentForm" lazy-validation>
             <p class="text-button font-weight-bold text-green mb-4">
               PERSONAL INFORMATION
             </p>
@@ -323,6 +323,7 @@ const valid = ref(true);
 const loading = ref(true);
 const search = ref(null);
 const loginForm = ref(null);
+const createStudentForm = ref(null);
 const studentList = ref([]);
 const selectedBA = ref(false);
 
@@ -387,7 +388,7 @@ const rules = ref({
 });
 
 async function createStudent() {
-  const { valid, errors } = await loginForm.value?.validate();
+  const { valid, errors } = await createStudentForm.value?.validate();
   console.log("Selected: ", course.value);
 
   if (valid) {
@@ -418,7 +419,7 @@ async function createStudent() {
         toast.error(response.message);
       } else {
         dialog.value = false;
-        loginForm.value?.reset();
+        createStudentForm.value?.reset();
         toast.success("Successfully created!");
         initialize();
       }
@@ -464,14 +465,14 @@ async function getCoursesList() {
   }
 }
 
-watch([course, bday], async () => {
+watch([course, bday, dialog], async () => {
   //console.log("Courses", course.value);
   if (course.value?.code === "BSBA(MM)" || course.value?.code === "BSBA(FM)") {
     selectedBA.value = true;
     if (course.value?.code === "BSBA(MM)") {
-      major.value = "Marketing Management"
+      major.value = "MARKETING MANAGEMENT"
     } else if (course.value?.code === "BSBA(FM)") {
-      major.value = "Financial Management"
+      major.value = "FINANCIAL MANAGEMENT"
     }
   } else {
     selectedBA.value = false;
@@ -482,6 +483,12 @@ watch([course, bday], async () => {
     age.value = null;
   } else {
     age.value = getAge(bday.value);
+  }
+
+  if (dialog.value == false) {
+    console.log("Create student dialog box closed");
+    createStudentForm.value?.reset();
+    bday.value = null;
   }
 });
 

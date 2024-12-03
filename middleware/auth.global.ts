@@ -25,10 +25,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (token.value == null && user_info) {
     localStorage.removeItem("user-info");
     // console.log("Token doesnt exist")
-    console.log("Token doesnt exist but it has data");
+    //console.log("Token doesnt exist but it has data");
   }
   if (token.value && user_info === null) {
-    console.log("Token exist but no user info details");
+   // console.log("Token exist but no user info details");
     localStorage.removeItem("user-info");
     token.value = null;
     authenticated.value = false;
@@ -68,12 +68,12 @@ export default defineNuxtRouteMiddleware((to, from) => {
   // }
 
   if (token.value && user_info.user.role_view === "admin") {
-    console.log("Admin Account");
+    //console.log("Admin Account");
     if (token.value && to.path !== "/admin") {
       return navigateTo("/admin");
     }
   } else if (token.value && user_info.user.role_view === "ched" && user_info.user.role_view == 'tesda') {
-    console.log("Basic Account");
+    //console.log("Basic Account");
 
     if (
       to.meta.layout === "admin" ||

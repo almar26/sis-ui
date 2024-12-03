@@ -76,28 +76,28 @@
                         <v-text-field color="primary" variant="outlined" :model-value="studentDetails.course"
                           label="Course" readonly hide-details="auto"></v-text-field>
                       </v-col>
-                      <v-col cols="12" md="2">
+                      <v-col cols="12" md="4">
                         <v-text-field color="primary" variant="outlined" :model-value="studentDetails.major"
                           label="Major" readonly hide-details="auto"></v-text-field>
                       </v-col>
-                      <v-col cols="12" md="2">
+                      <!-- <v-col cols="12" md="2">
                         <v-text-field color="primary" variant="outlined" :model-value="studentDetails.section"
                           label="Section" readonly hide-details="auto"></v-text-field>
-                      </v-col>
+                      </v-col> -->
                     </v-row>
 
                     <v-row v-else><v-col cols="12" md="4">
                         <v-text-field label="Student No" color="primary" :model-value="studentDetails.student_no"
                           readonly variant="outlined" hide-details="auto"></v-text-field>
                       </v-col>
-                      <v-col cols="12" md="6">
+                      <v-col cols="12" md="8">
                         <v-text-field color="primary" variant="outlined" :model-value="studentDetails.course"
                           label="Course" readonly hide-details="auto"></v-text-field>
                       </v-col>
-                      <v-col cols="12" md="2">
+                      <!-- <v-col cols="12" md="2">
                         <v-text-field color="primary" variant="outlined" :model-value="studentDetails.section"
                           label="Section" readonly hide-details="auto"></v-text-field>
-                      </v-col>
+                      </v-col> -->
                     </v-row>
 
                     <v-row><v-col cols="12" md="4">
