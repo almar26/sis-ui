@@ -184,6 +184,7 @@
                   :rules="rules.lastname"
                   variant="outlined"
                   label="Last name*"
+                  @input="lastname = lastname.toUpperCase()"
                 ></v-text-field>
               </v-col>
 
@@ -195,6 +196,7 @@
                   v-model="firstname"
                   variant="outlined"
                   persistent-hint
+                  @input="firstname = firstname.toUpperCase()"
                   required
                 ></v-text-field>
               </v-col>
@@ -203,9 +205,9 @@
                   color="primary"
                   label="Middle name*"
                   v-model="middlename"
-                  :rules="rules.middlename"
                   variant="outlined"
                   persistent-hint
+                  @input="middlename = middlename.toUpperCase()"
                   required
                 ></v-text-field>
               </v-col>
@@ -219,6 +221,7 @@
                   rows="1"
                   variant="outlined"
                   :rules="rules.address"
+                  @input="address = address.toUpperCase()"
                   auto-grow
                 ></v-textarea>
               </v-col>

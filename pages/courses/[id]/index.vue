@@ -1,6 +1,9 @@
 <template>
   <div>
-    <BaseBreadcrumb :title="page.title" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
+    <BaseBreadcrumb
+      :title="page.title"
+      :breadcrumbs="breadcrumbs"
+    ></BaseBreadcrumb>
 
     <!-- {{ route.params.id }} -->
     <v-row v-if="isEmpty" dense>
@@ -15,7 +18,8 @@
             >Details</v-card-title
           > -->
               <v-toolbar color="transparent" density="comfortable">
-                <v-toolbar-title class="card-title text-body-1">Details
+                <v-toolbar-title class="card-title text-body-1"
+                  >Details
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <!-- <v-btn color="blue" icon="mdi-pencil" @click="updateCourseDialog = true" class="text-capitalize">
@@ -23,24 +27,44 @@
                 <v-btn color="red" icon="mdi-delete" @click="deleteCourseDialog = true" class="text-capitalize">
                 </v-btn> -->
 
-                <v-btn color="warning" icon size="small" variant="text" @click="updateCourseDialog = true"><v-icon
-                    size="large">mdi-pencil</v-icon> <v-tooltip activator="parent"
-                    location="top">Edit</v-tooltip></v-btn>
-                <v-btn color="red" icon size="small" variant="text" @click="deleteCourseDialog = true"><v-icon
-                    size="large">mdi-delete</v-icon><v-tooltip activator="parent"
-                    location="top">Delete</v-tooltip></v-btn>
+                <v-btn
+                  color="warning"
+                  icon
+                  size="small"
+                  variant="text"
+                  @click="updateCourseDialog = true"
+                  ><v-icon size="large">mdi-pencil</v-icon>
+                  <v-tooltip activator="parent" location="top"
+                    >Edit</v-tooltip
+                  ></v-btn
+                >
+                <v-btn
+                  color="red"
+                  icon
+                  size="small"
+                  variant="text"
+                  @click="deleteCourseDialog = true"
+                  ><v-icon size="large">mdi-delete</v-icon
+                  ><v-tooltip activator="parent" location="top"
+                    >Delete</v-tooltip
+                  ></v-btn
+                >
               </v-toolbar>
               <v-divider></v-divider>
               <v-list density="compact">
                 <v-list-item>
-                  <v-list-item-subtitle class="title">Code</v-list-item-subtitle>
+                  <v-list-item-subtitle class="title"
+                    >Code</v-list-item-subtitle
+                  >
                   <v-list-item-title class="desc">{{
                     courseDetails.code
                   }}</v-list-item-title>
                 </v-list-item>
 
                 <v-list-item>
-                  <v-list-item-subtitle class="title">Description</v-list-item-subtitle>
+                  <v-list-item-subtitle class="title"
+                    >Description</v-list-item-subtitle
+                  >
                   <v-list-item-title class="desc">{{
                     courseDetails.description
                   }}</v-list-item-title>
@@ -48,7 +72,9 @@
 
                 <div v-if="courseDetails.major != ''">
                   <v-list-item>
-                    <v-list-item-subtitle class="title">Major</v-list-item-subtitle>
+                    <v-list-item-subtitle class="title"
+                      >Major</v-list-item-subtitle
+                    >
                     <v-list-item-title class="desc">{{
                       courseDetails.major
                     }}</v-list-item-title>
@@ -56,8 +82,12 @@
                 </div>
 
                 <v-list-item>
-                  <v-list-item-subtitle class="title">Year</v-list-item-subtitle>
-                  <v-list-item-title class="desc">{{ courseDetails.year }} Year</v-list-item-title>
+                  <v-list-item-subtitle class="title"
+                    >Year</v-list-item-subtitle
+                  >
+                  <v-list-item-title class="desc"
+                    >{{ courseDetails.year }} Year</v-list-item-title
+                  >
                 </v-list-item>
 
                 <!-- <v-list-item>
@@ -85,16 +115,23 @@
           <v-col cols="12">
             <v-card variant="flat" class="pb-3">
               <v-toolbar color="transparent" density="comfortable" class="pr-3">
-                <v-toolbar-title class="card-title text-body-1">Curriculum</v-toolbar-title>
+                <v-toolbar-title class="card-title text-body-1"
+                  >Curriculum</v-toolbar-title
+                >
                 <v-spacer></v-spacer>
-                <v-btn variant="flat" density="compact" color="primary" icon class="text-capitalize"
-                  @click="createCuriDialog = true">
+                <v-btn
+                  variant="flat"
+                  density="compact"
+                  color="primary"
+                  icon
+                  class="text-capitalize"
+                  @click="createCuriDialog = true"
+                >
                   <v-icon>mdi-plus</v-icon>
-                  <v-tooltip activator="parent" location="top">Add
-                    Curriculum</v-tooltip>
+                  <v-tooltip activator="parent" location="top"
+                    >Add Curriculum</v-tooltip
+                  >
                 </v-btn>
-
-
               </v-toolbar>
               <v-divider></v-divider>
 
@@ -107,7 +144,9 @@
                     <v-list-item-title class="desc">{{
                       item.year
                     }}</v-list-item-title>
-                    <v-list-item-subtitle class="title">Effective Date</v-list-item-subtitle>
+                    <v-list-item-subtitle class="title"
+                      >Effective Date</v-list-item-subtitle
+                    >
                     <!-- <v-list-item-subtitle class="title">{{
                       $relative(item.createdAt)
                     }}</v-list-item-subtitle> -->
@@ -127,13 +166,28 @@
 
 </v-list>
 </v-menu> -->
-                      <v-btn color="warning" icon size="x-small" variant="text"
-                        @click="showUpdateCuriDialog(item)"><v-icon size="large">mdi-pencil</v-icon> <v-tooltip
-                          activator="parent" location="top">Edit</v-tooltip></v-btn>
-                      <v-btn color="red" icon size="x-small" variant="text" @click="showDeleteCuriDialog(item)"><v-icon
-                          size="large">mdi-delete</v-icon> <v-tooltip activator="parent"
-                          location="top">Delete</v-tooltip></v-btn>
-
+                      <v-btn
+                        color="warning"
+                        icon
+                        size="x-small"
+                        variant="text"
+                        @click="showUpdateCuriDialog(item)"
+                        ><v-icon size="large">mdi-pencil</v-icon>
+                        <v-tooltip activator="parent" location="top"
+                          >Edit</v-tooltip
+                        ></v-btn
+                      >
+                      <v-btn
+                        color="red"
+                        icon
+                        size="x-small"
+                        variant="text"
+                        @click="showDeleteCuriDialog(item)"
+                        ><v-icon size="large">mdi-delete</v-icon>
+                        <v-tooltip activator="parent" location="top"
+                          >Delete</v-tooltip
+                        ></v-btn
+                      >
                     </template>
                   </v-list-item>
                   <!-- <v-card elevation="0" link class="mb-3">
@@ -160,17 +214,28 @@
       <v-col cols="12" md="9">
         <v-card variant="flat" v-if="isSelectedCurri">
           <v-toolbar color="transparent" class="pr-3" density="comfortable">
-            <v-toolbar-title class="card-title text-body-1">Effective School Year: {{ curriculaYear }}</v-toolbar-title>
+            <v-toolbar-title class="card-title text-body-1"
+              >Effective School Year: {{ curriculaYear }}</v-toolbar-title
+            >
             <v-spacer></v-spacer>
-            <v-btn variant="flat" color="primary" class="text-capitalize px-4" @click="addSubjDialog = true">
-              <v-icon start>mdi-plus</v-icon>Subject</v-btn>
+            <v-btn
+              variant="flat"
+              color="primary"
+              class="text-capitalize px-4"
+              @click="addSubjDialog = true"
+            >
+              <v-icon start>mdi-plus</v-icon>Subject</v-btn
+            >
           </v-toolbar>
           <v-divider></v-divider>
           <v-card-text>
-            <v-data-table density="compact" :items="subjectList" :headers="headers" :loading="loading">
+            <v-data-table
+              density="compact"
+              :items="subjectList"
+              :headers="headers"
+              :loading="loading"
+            >
               <template v-slot:[`item.actions`]="{ item }">
-
-
                 <!-- <v-menu>
                   <template v-slot:activator="{ props }">
                     <v-btn icon="mdi-dots-vertical" variant="text" v-bind="props"></v-btn>
@@ -194,27 +259,34 @@
                     size="large">mdi-delete</v-icon> <v-tooltip activator="parent"
                     location="top">Delete</v-tooltip></v-btn> -->
 
-
                 <v-tooltip text="Edit" location="top">
                   <template v-slot:activator="{ props }">
-                    <v-btn size="medium" variant="text" v-bind="props" @click="showUpdateSubjecyDialog(item)"
-                      icon="mdi-pencil" color="green">
+                    <v-btn
+                      size="medium"
+                      variant="text"
+                      v-bind="props"
+                      @click="showUpdateSubjecyDialog(item)"
+                      icon="mdi-pencil"
+                      color="green"
+                    >
                     </v-btn>
                   </template>
                 </v-tooltip>
                 <v-tooltip text="Delete" location="top">
                   <template v-slot:activator="{ props }">
-                    <v-btn size="medium" icon="mdi-delete" v-bind="props" @click="showDeleteSubjectDialog(item)"
-                      variant="text" color="red"></v-btn>
+                    <v-btn
+                      size="medium"
+                      icon="mdi-delete"
+                      v-bind="props"
+                      @click="showDeleteSubjectDialog(item)"
+                      variant="text"
+                      color="red"
+                    ></v-btn>
                   </template>
                 </v-tooltip>
 
-
-
                 <!-- <v-btn icon="mdi-dots-vertical" variant="text" v-bind="props"></v-btn> -->
-
               </template>
-
             </v-data-table>
           </v-card-text>
         </v-card>
@@ -243,17 +315,30 @@
             <v-row dense>
               <v-col cols="12">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
-                <v-text-field label="Effective School Year*" v-model="effectiveSY" variant="outlined"
-                  :rules="rules.effectiveSY" required></v-text-field>
+                <v-text-field
+                  label="Effective School Year*"
+                  v-model="effectiveSY"
+                  variant="outlined"
+                  :rules="rules.effectiveSY"
+                  required
+                ></v-text-field>
               </v-col>
             </v-row>
 
-            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+            <small class="text-caption text-medium-emphasis"
+              >*indicates required field</small
+            >
           </v-form>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="mx-5 my-2">
-          <v-btn block color="green" text="Save" variant="flat" @click="addCurriculum()"></v-btn>
+          <v-btn
+            block
+            color="green"
+            text="Save"
+            variant="flat"
+            @click="addCurriculum()"
+          ></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -276,17 +361,30 @@
             <v-row dense>
               <v-col cols="12">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
-                <v-text-field label="Effective School Year*" v-model="updateEffectiveSY" variant="outlined"
-                  :rules="rules.effectiveSY" required></v-text-field>
+                <v-text-field
+                  label="Effective School Year*"
+                  v-model="updateEffectiveSY"
+                  variant="outlined"
+                  :rules="rules.effectiveSY"
+                  required
+                ></v-text-field>
               </v-col>
             </v-row>
 
-            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+            <small class="text-caption text-medium-emphasis"
+              >*indicates required field</small
+            >
           </v-form>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="mx-5 my-2">
-          <v-btn block color="green" text="Update" variant="flat" @click="updateCurriculum()"></v-btn>
+          <v-btn
+            block
+            color="green"
+            text="Update"
+            variant="flat"
+            @click="updateCurriculum()"
+          ></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -309,19 +407,38 @@
             <v-row dense>
               <v-col cols="12">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
-                <v-text-field label="Subject Code*" v-model="subjCode" variant="outlined" :rules="rules.subjCode"
-                  required></v-text-field>
+                <v-text-field
+                  label="Subject Code*"
+                  v-model="subjCode"
+                  variant="outlined"
+                  :rules="rules.subjCode"
+                  @input="subjCode = subjCode.toUpperCase()"
+                  required
+                ></v-text-field>
               </v-col>
 
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Subject Title*" v-model="subjTitle" variant="outlined" :rules="rules.subjTitle"
-                  required></v-text-field>
+                <!-- <v-text-field
+                  label="Subject Title*"
+                  v-model="subjTitle"
+                  variant="outlined"
+                  :rules="rules.subjTitle"
+                  required
+                ></v-text-field> -->
+                <v-textarea v-model="subjTitle"  label="Subject Title*" rows="1" variant="outlined" @input="subjTitle = subjTitle.toUpperCase()" :rules="rules.subjTitle"
+                  auto-grow></v-textarea>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Year Level*" v-model="yearLevel" variant="outlined" :rules="rules.yearLevel"
-                  required></v-text-field>
+                <v-text-field
+                  label="Year Level*"
+                  v-model="yearLevel"
+                  variant="outlined"
+                  :rules="rules.yearLevel"
+                  type="number"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
@@ -332,36 +449,73 @@
                   :rules="rules.semester"
                   required
                 ></v-text-field> -->
-                <v-select variant="outlined" label="Semester" v-model="semester" :rules="rules.semester"
-                  :items="['1st Semester', '2nd Semester', 'Summer']"></v-select>
+                <v-select
+                  variant="outlined"
+                  label="Semester"
+                  v-model="semester"
+                  :rules="rules.semester"
+                  :items="['1st Semester', '2nd Semester', 'Summer']"
+                ></v-select>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Lec*" v-model="lec" variant="outlined" :rules="rules.lec" type="number"
-                  required></v-text-field>
+                <v-text-field
+                  label="Lec*"
+                  v-model="lec"
+                  variant="outlined"
+                  :rules="rules.lec"
+                  type="number"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Lab*" v-model="lab" variant="outlined" :rules="rules.lab" type="number"
-                  required></v-text-field>
+                <v-text-field
+                  label="Lab*"
+                  v-model="lab"
+                  variant="outlined"
+                  :rules="rules.lab"
+                  type="number"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Units*" v-model="units" variant="outlined" :rules="rules.units" type="number"
-                  required></v-text-field>
+                <v-text-field
+                  label="Units*"
+                  v-model="units"
+                  variant="outlined"
+                  :rules="rules.units"
+                  type="number"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Resultant" v-model="resultant" variant="outlined" required></v-text-field>
+                <v-text-field
+                  label="Resultant"
+                  v-model="resultant"
+                  @input="resultant = resultant.toUpperCase()"
+                  variant="outlined"
+                  required
+                ></v-text-field>
               </v-col>
             </v-row>
 
-            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+            <small class="text-caption text-medium-emphasis"
+              >*indicates required field</small
+            >
           </v-form>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="mx-5 my-2">
-          <v-btn block color="green" text="Save" variant="flat" @click="addSubject()"></v-btn>
+          <v-btn
+            block
+            color="green"
+            text="Save"
+            variant="flat"
+            @click="addSubject()"
+          ></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -384,19 +538,38 @@
             <v-row dense>
               <v-col cols="12">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
-                <v-text-field label="Subject Code*" v-model="subjCode" variant="outlined" :rules="rules.subjCode"
-                  required></v-text-field>
+                <v-text-field
+                  label="Subject Code*"
+                  v-model="subjCode"
+                  variant="outlined"
+                  :rules="rules.subjCode"
+                  @input="subjCode = subjCode.toUpperCase()"
+                  required
+                ></v-text-field>
               </v-col>
 
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Subject Title*" v-model="subjTitle" variant="outlined" :rules="rules.subjTitle"
-                  required></v-text-field>
+                <!-- <v-text-field
+                  label="Subject Title*"
+                  v-model="subjTitle"
+                  variant="outlined"
+                  :rules="rules.subjTitle"
+                  required
+                ></v-text-field> -->
+                <v-textarea v-model="subjTitle"  label="Subject Title*" @input="subjTitle = subjTitle.toUpperCase()" rows="1" variant="outlined" :rules="rules.subjTitle"
+                  auto-grow></v-textarea>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Year Level*" v-model="yearLevel" variant="outlined" :rules="rules.yearLevel"
-                  required></v-text-field>
+                <v-text-field
+                  label="Year Level*"
+                  v-model="yearLevel"
+                  variant="outlined"
+                  :rules="rules.yearLevel"
+                  type="number"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
@@ -407,42 +580,84 @@
                   :rules="rules.semester"
                   required
                 ></v-text-field> -->
-                <v-select variant="outlined" label="Semester" v-model="semester" :rules="rules.semester"
-                  :items="['1st Semester', '2nd Semester', 'Summer']"></v-select>
+                <v-select
+                  variant="outlined"
+                  label="Semester"
+                  v-model="semester"
+                  :rules="rules.semester"
+                  :items="['1st Semester', '2nd Semester', 'Summer']"
+                ></v-select>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Lec*" v-model="lec" variant="outlined" :rules="rules.lec" type="number"
-                  required></v-text-field>
+                <v-text-field
+                  label="Lec*"
+                  v-model="lec"
+                  variant="outlined"
+                  :rules="rules.lec"
+                  type="number"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Lab*" v-model="lab" variant="outlined" :rules="rules.lab" type="number"
-                  required></v-text-field>
+                <v-text-field
+                  label="Lab*"
+                  v-model="lab"
+                  variant="outlined"
+                  :rules="rules.lab"
+                  type="number"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Units*" v-model="units" variant="outlined" :rules="rules.units" type="number"
-                  required></v-text-field>
+                <v-text-field
+                  label="Units*"
+                  v-model="units"
+                  variant="outlined"
+                  :rules="rules.units"
+                  type="number"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Resultant" v-model="resultant" variant="outlined" required></v-text-field>
+                <v-text-field
+                  label="Resultant"
+                  v-model="resultant"
+                  @input="resultant = resultant.toUpperCase()"
+                  variant="outlined"
+                  required
+                ></v-text-field>
               </v-col>
             </v-row>
 
-            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+            <small class="text-caption text-medium-emphasis"
+              >*indicates required field</small
+            >
           </v-form>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="mx-5 my-2">
-          <v-btn block color="green" text="Update" variant="flat" @click="updateSubject()"></v-btn>
+          <v-btn
+            block
+            color="green"
+            text="Update"
+            variant="flat"
+            @click="updateSubject()"
+          ></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <!-- Update Course Dialog box -->
-    <v-dialog max-width="500" v-model="updateCourseDialog" scrollable persistent>
+    <v-dialog
+      max-width="500"
+      v-model="updateCourseDialog"
+      scrollable
+      persistent
+    >
       <v-card>
         <!-- <v-card-title><v-icon>mdi-book</v-icon> Add Course <v-spacer></v-spacer> <v-icon>mdi-close</v-icon></v-card-title> -->
         <v-toolbar>
@@ -459,85 +674,176 @@
             <v-row dense>
               <v-col cols="12">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
-                <v-text-field label="Course Code*" v-model="courseCode" variant="outlined"
-                  :rules="courseRules.courseCode" required></v-text-field>
+                <v-text-field
+                  label="Course Code*"
+                  v-model="courseCode"
+                  variant="outlined"
+                  :rules="courseRules.courseCode"
+                  @input="courseCode = courseCode.toUpperCase()"
+                  required
+                ></v-text-field>
               </v-col>
 
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Course Description*" v-model="courseDesc" variant="outlined"
-                  :rules="courseRules.courseDesc" required></v-text-field>
+                <v-text-field
+                  label="Course Description*"
+                  v-model="courseDesc"
+                  variant="outlined"
+                  :rules="courseRules.courseDesc"
+                  @input="courseDesc = courseDesc.toUpperCase()"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Major" v-model="major" variant="outlined" required></v-text-field>
+                <v-text-field
+                  label="Major"
+                  v-model="major"
+                  variant="outlined"
+                  @input="major = major.toUpperCase()"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Year" v-model="year" variant="outlined" :rules="courseRules.year" type="number"
-                  required></v-text-field>
+                <v-text-field
+                  label="Year"
+                  v-model="year"
+                  variant="outlined"
+                  :rules="courseRules.year"
+                  type="number"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col>
-                <v-select color="primary" v-model="course_type" :items="['ched', 'tesda']" variant="outlined"
-                  :rules="courseRules.courseType" label="Course Type*" required></v-select>
+                <v-select
+                  color="primary"
+                  v-model="course_type"
+                  :items="['ched', 'tesda']"
+                  variant="outlined"
+                  :rules="courseRules.courseType"
+                  label="Course Type*"
+                  required
+                ></v-select>
               </v-col>
             </v-row>
 
-            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+            <small class="text-caption text-medium-emphasis"
+              >*indicates required field</small
+            >
           </v-form>
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions class="mx-5 my-2">
-          <v-btn block color="green" text="Update" variant="flat" @click="updateCourse()"></v-btn>
+          <v-btn
+            block
+            color="green"
+            text="Update"
+            variant="flat"
+            @click="updateCourse()"
+          ></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <!-- Delete Course Dialog -->
     <v-dialog v-model="deleteCourseDialog" width="auto">
-      <v-card class="text-body-2" color="#263238" max-width="400" prepend-icon="mdi-delete"
-        text="Are you sure you want to delete this course?" title="Delete Course">
+      <v-card
+        class="text-body-2"
+        color="#263238"
+        max-width="400"
+        prepend-icon="mdi-delete"
+        text="Are you sure you want to delete this course?"
+        title="Delete Course"
+      >
         <template v-slot:actions>
           <v-spacer></v-spacer>
-          <v-btn class="text-none" :loading="loading2" text="Delete" prepend-icon="mdi-delete" color="red"
-            variant="tonal" @click="deleteCourse()"></v-btn>
-          <v-btn class="text-none" text="Cancel" prepend-icon="mdi-close" variant="tonal"
-            @click="deleteCourseDialog = false"></v-btn>
+          <v-btn
+            class="text-none"
+            :loading="loading2"
+            text="Delete"
+            prepend-icon="mdi-delete"
+            color="red"
+            variant="tonal"
+            @click="deleteCourse()"
+          ></v-btn>
+          <v-btn
+            class="text-none"
+            text="Cancel"
+            prepend-icon="mdi-close"
+            variant="tonal"
+            @click="deleteCourseDialog = false"
+          ></v-btn>
         </template>
       </v-card>
     </v-dialog>
 
     <!-- Delete Curriculum Dialog -->
     <v-dialog v-model="deleteCurriDialog" width="auto">
-      <v-card class="text-body-2" color="#263238" max-width="400" prepend-icon="mdi-delete"
-        text="Are you sure you want to delete this curriculum?" :title="`Delete Curriculum ${updateEffectiveSY}`">
+      <v-card
+        class="text-body-2"
+        color="#263238"
+        max-width="400"
+        prepend-icon="mdi-delete"
+        text="Are you sure you want to delete this curriculum?"
+        :title="`Delete Curriculum ${updateEffectiveSY}`"
+      >
         <template v-slot:actions>
           <v-spacer></v-spacer>
-          <v-btn class="text-none" :loading="loading3" text="Delete" prepend-icon="mdi-delete" color="red"
-            variant="tonal" @click="deleteCurriculum()"></v-btn>
-          <v-btn class="text-none" text="Cancel" prepend-icon="mdi-close" variant="tonal"
-            @click="deleteCurriDialog = false"></v-btn>
+          <v-btn
+            class="text-none"
+            :loading="loading3"
+            text="Delete"
+            prepend-icon="mdi-delete"
+            color="red"
+            variant="tonal"
+            @click="deleteCurriculum()"
+          ></v-btn>
+          <v-btn
+            class="text-none"
+            text="Cancel"
+            prepend-icon="mdi-close"
+            variant="tonal"
+            @click="deleteCurriDialog = false"
+          ></v-btn>
         </template>
       </v-card>
     </v-dialog>
 
     <!-- Delete Subject Dialog -->
     <v-dialog v-model="deleteSubjDialog" width="auto">
-      <v-card class="text-body-2" color="#263238" max-width="400" prepend-icon="mdi-delete"
-        text="Are you sure you want to delete this subject?" :title="`Delete Subject ${subjCode}`">
+      <v-card
+        class="text-body-2"
+        color="#263238"
+        max-width="400"
+        prepend-icon="mdi-delete"
+        text="Are you sure you want to delete this subject?"
+        :title="`Delete Subject ${subjCode}`"
+      >
         <template v-slot:actions>
           <v-spacer></v-spacer>
-          <v-btn class="text-none" :loading="loading3" text="Delete" prepend-icon="mdi-delete" color="red"
-            variant="tonal" @click="deleteSubject()"></v-btn>
-          <v-btn class="text-none" text="Cancel" prepend-icon="mdi-close" variant="tonal"
-            @click="deleteSubjDialog = false"></v-btn>
+          <v-btn
+            class="text-none"
+            :loading="loading4"
+            text="Delete"
+            prepend-icon="mdi-delete"
+            color="red"
+            variant="tonal"
+            @click="deleteSubject()"
+          ></v-btn>
+          <v-btn
+            class="text-none"
+            text="Cancel"
+            prepend-icon="mdi-close"
+            variant="tonal"
+            @click="deleteSubjDialog = false"
+          ></v-btn>
         </template>
       </v-card>
     </v-dialog>
-
-
   </div>
 </template>
 
@@ -549,6 +855,7 @@ const route = useRoute();
 const loading = ref(false);
 const loading2 = ref(false);
 const loading3 = ref(false);
+const loading4 = ref(false);
 const isEmpty = ref(false);
 const courseDetails = ref({});
 const curriculumList = ref([]);
@@ -574,6 +881,7 @@ const curriDocumentId = ref("");
 // Create Subject Variables
 const createSubjForm = ref(null);
 const valid = ref(true);
+const curriID = ref("");
 const subjCode = ref("");
 const subjTitle = ref("");
 const yearLevel = ref("");
@@ -586,12 +894,14 @@ const subjectList = ref([]);
 
 // Update Subject Variables
 const updateSubjForm = ref(null);
+const subjID = ref("");
+const subjCodeDuplicate = ref("");
 
 // Update Course
-const updateCourseForm = ref(null)
+const updateCourseForm = ref(null);
 const courseCode = ref("");
 const courseDesc = ref("");
-const courseCodeDuplicate = ref("")
+const courseCodeDuplicate = ref("");
 const major = ref("");
 const year = ref(0);
 const course_type = ref("");
@@ -645,14 +955,13 @@ const courseRules = ref({
   courseCode: [(v) => !!v || "Course code is required"],
   courseDesc: [(v) => !!v || "Course description is required"],
   year: [(v) => !!v || "Year is required"],
-  courseType: [(v) => !!v || "Course type is required"]
+  courseType: [(v) => !!v || "Course type is required"],
 });
 
 const itemsCurri = ref([
   { id: 1, text: "2020-2021", createdAt: "10-01-2021", icon: "mdi-account" },
   { id: 2, text: "2023-2024", createdAt: "10-01-2023" },
 ]);
-
 
 // Get course details
 async function initialize() {
@@ -697,23 +1006,22 @@ async function updateCourse() {
       course_desc: courseDesc.value,
       major: major.value,
       year: year.value,
-      course_type: course_type.value
+      course_type: course_type.value,
     };
     console.log("Update Course", payload);
     await $fetch(`/api/course/update/${route.params.id}`, {
       method: "PUT",
-      body: payload
-    })
-      .then(response => {
-        console.log("Updat Response: ", response);
-        if (response.status == 'fail') {
-          toast.error(response.message);
-        } else {
-          updateCourseDialog.value = false;
-          toast.success(`Course ${courseCode.value} updated!`)
-          initialize();
-        }
-      })
+      body: payload,
+    }).then((response) => {
+      console.log("Updat Response: ", response);
+      if (response.status == "fail") {
+        toast.error(response.message);
+      } else {
+        updateCourseDialog.value = false;
+        toast.success(`Course ${courseCode.value} updated!`);
+        initialize();
+      }
+    });
   } else {
     console.log(errors[0].errorMessages[0]);
   }
@@ -769,9 +1077,9 @@ async function addCurriculum(ctx) {
     await $fetch(`/api/curriculum/createCurriculum`, {
       method: "POST",
       body: payload,
-    }).then(response => {
-      console.log("response: ", response)
-      if (response.status == 'fail') {
+    }).then((response) => {
+      console.log("response: ", response);
+      if (response.status == "fail") {
         toast.error(response.message);
       } else {
         createCuriDialog.value = false;
@@ -779,8 +1087,7 @@ async function addCurriculum(ctx) {
         getCurriculumList();
         toast.success("Curriculum successfully created!");
       }
-    })
-
+    });
   } else {
     console.log(errors[0].errorMessages[0]);
   }
@@ -794,41 +1101,38 @@ async function selectedCurricula(curriculum) {
   curriculaYear.value = curriculum.year;
 }
 
-
 // Show update curriculum dialog box
 async function showUpdateCuriDialog(curriculum) {
-  console.log("Update selected curri", curriculum)
+  console.log("Update selected curri", curriculum);
   curriDocumentId.value = curriculum.documentId;
   //curriculaYear.value = curriculum.year;
   updateEffectiveSY.value = curriculum.year;
   updateCuriDialog.value = true;
 }
 
-
 // Update Curriculum
 async function updateCurriculum() {
   console.log("Successfully updated curriculum");
-  console.log("ID: ", curriDocumentId.value)
-  console.log("Effective School Year: ", updateEffectiveSY.value)
+  console.log("ID: ", curriDocumentId.value);
+  console.log("Effective School Year: ", updateEffectiveSY.value);
   const { valid, errors } = await updateCurriForm.value?.validate();
   if (valid) {
     let payload = {
       effective_sy: updateEffectiveSY.value,
-      course_id: route.params.id
+      course_id: route.params.id,
     };
     await $fetch(`/api/curriculum/update/${curriDocumentId.value}`, {
       method: "PUT",
       body: payload,
-    })
-      .then(response => {
-        if (response.status == "fail") {
-          toast.error(response.message);
-        } else {
-          updateCuriDialog.value = false;
-          toast.success("Successfully updated!")
-          getCurriculumList();
-        }
-      })
+    }).then((response) => {
+      if (response.status == "fail") {
+        toast.error(response.message);
+      } else {
+        updateCuriDialog.value = false;
+        toast.success("Successfully updated!");
+        getCurriculumList();
+      }
+    });
   } else {
     console.log(errors[0].errorMessages[0]);
   }
@@ -836,7 +1140,7 @@ async function updateCurriculum() {
 
 // Show delete curriculum dialog box
 async function showDeleteCuriDialog(curriculum) {
-  console.log("Delete selected curri", curriculum)
+  console.log("Delete selected curri", curriculum);
   curriDocumentId.value = curriculum.documentId;
   //curriculaYear.value = curriculum.year;
   updateEffectiveSY.value = curriculum.year;
@@ -847,7 +1151,9 @@ async function showDeleteCuriDialog(curriculum) {
 async function deleteCurriculum() {
   try {
     loading3.value = true;
-    let result = await $fetch(`/api/curriculum/delete/${curriDocumentId.value}`)
+    let result = await $fetch(
+      `/api/curriculum/delete/${curriDocumentId.value}`
+    );
     if (result) {
       loading3.value = false;
       deleteCurriDialog.value = false;
@@ -861,7 +1167,6 @@ async function deleteCurriculum() {
     throw err;
   }
 }
-
 
 // Get list of subject by curriculum id
 async function getCuriSubject(curriculumId) {
@@ -899,15 +1204,15 @@ async function addSubject() {
       units: units.value,
       resultant: resultant.value,
       course_code: courseDetails.value.code,
-      course_id: route.params.id
+      course_id: route.params.id,
     };
     console.log("Subject: ", payload);
     await $fetch(`/api/subject/createSubject`, {
       method: "POST",
       body: payload,
-    }).then(response => {
-      console.log("response: ", response.status)
-      if (response.status == 'fail') {
+    }).then((response) => {
+      console.log("response: ", response.status);
+      if (response.status == "fail") {
         toast.error(response.message);
       } else {
         addSubjDialog.value = false;
@@ -916,9 +1221,7 @@ async function addSubject() {
         getCuriSubject(payload.curri_id);
         toast.success("Subject successfully created!");
       }
-
-    })
-
+    });
   } else {
     console.log(errors[0].errorMessages[0]);
   }
@@ -926,39 +1229,61 @@ async function addSubject() {
 
 // Show update subject dialog box
 async function showUpdateSubjecyDialog(subject) {
-  //console.log("Update selected Subject", subject)
+  console.log("Update selected Subject", subject);
+  curriID.value = subject.curriculum_id;
+  subjID.value = subject.documentId
   subjCode.value = subject.code;
+  subjCodeDuplicate.value = subject.code;
   subjTitle.value = subject.title;
   yearLevel.value = subject.year_level;
   semester.value = subject.semester;
   lec.value = subject.lec;
   lab.value = subject.lab;
   units.value = subject.units;
-  resultant.value = subject.resultant
+  resultant.value = subject.resultant;
   updateSubjDialog.value = true;
 }
 
-
 // Update subject
 async function updateSubject() {
-  let payload = {
-    subj_code: subjCode.value,
-    subj_title: subjTitle.value,
-    year_level: yearLevel.value,
-    semester: semester.value,
-    lec: lec.value,
-    lab: lab.value,
-    units: units.value,
-    resultant: resultant.value,
-  };
-
-  console.log("Update Subject: ", payload);
+  const { valid, errors } = await updateSubjForm.value?.validate();
+  if (valid) {
+    let payload = {
+      curri_id: curriID.value,
+      subj_code: subjCode.value,
+      subj_code_duplicate: subjCodeDuplicate.value,
+      subj_title: subjTitle.value,
+      year_level: yearLevel.value,
+      semester: semester.value,
+      lec: lec.value,
+      lab: lab.value,
+      units: units.value,
+      resultant: resultant.value,
+    };
+    console.log("Update Subject: ", payload);
+    await $fetch(`/api/subject/update/${subjID.value}`, {
+      method: 'PUT',
+      body: payload
+    }).then(response => {
+      console.log("Update Response: ", response);
+      if (response.status == "fail") {
+        toast.error(response.message);
+      } else {
+        updateSubjDialog.value = false;
+        getCuriSubject(payload.curri_id);
+        toast.success(`Subject ${subjCode.value} successfully updated`);
+      }
+    })
+  } else {
+    console.log(errors[0].errorMessages[0]);
+  }
 }
 
 // Show delete dialog box
 async function showDeleteSubjectDialog(subject) {
-  console.log("Delete selected subj", subject)
-  curriDocumentId.value = subject.documentId;
+  console.log("Delete selected subj", subject);
+  subjID.value = subject.documentId;
+  curriID.value = subject.curriculum_id;
   //curriculaYear.value = curriculum.year;
   subjCode.value = subject.code;
   deleteSubjDialog.value = true;
@@ -966,57 +1291,91 @@ async function showDeleteSubjectDialog(subject) {
 
 // Delete Subject
 async function deleteSubject() {
-  console.log("Deleted Successfully")
-  deleteSubjDialog.value = true;
+  // console.log("Deleted Successfully");
+  // loading4.value = true;
+  // deleteSubjDialog.value = true;
+  // setTimeout(() => {
+  //   loading4.value = false;
+  // }, 3000)
+  try {
+    loading4.value = true;
+    let result = await $fetch(`/api/subject/delete/${subjID.value}`);
+    if (result) {
+      loading4.value = false;
+      deleteSubjDialog.value = false;
+      toast.success(`Subject ${subjCode.value} deleted successfully!`);
+      getCuriSubject(curriID.value);
+    }
+  } catch (err) {
+    loading4.value = false;
+    console.error("Failed to fetch data: ", err);
+    throw err;
+  }
 }
-
 
 onMounted(() => {
   initialize();
   getCurriculumList();
 });
 
-watch([deleteCourseDialog, deleteCurriDialog, createCuriDialog, updateCuriDialog, updateSubjDialog], async () => {
-  if (deleteCourseDialog.value == false) {
-    //console.log("Delete dialog box closed");
-    loading2.value = false;
-  }
-  if (deleteCurriDialog.value == false) {
-    //console.log("Delete curriculum dialog box closed")
-    loading3.value = false
-  }
+watch(
+  [
+    deleteCourseDialog,
+    deleteCurriDialog,
+    createCuriDialog,
+    updateCuriDialog,
+    addSubjDialog,
+    updateSubjDialog,
+  ],
+  async () => {
+    if (deleteCourseDialog.value == false) {
+      //console.log("Delete dialog box closed");
+      loading2.value = false;
+    }
+    if (deleteCurriDialog.value == false) {
+      //console.log("Delete curriculum dialog box closed")
+      loading3.value = false;
+    }
 
-  if (createCuriDialog.value == false) {
-    //console.log("Create curriculum dialog box closed")
-    effectiveSY.value = "";
-  }
+    if (createCuriDialog.value == false) {
+      //console.log("Create curriculum dialog box closed")
+      effectiveSY.value = "";
+    }
 
-  if (updateSubjDialog.value == false) {
-    //console.log("Update subject dialog box closed")
-    updateSubjForm.value?.reset()
+    if (addSubjDialog.value == false) {
+      createSubjForm.value?.reset();
+      resultant.value = "None"
+    }
+
+    if (updateSubjDialog.value == false) {
+      //console.log("Update subject dialog box closed")
+      updateSubjForm.value?.reset();
+      resultant.value = "None"
+    }
   }
-})
+);
 </script>
 
 <style scoped>
-:deep() .v-table .v-table__wrapper>table>thead>tr>th {
+:deep() .v-table .v-table__wrapper > table > thead > tr > th {
   border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
-  border-bottom: thick solid rgba(var(--v-border-color), var(--v-border-opacity));
+  border-bottom: thick solid
+    rgba(var(--v-border-color), var(--v-border-opacity));
   font-weight: bold;
   /* background-color: #04aa6d;
   color: white; */
 }
 
-:deep() .v-table .v-table__wrapper>table>tbody>tr>td:not(:last-child),
-.v-table .v-table__wrapper>table>tbody>tr>th:not(:last-child) {
+:deep() .v-table .v-table__wrapper > table > tbody > tr > td:not(:last-child),
+.v-table .v-table__wrapper > table > tbody > tr > th:not(:last-child) {
   border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
 }
 
-:deep() .v-table .v-table__wrapper>table>tbody>tr:nth-child(even) {
+:deep() .v-table .v-table__wrapper > table > tbody > tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-:deep() .v-table .v-table__wrapper>table>tbody>tr:hover {
+:deep() .v-table .v-table__wrapper > table > tbody > tr:hover {
   background-color: #f2f2f2;
 }
 

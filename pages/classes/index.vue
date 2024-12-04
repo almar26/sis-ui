@@ -19,7 +19,7 @@
 <script setup>
 const route = useRoute();
 const page = ref({
-  title: "Teachers List",
+  title: "List of Classes",
 });
 const breadcrumbs = ref([
   {

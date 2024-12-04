@@ -11,7 +11,7 @@
             <!-- <v-icon icon="mdi-book"></v-icon> &nbsp; List of Courses -->
 
             <v-spacer></v-spacer>
-            <v-btn class="mb-3 text-capitalize" color="primary" @click="dialog = true" prepend-icon="mdi-plus">Create</v-btn>
+            <v-btn class="mb-3 text-capitalize" color="primary" @click="createCourseDialog = true" prepend-icon="mdi-plus">Create</v-btn>
            
           </v-card-title>
 
@@ -41,14 +41,14 @@
     </v-row>
 
     <!-- DIALOG BOX -->
-    <v-dialog max-width="500" v-model="dialog" scrollable persistent>
+    <v-dialog max-width="500" v-model="createCourseDialog" scrollable persistent>
       <v-card>
         <!-- <v-card-title><v-icon>mdi-book</v-icon> Add Course <v-spacer></v-spacer> <v-icon>mdi-close</v-icon></v-card-title> -->
         <v-toolbar>
           <v-icon class="ml-4">mdi-book</v-icon>
           <v-toolbar-title>Create New Course</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn icon @click="dialog = false">
+          <v-btn icon @click="createCourseDialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-toolbar>
@@ -58,18 +58,18 @@
             <v-row dense>
               <v-col cols="12">
                 <!-- <label class="label text-grey-darken-2" for="email">Course</label> -->
-                <v-text-field label="Course Code*" v-model="courseCode" variant="outlined" :rules="rules.courseCode"
+                <v-text-field label="Course Code*" v-model="courseCode" variant="outlined" @input="courseCode = courseCode.toUpperCase()" :rules="rules.courseCode"
                   required></v-text-field>
               </v-col>
 
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Course Description*" v-model="courseDesc" variant="outlined"
+                <v-text-field label="Course Description*" v-model="courseDesc" @input="courseDesc = courseDesc.toUpperCase()" variant="outlined"
                   :rules="rules.courseDesc" required></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
-                <v-text-field label="Major" v-model="major" variant="outlined" required></v-text-field>
+                <v-text-field label="Major" v-model="major" variant="outlined" @input="major = major.toUpperCase()" required></v-text-field>
               </v-col>
               <v-col cols="12">
                 <!-- <label class="label mb-4" for="email">Student No</label> -->
@@ -102,7 +102,7 @@ import { useMyAuthStore } from "~/stores/auth";
 import { useToast } from "vue-toastification";
 const { userInfo } = storeToRefs(useMyAuthStore());
 const userData = ref(userInfo?.value.user);
-const dialog = ref(false);
+const createCourseDialog = ref(false);
 const valid = ref(true);
 const loading = ref(false);
 const createCourseForm = ref(null);
@@ -186,7 +186,7 @@ async function createCourse() {
           toast.error(response.message);
         } else {
           initialize();
-          dialog.value = false;
+          createCourseDialog.value = false;
           createCourseForm.value?.reset();
           toast.success("Successfully created!");
           console.log("Created a Course!", payload);
@@ -197,6 +197,13 @@ async function createCourse() {
     console.log(errors[0].errorMessages[0]);
   }
 }
+
+watch(createCourseDialog, async () => {
+  if (createCourseDialog.value == false) {
+    //console.log("Create Coure dialog closed")
+    createCourseForm.value?.reset()
+  }
+})
 
 onMounted(() => {
   initialize();
