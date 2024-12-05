@@ -11,7 +11,7 @@
         
         <v-card elevation="0">
           <v-card-title class="d-flex align-center pe-2">
-            <v-btn class="mb-3 text-capitalize" color="primary" prepend-icon="mdi-plus" @click="dialog = true"
+            <v-btn class="mb-3 text-capitalize" color="primary" prepend-icon="mdi-plus" @click="openCreateDialog()"
           >Create</v-btn
         >
             <v-spacer></v-spacer>
@@ -203,7 +203,7 @@
               <v-col cols="12" md="4" sm="6">
                 <v-text-field
                   color="primary"
-                  label="Middle name*"
+                  label="Middle name"
                   v-model="middlename"
                   variant="outlined"
                   persistent-hint
@@ -220,7 +220,6 @@
                   label="Address"
                   rows="1"
                   variant="outlined"
-                  :rules="rules.address"
                   @input="address = address.toUpperCase()"
                   auto-grow
                 ></v-textarea>
@@ -233,8 +232,7 @@
                   v-model="gender"
                   :items="['MALE', 'FEMALE']"
                   variant="outlined"
-                  :rules="rules.gender"
-                  label="Gender*"
+                  label="Gender"
                   required
                 ></v-select>
 
@@ -283,6 +281,7 @@
             text="Save"
             variant="flat"
             width="140"
+            :loading="loadingCreateStudent"
             @click="createStudent()"
             prepend-icon="mdi-content-save"
           ></v-btn>
@@ -324,6 +323,7 @@ const toast = useToast();
 const dialog = ref(false);
 const valid = ref(true);
 const loading = ref(true);
+const loadingCreateStudent = ref(false);
 const search = ref(null);
 const loginForm = ref(null);
 const createStudentForm = ref(null);
@@ -390,10 +390,16 @@ const rules = ref({
   schoolyearend: [(v) => !!v || "School Year End is required"],
 });
 
+// Open Create Student Dialog box
+async function openCreateDialog() {
+dialog.value = true;
+getCoursesList()
+}
+
 async function createStudent() {
   const { valid, errors } = await createStudentForm.value?.validate();
   console.log("Selected: ", course.value);
-
+  loadingCreateStudent.value = true;
   if (valid) {
     const payload = {
       student_no: studentno.value,
@@ -419,9 +425,11 @@ async function createStudent() {
     }).then((response) => {
       console.log("Response: ", response);
       if (response.status == "fail") {
+        loadingCreateStudent.value = false;
         toast.error(response.message);
       } else {
-        dialog.value = false;
+        //dialog.value = false;
+        loadingCreateStudent.value = false;
         createStudentForm.value?.reset();
         toast.success("Successfully created!");
         initialize();
@@ -429,6 +437,7 @@ async function createStudent() {
     });
   } else {
     console.log(errors[0].errorMessages[0]);
+    loadingCreateStudent.value = false;
   }
 }
 
@@ -491,14 +500,14 @@ watch([course, bday, dialog], async () => {
   if (dialog.value == false) {
     console.log("Create student dialog box closed");
     createStudentForm.value?.reset();
+    loadingCreateStudent.value = false;
     bday.value = null;
   }
 });
 
 onMounted(async () => {
   await initialize();
-  getCoursesList();
-  //console.log("age: ", +getAge("1990/10/08"));
+    //console.log("age: ", +getAge("1990/10/08"));
 });
 </script>
 

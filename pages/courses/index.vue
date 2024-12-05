@@ -89,7 +89,7 @@
         <v-divider></v-divider>
 
         <v-card-actions class="mx-5 my-2">
-          <v-btn block color="green" text="Save" variant="flat" @click="createCourse()"></v-btn>
+          <v-btn block color="green" text="Save" variant="flat" :loading="loadingCreateCourse" @click="createCourse()"></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -105,6 +105,7 @@ const userData = ref(userInfo?.value.user);
 const createCourseDialog = ref(false);
 const valid = ref(true);
 const loading = ref(false);
+const loadingCreateCourse = ref(false);
 const createCourseForm = ref(null);
 const search = ref(null);
 const courseCode = ref("");
@@ -170,6 +171,7 @@ async function createCourse() {
   const { valid, errors } = await createCourseForm.value?.validate();
 
   if (valid) {
+    loadingCreateCourse.value = true;
     const payload = {
       course_code: courseCode.value,
       course_description: courseDesc.value,
@@ -184,9 +186,11 @@ async function createCourse() {
       .then(response => {
         if (response.status == 'fail') {
           toast.error(response.message);
+          loadingCreateCourse.value = false;
         } else {
           initialize();
           createCourseDialog.value = false;
+          loadingCreateCourse.value = false;
           createCourseForm.value?.reset();
           toast.success("Successfully created!");
           console.log("Created a Course!", payload);
@@ -194,6 +198,7 @@ async function createCourse() {
       })
 
   } else {
+    loadingCreateCourse.value = false;
     console.log(errors[0].errorMessages[0]);
   }
 }
@@ -201,6 +206,7 @@ async function createCourse() {
 watch(createCourseDialog, async () => {
   if (createCourseDialog.value == false) {
     //console.log("Create Coure dialog closed")
+    loadingCreateCourse.value = false;
     createCourseForm.value?.reset()
   }
 })

@@ -337,6 +337,7 @@
             color="green"
             text="Save"
             variant="flat"
+            :loading="loadingCreateCurri"
             @click="addCurriculum()"
           ></v-btn>
         </v-card-actions>
@@ -383,6 +384,7 @@
             color="green"
             text="Update"
             variant="flat"
+            :loading="loadingUpdateCurri"
             @click="updateCurriculum()"
           ></v-btn>
         </v-card-actions>
@@ -743,6 +745,7 @@
             color="green"
             text="Update"
             variant="flat"
+            :loading="loadingUpdateCourse"
             @click="updateCourse()"
           ></v-btn>
         </v-card-actions>
@@ -856,6 +859,9 @@ const loading = ref(false);
 const loading2 = ref(false);
 const loading3 = ref(false);
 const loading4 = ref(false);
+const loadingUpdateCourse = ref(false);
+const loadingCreateCurri = ref(false);
+const loadingUpdateCurri = ref(false)
 const isEmpty = ref(false);
 const courseDetails = ref({});
 const curriculumList = ref([]);
@@ -1000,6 +1006,7 @@ async function initialize() {
 async function updateCourse() {
   const { valid, errors } = await updateCourseForm.value?.validate();
   if (valid) {
+    loadingUpdateCourse.value = true;
     let payload = {
       course_code: courseCode.value,
       course_code_duplicate: courseCodeDuplicate.value,
@@ -1015,14 +1022,17 @@ async function updateCourse() {
     }).then((response) => {
       console.log("Updat Response: ", response);
       if (response.status == "fail") {
+        loadingUpdateCourse.value = false;
         toast.error(response.message);
       } else {
         updateCourseDialog.value = false;
+        loadingUpdateCourse.value = false;
         toast.success(`Course ${courseCode.value} updated!`);
         initialize();
       }
     });
   } else {
+    loadingUpdateCourse.value = false;
     console.log(errors[0].errorMessages[0]);
   }
 }
@@ -1064,6 +1074,7 @@ async function addCurriculum(ctx) {
   const { valid, errors } = await createCurriForm.value?.validate();
 
   if (valid) {
+    loadingCreateCurri.value = true;
     const payload = {
       course_code: courseDetails.value.code,
       course_desc: courseDetails.value.description,
@@ -1080,8 +1091,10 @@ async function addCurriculum(ctx) {
     }).then((response) => {
       console.log("response: ", response);
       if (response.status == "fail") {
+        loadingCreateCurri.value = false;
         toast.error(response.message);
       } else {
+        loadingCreateCurri.value = false;
         createCuriDialog.value = false;
         createCurriForm.value?.reset();
         getCurriculumList();
@@ -1089,6 +1102,7 @@ async function addCurriculum(ctx) {
       }
     });
   } else {
+    loadingCreateCurri.value = false;
     console.log(errors[0].errorMessages[0]);
   }
 }
@@ -1112,11 +1126,12 @@ async function showUpdateCuriDialog(curriculum) {
 
 // Update Curriculum
 async function updateCurriculum() {
-  console.log("Successfully updated curriculum");
-  console.log("ID: ", curriDocumentId.value);
-  console.log("Effective School Year: ", updateEffectiveSY.value);
+  //console.log("Successfully updated curriculum");
+  //console.log("ID: ", curriDocumentId.value);
+  //console.log("Effective School Year: ", updateEffectiveSY.value);
   const { valid, errors } = await updateCurriForm.value?.validate();
   if (valid) {
+    loadingUpdateCurri.value = true;
     let payload = {
       effective_sy: updateEffectiveSY.value,
       course_id: route.params.id,
@@ -1126,14 +1141,17 @@ async function updateCurriculum() {
       body: payload,
     }).then((response) => {
       if (response.status == "fail") {
+        loadingUpdateCurri.value = false;
         toast.error(response.message);
       } else {
         updateCuriDialog.value = false;
+        loadingUpdateCurri.value = false;
         toast.success("Successfully updated!");
         getCurriculumList();
       }
     });
   } else {
+    loadingUpdateCurri.value = false;
     console.log(errors[0].errorMessages[0]);
   }
 }
@@ -1326,6 +1344,7 @@ watch(
     updateCuriDialog,
     addSubjDialog,
     updateSubjDialog,
+    updateCourseDialog
   ],
   async () => {
     if (deleteCourseDialog.value == false) {
@@ -1339,7 +1358,13 @@ watch(
 
     if (createCuriDialog.value == false) {
       //console.log("Create curriculum dialog box closed")
+      loadingCreateCurri.value = false;
       effectiveSY.value = "";
+    }
+
+    if (updateCuriDialog.value == false) {
+      //console.log("Update Curriculum dialog box closed")
+      loadingUpdateCurri.value = false;
     }
 
     if (addSubjDialog.value == false) {
@@ -1351,6 +1376,11 @@ watch(
       //console.log("Update subject dialog box closed")
       updateSubjForm.value?.reset();
       resultant.value = "None"
+    }
+
+    if (updateCourseDialog.value == false) {
+      //console.log("Update Course dialog box closed")
+      loadingUpdateCourse.value = false;
     }
   }
 );

@@ -420,8 +420,7 @@
                   v-model="gender"
                   :items="['MALE', 'FEMALE']"
                   variant="outlined"
-                  :rules="rules.gender"
-                  label="Gender*"
+                  label="Gender"
                   required
                 ></v-select>
               </v-col>
@@ -469,6 +468,7 @@
             text="Update"
             prepend-icon="mdi-pencil"
             variant="tonal"
+            :loading="loading2"
             @click="updateDetails()"
           ></v-btn>
           <v-spacer></v-spacer>
@@ -530,6 +530,7 @@ const toast = useToast();
 const studentDetails = ref({});
 const valid = ref(true);
 const loading = ref(false);
+const loading2 = ref(false);
 const updateDetailsForm = ref(null);
 const tab = ref(null);
 const isEmpty = ref(false);
@@ -679,6 +680,7 @@ async function updateDetails() {
   // }
   const { valid, errors } = await updateDetailsForm.value?.validate();
   if (valid) {
+    loading2.value = true;
     let payload = {
       semester: semester.value,
       school_year_start: parseInt(schoolyearstart.value),
@@ -703,14 +705,17 @@ async function updateDetails() {
       console.log("Update Response: ", response);
       if (response.status == "fail") {
         toast.error(response.message);
+        loading2.value = false;
       } else {
         updateInfoDialog.value = false;
+        loading2.value = false
         //updateDetailsForm.value?.reset();
         toast.success("Successfully updated!");
         initialize();
       }
     });
   } else {
+    loading2.value = false;
     console.log(errors[0].errorMessages[0]);
   }
 }
@@ -771,6 +776,7 @@ watch([course, bday, updateInfoDialog], async () => {
   }
 
   if (updateInfoDialog.value == false) {
+    loading2.value = false;
     initialize();
   }
 });
