@@ -516,6 +516,7 @@
             color="green"
             text="Save"
             variant="flat"
+            :loading="loading5"
             @click="addSubject()"
           ></v-btn>
         </v-card-actions>
@@ -647,6 +648,7 @@
             color="green"
             text="Update"
             variant="flat"
+            :loading="loading6"
             @click="updateSubject()"
           ></v-btn>
         </v-card-actions>
@@ -859,6 +861,8 @@ const loading = ref(false);
 const loading2 = ref(false);
 const loading3 = ref(false);
 const loading4 = ref(false);
+const loading5 = ref(false);
+const loading6 = ref(false);
 const loadingUpdateCourse = ref(false);
 const loadingCreateCurri = ref(false);
 const loadingUpdateCurri = ref(false)
@@ -1211,6 +1215,7 @@ async function addSubject() {
   console.log("Document ID: ", documentid.value);
 
   if (valid) {
+    loading5.value = true;
     const payload = {
       curri_id: documentid.value,
       subj_code: subjCode.value,
@@ -1231,8 +1236,10 @@ async function addSubject() {
     }).then((response) => {
       console.log("response: ", response.status);
       if (response.status == "fail") {
+        loading5.value = false;
         toast.error(response.message);
       } else {
+        loading5.value = false;
         addSubjDialog.value = false;
         createSubjForm.value?.reset();
         resultant.value = "None";
@@ -1241,6 +1248,7 @@ async function addSubject() {
       }
     });
   } else {
+    loading5.value = false;
     console.log(errors[0].errorMessages[0]);
   }
 }
@@ -1266,6 +1274,7 @@ async function showUpdateSubjecyDialog(subject) {
 async function updateSubject() {
   const { valid, errors } = await updateSubjForm.value?.validate();
   if (valid) {
+    loading6.value = true;
     let payload = {
       curri_id: curriID.value,
       subj_code: subjCode.value,
@@ -1285,14 +1294,17 @@ async function updateSubject() {
     }).then(response => {
       console.log("Update Response: ", response);
       if (response.status == "fail") {
+        loading6.value = false;
         toast.error(response.message);
       } else {
+        loading6.value = false;
         updateSubjDialog.value = false;
         getCuriSubject(payload.curri_id);
         toast.success(`Subject ${subjCode.value} successfully updated`);
       }
     })
   } else {
+    loading6.value = false;
     console.log(errors[0].errorMessages[0]);
   }
 }
@@ -1368,12 +1380,14 @@ watch(
     }
 
     if (addSubjDialog.value == false) {
+      loading5.value = false;
       createSubjForm.value?.reset();
       resultant.value = "None"
     }
 
     if (updateSubjDialog.value == false) {
       //console.log("Update subject dialog box closed")
+      loading6.value = false;
       updateSubjForm.value?.reset();
       resultant.value = "None"
     }
