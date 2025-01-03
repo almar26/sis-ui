@@ -32,7 +32,7 @@
           <v-divider></v-divider>
           <v-data-table
             density="compact"
-            v-model:search="search"
+            :search="search"
             :items="studentList"
             :headers="headers"
             :loading="loading"
