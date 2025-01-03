@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="d-flex align-center justify-center" style="height: 80vh">
+    <div class="d-flex align-center justify-center" style="height: 75vh">
       <v-card class="elevation-0 text-center py-16" color="transparent">
         <!-- <v-icon size="80" color="warning">mdi-alert-outline</v-icon> -->
          <v-img src="/public/maintenance.png" class="mx-auto" :width="150"></v-img>

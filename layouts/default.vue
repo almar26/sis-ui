@@ -56,6 +56,10 @@
       ></v-app-bar-nav-icon>
       <v-toolbar-title>Student Information System</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-list class="sy-bgcolor">
+        <v-list-item :title="semester" :subtitle="schoolYear">
+        </v-list-item>
+      </v-list>
       <div class="mr-2">
         <v-menu min-width="200px" rounded>
           <template v-slot:activator="{ props }">
@@ -130,14 +134,39 @@ const items = ref([
   { title: "Dashboard", route: "/", icon: "mdi-view-dashboard" },
   { title: "Students", route: "/students", icon: "mdi-account" },
   { title: "Courses", route: "/courses", icon: "mdi-book" },
-  { title: "Classes", route: "/classes", icon: "mdi-account-supervisor" },
+  { title: "Classes", route: "/classes", icon: "mdi-google-classroom" },
+  { title: "Teachers", route: "/teachers", icon: "mdi-account-group" },
+  { title: "Reports", route: "/reports", icon: "mdi-notebook-multiple" },
   // { title: "Curriculum", route: "/curriculum", icon: "mdi-card-text" },
 ]);
+
+const schoolYear = ref("");
+const semester = ref("");
 
 const logout = () => {
   logUserOut();
   router.push("/auth/signin");
 };
+
+async function initialize() {
+  try {
+    let result = await  $fetch("/api/school-year/getActiveSchoolYear");
+
+    if (result) {
+      semester.value = result[0].semester
+      schoolYear.value = result[0].school_year;
+      //console.log("Active School Year: ", result[0])
+    }
+  } catch (err) {
+    console.error("Failed to fetch data: ", err);
+    throw err;
+  }
+}
+
+onMounted(async () => {
+  await initialize();
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -181,5 +210,11 @@ const logout = () => {
 
 .rounded-image {
   border-radius: 50%;
+}
+
+.sy-bgcolor {
+  background-color: transparent;
+  color: white;
+  margin-right: 20px;
 }
 </style>

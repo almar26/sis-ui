@@ -29,7 +29,7 @@ const breadcrumbs = ref([
   },
 
   {
-    title: "Teachers",
+    title: "Classes",
     disabled: true,
   },
 ]);

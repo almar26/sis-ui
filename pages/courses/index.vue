@@ -104,7 +104,7 @@ const { userInfo } = storeToRefs(useMyAuthStore());
 const userData = ref(userInfo?.value.user);
 const createCourseDialog = ref(false);
 const valid = ref(true);
-const loading = ref(false);
+const loading = ref(true);
 const loadingCreateCourse = ref(false);
 const createCourseForm = ref(null);
 const search = ref(null);
@@ -160,6 +160,7 @@ async function initialize() {
     let result = await $fetch(`/api/course/type/${userData.value.role_view}`);
     if (result) {
       courseList.value = result;
+      loading.value = false;
     }
   } catch (err) {
     console.error("Failed ot fetch data: ", err);

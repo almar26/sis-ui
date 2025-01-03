@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-center justify-center px-10" style="height: 100vh">
-    <v-card width="450" class="mx-auto card-border elevation-0 py-10">
+    <v-card width="450" class="mx-auto card-border elevation-0 pt-10">
       <div class="hr-sect"><v-img src="\SNC-Logo.png" max-height="120" class="mb-5" contain></v-img></div>
 
       <!-- <v-card-text>
@@ -32,9 +32,11 @@
         <v-text-field
           v-model="user.password"
           :rules="passwordRules"
+          :append-inner-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
           variant="outlined"
           label="Password"
-          type="password"
+          :type="showPass ? 'text' : 'password'"
+          @click:append-inner="showPass = !showPass"
           prepend-inner-icon="mdi-lock"
           required
         ></v-text-field>
@@ -71,6 +73,7 @@
 				<NuxtLink to="/auth/signup" class="nuxt-link">Create an account</NuxtLink>
 				<v-spacer></v-spacer>
 			</v-card-actions> -->
+      <p class="version">{{ version }}</p>
     </v-card>
 
     <v-snackbar v-model="snackbar" location="top" color="red" variant="tonal">
@@ -105,6 +108,7 @@ const { errorMessage } = storeToRefs(useMyAuthStore()); // make errorMessage sta
 
 const valid = ref(true);
 const loading = ref(false);
+const showPass = ref(false);
 const user = ref({
   identifier: "",
   password: "",
@@ -117,6 +121,7 @@ const usernameRules = [
 const passwordRules = [(v) => !!v || "Password is required"];
 const snackbar = ref(false);
 const text = ref("HHHHHH");
+const version = ref("version 1.0.2.10")
 
 // FUNCTIONS
 async function login() {
@@ -177,5 +182,12 @@ async function login() {
   font-size: 0;
   line-height: 0;
   margin: 0 8px;
+}
+
+.version {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: rgba(0, 0, 0, 0.74);
 }
 </style>
