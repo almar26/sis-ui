@@ -7,9 +7,8 @@ FROM node:20-slim
 RUN mkdir -p /usr/src/myapp
 WORKDIR /usr/src/myapp
 
-# update and install dependency
-RUN apk update && apk upgrade
-RUN apk add git
+# Installing libvips-dev for sharp compatibility
+RUN apt-get update && apt-get install libvips-dev -y
 
 # Copy the local source code from the folder to the container
 COPY . .
