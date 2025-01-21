@@ -246,21 +246,21 @@ const semester = ref("");
 const schoolYear = ref("");
 
 async function searchStudent() {
-  console.log("search student")
+  //console.log("search student")
   loaderIcon.value = "mdi-magnify"
   loaderTitle.value = "Searching..."
   generateReportLoader.value = true
   getActiveSchoolyear()
   try {
     if (searchRecord.value == "") {
-      console.log("Empty search bar")
+      //console.log("Empty search bar")
       searchResult.value = []
       generateReportLoader.value = false
       loadingTable.value = false
     } else {
       let result = await $fetch(`/api/student/search?searchid=${searchRecord.value}`);
       if (result) {
-        console.log(result);
+        //console.log(result);
         searchResult.value = result
         showResult.value = true
         generateReportLoader.value = false
@@ -278,7 +278,7 @@ async function searchStudent() {
 }
 
 async function generateReport(item) {
-  console.log(item)
+  //console.log(item)
   studentDetails.value = item;
   studentid.value = item.documentId
   studentno.value = item.student_no
@@ -331,7 +331,7 @@ async function showGeneratedReport() {
 }
 
 async function showTeacher(teacherid) {
-  console.log(teacherid)
+  //console.log(teacherid)
 }
 </script>
 

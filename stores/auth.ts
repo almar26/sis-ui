@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import axios from 'axios';
 
 interface UserPayloadInterface {
   identifier: string;
@@ -12,7 +13,8 @@ export const useMyAuthStore = defineStore({
     loading: false,
     userInfo: {},
     errorLogin: false,
-    errorMessage: ""
+    errorMessage: "",
+    activeSY: []
   }),
   actions: {
 
@@ -39,11 +41,20 @@ export const useMyAuthStore = defineStore({
           this.errorLogin = true;
           return error;
         }
+       
         localStorage.setItem("user-info", JSON.stringify(data.value)); // set user-info data to local storage
         const token = useCookie('token'); // useCookie new hook in nuxt 3
         token.value = data?.value?.jwt; // set token to cookie
         this.authenticated = true; // set authenticated state value to true
         this.errorLogin = false; // set errorLogin state value to false
+
+         // get active school year
+         const result = await axios.get('/api/school-year/getActiveSchoolYear')
+         if (result) {
+           //this.activeSY = result.data[0];
+           localStorage.setItem("active-sy", JSON.stringify(result.data[0]))
+         }
+ 
       } else {
         this.errorLogin = true; // set errorLogin state value to true
         // this.errorMessage = error.value.data.error.message;
@@ -60,6 +71,7 @@ export const useMyAuthStore = defineStore({
       this.authenticated = false; // set authenticated state value to false
       this.userInfo = {}; // set the userinfo state value to empty
       localStorage.removeItem("user-info"); // remove the user-info data to local storage
+      localStorage.removeItem("active-sy"); // remove the active-sy data to local storage
     }
   }
 })

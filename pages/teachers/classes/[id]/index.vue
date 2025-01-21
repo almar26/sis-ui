@@ -214,7 +214,9 @@ import { useToast } from "vue-toastification";
 import { storeToRefs } from "pinia";
 import { useMyAuthStore } from "~/stores/auth";
 const { userInfo } = storeToRefs(useMyAuthStore());
+const { activeSY } = storeToRefs(useMyAuthStore());
 const userData = ref(userInfo?.value.user);
+const active_sy = ref(activeSY?.value);
 const router = useRouter();
 const route = useRoute();
 const toast = useToast();
@@ -326,26 +328,26 @@ async function initialize() {
 }
 
 // Get Active School Year
-async function getActiveSchoolyear() {
-  try {
-    let result = await $fetch("/api/school-year/getActiveSchoolYear");
+// async function getActiveSchoolyear() {
+//   try {
+//     let result = await $fetch("/api/school-year/getActiveSchoolYear");
 
-    if (result) {
-      semester.value = result[0].semester
-      schoolYear.value = result[0].school_year;
-      //console.log("Active School Year: ", result[0])
-    }
-  } catch (err) {
-    console.error("Failed to fetch data: ", err);
-    throw err;
-  }
-}
+//     if (result) {
+//       semester.value = result[0].semester
+//       schoolYear.value = result[0].school_year;
+//       //console.log("Active School Year: ", result[0])
+//     }
+//   } catch (err) {
+//     console.error("Failed to fetch data: ", err);
+//     throw err;
+//   }
+// }
 
 // Get list of classes of the faculty
 async function getFacultyClasses() {
   try {
     let result = await $fetch(
-      `/api/class/getClassList?teacher_id=${route.params.id}&sy=${schoolYear.value}&semester=${semester.value}`
+      `/api/class/getClassList?teacher_id=${route.params.id}&sy=${active_sy.value.school_year}&semester=${active_sy.value.semester}`
     );
     if (result) {
       console.log("List: ", result);
@@ -519,7 +521,7 @@ watch([updateGradeDialog, incomplete,
 
   
 onMounted(async () => {
-  await getActiveSchoolyear();
+  //await getActiveSchoolyear();
   await initialize()
   await getFacultyClasses()
 })

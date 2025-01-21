@@ -57,14 +57,14 @@
       <v-toolbar-title>Student Information System</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-list class="sy-bgcolor">
-        <v-list-item :title="semester" :subtitle="schoolYear">
+        <v-list-item :title="active_sy.semester" :subtitle="active_sy.school_year">
         </v-list-item>
       </v-list>
       <div class="mr-2">
         <v-menu min-width="200px" rounded>
           <template v-slot:activator="{ props }">
             <v-btn icon v-bind="props" variant="tonal">
-              <v-avatar color="#FFFFFF0" size="large">
+              <v-avatar color="#66BB6A" size="large">
                 <v-icon icon="mdi-account-circle" color="white"></v-icon>
               </v-avatar>
             </v-btn>
@@ -119,14 +119,19 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useMyAuthStore } from "~/stores/auth";
+import { useMySyStore } from "~/stores/sy";
+
 
 const router = useRouter();
 const { logUserOut } = useMyAuthStore();
 const { authenticated } = storeToRefs(useMyAuthStore());
 const { userInfo } = storeToRefs(useMyAuthStore());
+const { getActiveSchoolYear } = useMySyStore();
+const { activeSY } = storeToRefs(useMyAuthStore());
 
 //@ts-ignore
 const userData = ref(userInfo?.value.user);
+const active_sy = ref(activeSY?.value);
 const cookie = useCookie("token");
 const drawer = ref(true);
 const rail = ref(true);
@@ -149,22 +154,18 @@ const logout = () => {
 };
 
 async function initialize() {
-  try {
-    let result = await  $fetch("/api/school-year/getActiveSchoolYear");
-
-    if (result) {
-      semester.value = result[0].semester
-      schoolYear.value = result[0].school_year;
-      //console.log("Active School Year: ", result[0])
-    }
-  } catch (err) {
-    console.error("Failed to fetch data: ", err);
-    throw err;
-  }
+  // try {
+  //   let result = await getActiveSchoolYear();
+  //   if (activeSY) {
+  //      console.log("Active SY", activeSY.value);
+  //   }
+  // } catch (err) {
+  //   console.log(err);
+  // }
 }
 
 onMounted(async () => {
-  await initialize();
+ // await initialize();
 })
 
 </script>

@@ -19,12 +19,13 @@
             <v-text-field v-model="search" density="compact" label="Search" prepend-inner-icon="mdi-magnify"
               variant="solo-filled" flat hide-details single-line></v-text-field>
           </v-card-title>
-          <v-data-table :search="search" :headers="headers" :items="teachersAccountList" :loading="loadingTable">
+          <v-divider></v-divider>
+          <v-data-table density="compact" :search="search" :headers="headers" :items="teachersAccountList" :loading="loadingTable">
             <template v-slot:loadingTable>
               <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
             </template>
             <template v-slot:[`item.classes`]="{ item }">
-              <v-btn variant="tonal" color="blue" :to="`/teachers/classes/${item.teacher_id}`"><v-icon
+              <v-btn variant="tonal" class="my-1" color="blue" :to="`/teachers/classes/${item.teacher_id}`"><v-icon
                   start>mdi-google-classroom</v-icon> View</v-btn>
             </template>
             <!-- <template v-slot:[`item.actions`]="{ item }">
@@ -98,5 +99,31 @@ onMounted(async () => {
 .service-notif {
   font-size: 20px;
   color: grey;
+}
+
+:root {
+  --v-border-color: grey;
+  --v-border-opacity: 0.5;
+}
+
+:deep() .v-table .v-table__wrapper>table>thead>tr>th {
+  border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+  border-bottom: thick solid rgba(var(--v-border-color), var(--v-border-opacity));
+  font-weight: bold;
+  /* background-color: #04aa6d;
+  color: white; */
+}
+
+:deep() .v-table .v-table__wrapper>table>tbody>tr>td:not(:last-child),
+.v-table .v-table__wrapper>table>tbody>tr>th:not(:last-child) {
+  border-right: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
+}
+
+:deep() .v-table .v-table__wrapper>table>tbody>tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+:deep() .v-table .v-table__wrapper>table>tbody>tr:hover {
+  background-color: #f2f2f2;
 }
 </style>

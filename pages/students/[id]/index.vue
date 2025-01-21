@@ -170,7 +170,7 @@
 
     <!-- START DIALOG BOX -->
     <!-- Update Student Information -->
-    <v-dialog v-model="updateInfoDialog" width="auto" scrollable>
+    <v-dialog v-model="updateInfoDialog" width="800" scrollable>
       <v-card prepend-icon="mdi-account" title="Update Personal Information">
         <v-divider></v-divider>
         <v-card-text class="mx-5">
@@ -185,15 +185,19 @@
                   variant="outlined" required></v-select>
               </v-col>
               <v-col cols="12" md="2"></v-col>
-              <v-col cols="12" md="3" sm="6">
-                <!-- <label class="label mb-4" for="email">Student No</label> -->
+              <v-col cols="12" md="2"></v-col>
+              <!-- <v-col cols="12" md="3" sm="6">
                 <v-text-field label="School Year Start*" :rules="rules.schoolyearstart" v-model="schoolyearstart"
                   type="number" variant="outlined" required></v-text-field>
               </v-col>
               <v-col cols="12" md="3" sm="6">
-                <!-- <label class="label mb-4" for="email">Student No</label> -->
                 <v-text-field label="School Year End*" type="number" :rules="rules.schoolyearend"
                   v-model="schoolyearend" variant="outlined" required></v-text-field>
+              </v-col> -->
+
+              <v-col cols="12" md="4" sm="6">
+                <v-text-field label="School Year*" :rules="rules.schoolyear" v-model="schoolYear"
+                 variant="outlined" required></v-text-field>
               </v-col>
             </v-row>
             <v-row dense v-if="studentDetails.major != ''">
@@ -346,12 +350,14 @@ const course = ref("");
 const course_code = ref("");
 const courseDesc = ref("");
 const courseCode = ref("")
+const courseType = ref("");
 const major = ref("");
 const address = ref("");
 const gender = ref("");
 const bday = ref("");
 const age = ref(null);
 const semester = ref("");
+const schoolYear = ref("");
 const schoolyearstart = ref(0);
 const schoolyearend = ref(0);
 const semesterList = ref(["1st Semester", "2nd Semester", "Summer"]);
@@ -405,6 +411,7 @@ const rules = ref({
   birthday: [(v) => !!v || "Birthday is required"],
   age: [(v) => !!v || "Age is required"],
   semester: [(v) => !!v || "Semester is required"],
+  schoolyear: [(v) => !!v || "School Year is required"],
   schoolyearstart: [(v) => !!v || "School Year Start is required"],
   schoolyearend: [(v) => !!v || "School Year End is required"],
 });
@@ -422,6 +429,7 @@ async function initialize() {
         // console.log("has data")
         isEmpty.value = false;
         semester.value = result[0].semester;
+        schoolYear.value = result[0].school_year;
         schoolyearstart.value = result[0].school_year_start;
         schoolyearend.value = result[0].school_year_end;
         studentno.value = result[0].student_no;
@@ -436,6 +444,7 @@ async function initialize() {
         gender.value = result[0].gender;
         bday.value = result[0].birthday;
         age.value = result[0].age;
+        courseType.value = result[0].course_type
         loader.value = false;
 
         // if (courseCode.value == "BSBA(MM)") {
@@ -532,21 +541,25 @@ async function updateCourse() {
     let course_code_update;
     let course_desc_update;
     let major_update;
+    let course_type_update;
 
     loadingUpdateCourse.value = true
     if (courseCode.value?.code === undefined) {
       course_code_update = courseCode.value
       course_desc_update = courseDesc.value
       major_update = major.value
+      course_type_update = courseType.value;
     } else {
       course_code_update = courseCode.value?.code
       course_desc_update = courseCode.value?.description
       major_update = courseCode.value?.major
+      course_type_update = courseCode.value?.course_type
     }
     let payload = {
       course_code: course_code_update,
       course_desc: course_desc_update,
-      major: major_update
+      major: major_update,
+      course_type: course_type_update
     }
     await $fetch(`/api/student/update-course/${route.params.id}`, {
       method: "PUT",
