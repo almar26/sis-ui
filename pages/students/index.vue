@@ -15,6 +15,7 @@
           >Create</v-btn
         >
             <v-spacer></v-spacer>
+          <!-- {{ active_sy.semester }} - {{ active_sy.school_year }} -->
             <v-spacer></v-spacer>
 
             <v-text-field
@@ -36,12 +37,14 @@
             :items="studentList"
             :headers="headers"
             :loading="loading"
+            items-per-page="20"
           >
             <template v-slot:loading>
               <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
             </template>
             <template v-slot:[`item.sy`]="{ item }">
-              {{ item.school_year_start }}-{{ item.school_year_end }}
+              <!-- {{ item.school_year_start }}-{{ item.school_year_end }} -->
+                {{  item.school_year }}
             </template>
 
             <template v-slot:[`item.actions`]="{ item }">
@@ -106,8 +109,8 @@
                 ></v-select>
               </v-col>
               <v-col cols="12" md="2"></v-col>
-              <v-col cols="12" md="3" sm="6">
-                <!-- <label class="label mb-4" for="email">Student No</label> -->
+              <v-col cols="12" md="2"></v-col>
+              <!-- <v-col cols="12" md="3" sm="6">
                 <v-text-field
                   label="School Year Start*"
                   :rules="rules.schoolyearstart"
@@ -118,7 +121,7 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="3" sm="6">
-                <!-- <label class="label mb-4" for="email">Student No</label> -->
+           
                 <v-text-field
                   label="School Year End*"
                   type="number"
@@ -127,6 +130,11 @@
                   variant="outlined"
                   required
                 ></v-text-field>
+              </v-col> -->
+
+              <v-col cols="12" md="4" sm="6">
+                <v-text-field label="School Year*" :rules="rules.schoolyear" v-model="schoolYear"
+                 variant="outlined" required></v-text-field>
               </v-col>
             </v-row>
             <v-row dense>
@@ -299,6 +307,9 @@ import { useToast } from "vue-toastification";
 const { userInfo } = storeToRefs(useMyAuthStore());
 const token = useCookie("token");
 const userData = ref(userInfo?.value.user);
+const { activeSY } = storeToRefs(useMyAuthStore());
+
+const active_sy = ref(activeSY?.value);
 
 useHead({
   title: "Account",
@@ -341,9 +352,10 @@ const address = ref("");
 const gender = ref("");
 const bday = ref("");
 const age = ref(null);
-const semester = ref("");
+const semester = ref(active_sy.value?.semester);
 const schoolyearstart = ref(null);
 const schoolyearend = ref(null);
+const schoolYear = ref(active_sy.value?.school_year)
 
 const courses = ref([]);
 const majorList = ref([
@@ -388,6 +400,7 @@ const rules = ref({
   semester: [(v) => !!v || "Semester is required"],
   schoolyearstart: [(v) => !!v || "School Year Start is required"],
   schoolyearend: [(v) => !!v || "School Year End is required"],
+  schoolyear: [(v) => !!v || "School Year is required"],
 });
 
 // Open Create Student Dialog box
@@ -413,8 +426,9 @@ async function createStudent() {
       gender: gender.value,
       birthday: bday.value,
       age: age.value,
-      schoolyearstart: schoolyearstart.value,
-      schoolyearend: schoolyearend.value,
+      // schoolyearstart: schoolyearstart.value,
+      // schoolyearend: schoolyearend.value,
+      school_year: schoolYear.value,
       semester: semester.value,
       course_type: userData.value.role_view,
     };
@@ -431,6 +445,7 @@ async function createStudent() {
         //dialog.value = false;
         loadingCreateStudent.value = false;
         createStudentForm.value?.reset();
+        age.value = 0
         toast.success("Successfully created!");
         initialize();
       }
@@ -541,6 +556,6 @@ onMounted(async () => {
 }
 
 :deep() .v-table .v-table__wrapper > table > tbody > tr:hover {
-  background-color: #f2f2f2;
+  background-color: #E8F5E9;
 }
 </style>

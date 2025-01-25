@@ -11,15 +11,15 @@
     </div>
     <div v-else>
       <BaseBreadcrumb :title="page.title" :icon="page.icon" :breadcrumbs="breadcrumbs"></BaseBreadcrumb>
-      <div class="d-flex align-center justify-center" style="height: 60vh" v-if="loader">
+      <!-- <div class="d-flex align-center justify-center" style="height: 60vh" v-if="loader">
         <v-card class="elevation-0 text-center py-16" color="transparent">
           <v-progress-circular :size="70" :width="7" indeterminate></v-progress-circular>
           <div class="service-notif mt-5">Loading....</div>
         </v-card>
-      </div>
-      <v-row dense v-else>
+      </div> -->
+      <v-row dense>
         <v-col cols="12" md="2">
-          <StudentSideBar />
+          <StudentSideBar :studentDetails="studentDetails"/>
           <!-- <v-card class="elevation-0">
           <v-list density="compact" nav>
             <v-list-subheader color="green" class="label-header"
@@ -51,7 +51,13 @@
         </v-card> -->
         </v-col>
         <v-col cols="12" md="10">
-          <v-card class="elevation-0">
+          <div class="d-flex align-center justify-center" style="height: 60vh" v-if="loader">
+            <v-card class="elevation-0 text-center py-16" color="transparent">
+              <v-progress-circular :size="70" :width="7" indeterminate></v-progress-circular>
+              <div class="service-notif mt-5">Loading....</div>
+            </v-card>
+          </div>
+          <v-card class="elevation-0" v-else>
             <!-- <div class="text-button font-weight-bold text-green mx-5">
             <v-icon>mdi-account</v-icon> Personal Information
           </div>
@@ -63,6 +69,7 @@
                 <v-tab prepend-icon="mdi-school" :value="2">Education</v-tab>
               </v-tabs>
               <v-spacer></v-spacer>
+              <!-- {{ active_sy.semester }} - {{ active_sy.school_year }} -->
 
               <v-btn color="blue" variant="tonal" class="text-capitalize mr-2" @click="updateInfoDialog = true">
                 <v-icon start>mdi-pencil</v-icon> Update Info
@@ -196,8 +203,8 @@
               </v-col> -->
 
               <v-col cols="12" md="4" sm="6">
-                <v-text-field label="School Year*" :rules="rules.schoolyear" v-model="schoolYear"
-                 variant="outlined" required></v-text-field>
+                <v-text-field label="School Year*" :rules="rules.schoolyear" v-model="schoolYear" variant="outlined"
+                  required></v-text-field>
               </v-col>
             </v-row>
             <v-row dense v-if="studentDetails.major != ''">
@@ -327,7 +334,12 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
+import { useMyAuthStore } from "~/stores/auth";
 import { useToast } from "vue-toastification";
+
+const { activeSY } = storeToRefs(useMyAuthStore());
+const active_sy = ref(activeSY?.value);
 const route = useRoute();
 const toast = useToast();
 const studentDetails = ref({});
@@ -339,7 +351,7 @@ const updateDetailsForm = ref(null);
 const tab = ref(null);
 const isEmpty = ref(false);
 const loadingUpdateCourse = ref(false);
-const updateInfoDialog = ref(false);
+const updateInfoDialog = ref(null);
 const updateCourseDialog = ref(false);
 const deleteStudentDialog = ref(false);
 const studentno = ref("");
@@ -542,6 +554,7 @@ async function updateCourse() {
     let course_desc_update;
     let major_update;
     let course_type_update;
+    let changeCourse = false;
 
     loadingUpdateCourse.value = true
     if (courseCode.value?.code === undefined) {
@@ -549,17 +562,23 @@ async function updateCourse() {
       course_desc_update = courseDesc.value
       major_update = major.value
       course_type_update = courseType.value;
+      changeCourse = false;
+
     } else {
       course_code_update = courseCode.value?.code
       course_desc_update = courseCode.value?.description
       major_update = courseCode.value?.major
       course_type_update = courseCode.value?.course_type
+      changeCourse = true;
     }
     let payload = {
       course_code: course_code_update,
       course_desc: course_desc_update,
       major: major_update,
-      course_type: course_type_update
+      course_type: course_type_update,
+      school_year: active_sy.value?.school_year,
+      semester: active_sy.value?.semester,
+      change_course: changeCourse
     }
     await $fetch(`/api/student/update-course/${route.params.id}`, {
       method: "PUT",
@@ -647,7 +666,8 @@ watch([course, bday, updateInfoDialog, major], async () => {
 
   if (updateInfoDialog.value == false) {
     loading2.value = false;
-    initialize();
+    //initialize();
+    console.log(studentDetails.value)
   }
 });
 

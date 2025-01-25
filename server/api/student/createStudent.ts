@@ -20,8 +20,9 @@ export default defineEventHandler(async (event) => {
       birthday: body.birthday,
       age: body.age,
       semester: body.semester,
-      school_year_start: body.schoolyearstart,
-      school_year_end: body.schoolyearend,
+      // school_year_start: body.schoolyearstart,
+      // school_year_end: body.schoolyearend,
+      school_year: body.school_year,
       course_type: body.course_type
     }
 

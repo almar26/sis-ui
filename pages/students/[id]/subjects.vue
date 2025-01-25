@@ -10,7 +10,7 @@
     </v-row>
     <v-row dense v-else>
       <v-col cols="12" md="2">
-        <StudentSideBar/>
+        <StudentSideBar :studentDetails="studentDetails"/>
       </v-col>
       <v-col cols="12" md="10">
         <v-card class="elevation-0 text-center py-16">
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-const route = useRoute();
+const route = useRoute(); 
 const page = ref({
   title: "Subjects",
 });
