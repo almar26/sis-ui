@@ -28,7 +28,6 @@
             <!-- <v-btn color="primary" variant="flat" class="text-capitalize px-4"
               ><v-icon start>mdi-pencil</v-icon> Edit</v-btn
             > -->
-            <v-spacer></v-spacer>
             <v-btn color="red" variant="tonal" block class="text-none" @click="deleteStudentDialog = true"><v-icon
                 start>mdi-delete</v-icon> Delete Account</v-btn>
           </v-card-actions>

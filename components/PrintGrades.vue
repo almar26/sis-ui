@@ -129,7 +129,7 @@ async function generatePDF() {
     { header: 'Remarks', dataKey: 'remarks' },
   ];
   const data = props.gradeResult;
-  console.log("Grade Result: ", data);
+  //console.log("Grade Result: ", data);
 
   // pdf.setY(30);
   // Add table to the PDF

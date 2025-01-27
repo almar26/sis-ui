@@ -732,12 +732,12 @@ async function updateCourse() {
       year: year.value,
       course_type: course_type.value,
     };
-    console.log("Update Course", payload);
+    //console.log("Update Course", payload);
     await $fetch(`/api/course/update/${route.params.id}`, {
       method: "PUT",
       body: payload,
     }).then((response) => {
-      console.log("Updat Response: ", response);
+      //console.log("Updat Response: ", response);
       if (response.status == "fail") {
         loadingUpdateCourse.value = false;
         toast.error(response.message);
@@ -806,7 +806,7 @@ async function addCurriculum(ctx) {
       method: "POST",
       body: payload,
     }).then((response) => {
-      console.log("response: ", response);
+      //console.log("response: ", response);
       if (response.status == "fail") {
         loadingCreateCurri.value = false;
         toast.error(response.message);
@@ -834,7 +834,7 @@ async function selectedCurricula(curriculum) {
 
 // Show update curriculum dialog box
 async function showUpdateCuriDialog(curriculum) {
-  console.log("Update selected curri", curriculum);
+  //console.log("Update selected curri", curriculum);
   curriDocumentId.value = curriculum.documentId;
   //curriculaYear.value = curriculum.year;
   updateEffectiveSY.value = curriculum.year;
@@ -875,7 +875,7 @@ async function updateCurriculum() {
 
 // Show delete curriculum dialog box
 async function showDeleteCuriDialog(curriculum) {
-  console.log("Delete selected curri", curriculum);
+  //console.log("Delete selected curri", curriculum);
   curriDocumentId.value = curriculum.documentId;
   //curriculaYear.value = curriculum.year;
   updateEffectiveSY.value = curriculum.year;
@@ -925,7 +925,7 @@ async function getCuriSubject(curriculumId) {
 // Create new subject
 async function addSubject() {
   const { valid, errors } = await createSubjForm.value?.validate();
-  console.log("Document ID: ", documentid.value);
+  //console.log("Document ID: ", documentid.value);
 
   if (valid) {
     loading5.value = true;
@@ -947,7 +947,7 @@ async function addSubject() {
       method: "POST",
       body: payload,
     }).then((response) => {
-      console.log("response: ", response.status);
+      //console.log("response: ", response.status);
       if (response.status == "fail") {
         loading5.value = false;
         toast.error(response.message);
@@ -968,7 +968,7 @@ async function addSubject() {
 
 // Show update subject dialog box
 async function showUpdateSubjecyDialog(subject) {
-  console.log("Update selected Subject", subject);
+  //console.log("Update selected Subject", subject);
   curriID.value = subject.curriculum_id;
   subjID.value = subject.documentId
   subjCode.value = subject.code;
@@ -1000,12 +1000,12 @@ async function updateSubject() {
       units: units.value,
       resultant: resultant.value,
     };
-    console.log("Update Subject: ", payload);
+    //console.log("Update Subject: ", payload);
     await $fetch(`/api/subject/update/${subjID.value}`, {
       method: 'PUT',
       body: payload
     }).then(response => {
-      console.log("Update Response: ", response);
+      //console.log("Update Response: ", response);
       if (response.status == "fail") {
         loading6.value = false;
         toast.error(response.message);
@@ -1024,7 +1024,7 @@ async function updateSubject() {
 
 // Show delete dialog box
 async function showDeleteSubjectDialog(subject) {
-  console.log("Delete selected subj", subject);
+  //console.log("Delete selected subj", subject);
   subjID.value = subject.documentId;
   curriID.value = subject.curriculum_id;
   //curriculaYear.value = curriculum.year;

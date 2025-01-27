@@ -194,7 +194,7 @@ async function createCourse() {
           loadingCreateCourse.value = false;
           createCourseForm.value?.reset();
           toast.success("Successfully created!");
-          console.log("Created a Course!", payload);
+          //console.log("Created a Course!", payload);
         }
       })
 

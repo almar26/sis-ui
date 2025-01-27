@@ -206,13 +206,13 @@ async function updateSY() {
     school_year: schoolYear.value,
     semester: semester.value
   }
-  console.log(payload);
+  //console.log(payload);
   await $fetch(`/api/student-sy-history/create`, {
     method: "POST",
     body: payload,
   })
     .then(response => {
-      console.log("Response: ", response);
+      //console.log("Response: ", response);
       if (response.status == "fail") {
         loadingUpdateSY.value = false;
         toast.error(response.message);

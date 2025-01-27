@@ -524,12 +524,12 @@ async function updateDetails() {
       birthday: bday.value,
       age: age.value,
     };
-    console.log(payload);
+    //console.log(payload);
     await $fetch(`/api/student/update/${route.params.id}`, {
       method: "PUT",
       body: payload,
     }).then((response) => {
-      console.log("Update Response: ", response);
+      //console.log("Update Response: ", response);
       if (response.status == "fail") {
         toast.error(response.message);
         loading2.value = false;
@@ -584,7 +584,7 @@ async function updateCourse() {
       method: "PUT",
       body: payload,
     }).then((response) => {
-      console.log("Update Course Response: ", response);
+      //console.log("Update Course Response: ", response);
 
       updateCourseDialog.value = false;
       loadingUpdateCourse.value = false
@@ -652,10 +652,10 @@ watch([course, bday, updateInfoDialog, major], async () => {
   // }
 
   if (major.value !== '') {
-    console.log("Major is not empty")
+    //console.log("Major is not empty")
     selectedBA.value = true;
   } else {
-    console.log("No Major")
+    //console.log("No Major")
   }
   //console.log(bday.value);
   if (bday.value === null) {
@@ -667,7 +667,7 @@ watch([course, bday, updateInfoDialog, major], async () => {
   if (updateInfoDialog.value == false) {
     loading2.value = false;
     //initialize();
-    console.log(studentDetails.value)
+    //console.log(studentDetails.value)
   }
 });
 
