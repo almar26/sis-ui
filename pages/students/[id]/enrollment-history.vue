@@ -6,7 +6,7 @@
     </v-row>
     <v-row dense v-else>
       <v-col cols="12" md="2">
-        <StudentSideBar :studentDetails="studentDetails"/>
+        <StudentSideBar :studentDetails="studentDetails" :loading3="loading3"/>
       </v-col>
       <v-col cols="12" md="10">
         <v-card class="elevation-0">
@@ -120,6 +120,7 @@ const valid = ref(true);
 const enrollmentHistory = ref([]);
 const updateStudentSYHistoryDialog = ref(false);
 const loadingUpdateSY = ref(false);
+const loading3 = ref(true);
 const studentId = ref("");
 const courses = ref([]);
 const courseCode = ref("")
@@ -137,6 +138,7 @@ async function initialize() {
 
     if (result) {
       studentDetails.value = result[0]
+      loading3.value = false;
       studentId.value = result[0].documentId;
       courseCode.value = result[0].course_code;
       courseDesc.value = result[0].course;

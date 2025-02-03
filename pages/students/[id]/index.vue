@@ -19,7 +19,7 @@
       </div> -->
       <v-row dense>
         <v-col cols="12" md="2">
-          <StudentSideBar :studentDetails="studentDetails"/>
+          <StudentSideBar :studentDetails="studentDetails" :loading3="loading3"/>
           <!-- <v-card class="elevation-0">
           <v-list density="compact" nav>
             <v-list-subheader color="green" class="label-header"
@@ -347,6 +347,7 @@ const loader = ref(true);
 const valid = ref(true);
 const loading = ref(false);
 const loading2 = ref(false);
+const loading3 = ref(true);
 const updateDetailsForm = ref(null);
 const tab = ref(null);
 const isEmpty = ref(false);
@@ -434,6 +435,7 @@ async function initialize() {
 
     if (result) {
       studentDetails.value = result[0];
+      loading3.value = false;
       if (result.length == 0) {
         //console.log("Empty Data")
         isEmpty.value = true;

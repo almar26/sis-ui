@@ -6,7 +6,7 @@
     </v-row>
     <v-row dense v-else>
       <v-col cols="12" md="2">
-        <StudentSideBar :studentDetails="studentDetails" />
+        <StudentSideBar :studentDetails="studentDetails" :loading3="loading3"/>
       </v-col>
       <v-col cols="12" md="10">
         <v-card class="elevation-0">
@@ -123,6 +123,7 @@ const items = ref([
 const studentDetails = ref({});
 const isEmpty = ref(false);
 const loading = ref(true);
+const loading3 = ref(true);
 const studentSubjects = ref([]);
 
 async function initialize() {
@@ -131,6 +132,7 @@ async function initialize() {
     //console.log(result);
     if (result) {
       studentDetails.value = result[0];
+      loading3.value = false;
       if (result.length == 0) {
         //console.log("Empty Data")
         isEmpty.value = true;

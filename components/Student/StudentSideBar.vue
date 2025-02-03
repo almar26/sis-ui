@@ -4,7 +4,10 @@
       <v-col>
         <v-card elevation="0" class="py-3">
           <!-- <v-toolbar color="transparent" class="mx-3" density="compact"><v-icon size="20">mdi-arrow-left</v-icon></v-toolbar> -->
-          <v-card-text class="text-center">
+          <v-card-text class="elevation-0 text-center py-16" v-if="loading3">
+            <v-progress-circular :size="70" :width="7" indeterminate></v-progress-circular>
+          </v-card-text>
+          <v-card-text class="text-center" v-else>
             <v-avatar size="100" color="#EEEEEE" class="mb-3">
               <v-icon icon="mdi-account-circle" color="grey" size="95"></v-icon>
             </v-avatar>
@@ -57,8 +60,9 @@
 import { useToast } from "vue-toastification";
 const route = useRoute();
 const toast = useToast();
-const props = defineProps(['studentDetails'])
+const props = defineProps(['studentDetails', 'loading3'])
 const loading = ref(false);
+//const loading2 = ref(true);
 const deleteStudentDialog = ref(false);
 const items = ref([
   {
