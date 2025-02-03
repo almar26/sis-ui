@@ -20,37 +20,55 @@
 
         <v-tabs-window v-model="tab">
           <v-tabs-window-item value="finalized">
-            <v-data-table density="compact" :items="finalizedClasses" :headers="headers" :loading="loading">
-              <template v-slot:[`item.teacher`]="{ item }">
-                <v-chip class="ma-2" color="blue" variant="outlined" label>
-                  <v-icon icon="mdi-account"  start></v-icon>
-                  {{ item.teacher_name }}
-                </v-chip>
-              </template>
-              <template v-slot:[`item.course`]="{ item }">
-                {{ item.course_code }}-{{ item.section }}
-              </template>
-              <template v-slot:[`item.status`]="{ item }">
-                <v-chip class="ma-2" color="warning" label v-if="item.finalize == null || item.finalize == false">
-                  <v-icon icon="mdi-information" start></v-icon>
-                  Unfinalize
-                </v-chip>
-                <v-chip class="ma-2" color="green" label v-else>
-                  <v-icon icon="mdi-check-circle" start></v-icon>
-                  Finalized
-                </v-chip>
-              </template>
-            </v-data-table>
+            <v-card elevation="0">
+              <v-card-title class="d-flex align-center pe-2">
+                <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
+                <v-text-field v-model="searchFinalize" density="compact" label="Search" prepend-inner-icon="mdi-magnify"
+                  variant="solo-filled" flat hide-details single-line></v-text-field>
+              </v-card-title>
+              <v-divider></v-divider>
+              <v-data-table density="compact" :items="finalizedClasses" :search="searchFinalize" :headers="headers" :loading="loading">
+                <template v-slot:[`item.teacher`]="{ item }">
+                
+                    {{ item.teacher_name }}
+         
+                </template>
+                <template v-slot:[`item.course`]="{ item }">
+                  {{ item.course_code }}-{{ item.section }}
+                </template>
+                <template v-slot:[`item.status`]="{ item }">
+                  <v-chip class="ma-2" color="warning" label v-if="item.finalize == null || item.finalize == false">
+                    <v-icon icon="mdi-information" start></v-icon>
+                    Unfinalize
+                  </v-chip>
+                  <v-chip class="ma-2" color="green" label v-else>
+                    <v-icon icon="mdi-check-circle" start></v-icon>
+                    Finalized
+                  </v-chip>
+                </template>
+              </v-data-table>
+
+            </v-card>
+
           </v-tabs-window-item>
 
           <v-tabs-window-item value="unfinalized">
-            <v-data-table density="compact" :items="unFinalizedClasses" :headers="headers" :loading="loading2">
-              <template v-slot:[`item.teacher`]="{ item }">
+            <v-card elevation="0">
+              <v-card-title class="d-flex align-center pe-2">
+                <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
+                <v-text-field v-model="searchUnfinalize" density="compact" label="Search" prepend-inner-icon="mdi-magnify"
+                  variant="solo-filled" flat hide-details single-line></v-text-field>
+              </v-card-title>
+              <v-divider></v-divider>
+            <v-data-table density="compact" :items="unFinalizedClasses" :search="searchUnfinalize" :headers="headers" :loading="loading2">
+              <!-- <template v-slot:[`item.teacher`]="{ item }">
                 <v-chip class="ma-2" color="blue" variant="outlined" label>
                   <v-icon icon="mdi-account" start></v-icon>
                   {{ item.teacher_name }}
                 </v-chip>
-              </template>
+              </template> -->
               <template v-slot:[`item.course`]="{ item }">
                 {{ item.course_code }}-{{ item.section }}
               </template>
@@ -65,6 +83,8 @@
                 </v-chip>
               </template>
             </v-data-table>
+            </v-card>
+
           </v-tabs-window-item>
         </v-tabs-window>
       </v-card-text>
@@ -102,7 +122,7 @@ const headers = ref([
   {
     title: "Teacher",
     sortable: true,
-    key: "teacher"
+    key: "teacher_name"
   },
   {
     title: "Subject Code",
@@ -121,6 +141,8 @@ const loading = ref(true);
 const loading2 = ref(true);
 const finalizedClasses = ref([]);
 const unFinalizedClasses = ref([]);
+const searchFinalize = ref(null);
+const searchUnfinalize = ref(null);
 
 // Get Finalized Classes
 async function getFinalizedClasses() {
