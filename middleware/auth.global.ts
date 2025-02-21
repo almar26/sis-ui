@@ -28,7 +28,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     //console.log("Token doesnt exist but it has data");
   }
   if (token.value && user_info === null) {
-   // console.log("Token exist but no user info details");
+    // console.log("Token exist but no user info details");
     localStorage.removeItem("user-info");
     token.value = null;
     authenticated.value = false;
@@ -67,23 +67,48 @@ export default defineNuxtRouteMiddleware((to, from) => {
   //   }
   // }
 
+  // if (token.value && user_info.user.role_view === "admin") {
+  //   //console.log("Admin Account");
+  //   if (token.value && to.path !== "/admin") {
+  //     return navigateTo("/admin");
+  //   }
+  // } else if (token.value && user_info.user.role_view === "ched" && user_info.user.role_view == 'tesda') {
+  //   //console.log("Basic Account");
+
+  //   if (
+  //     to.meta.layout === "admin" ||
+  //     to.meta.layout === "auth" ||
+  //     to.meta.layout === "student"
+  //   ) {
+  //     return navigateTo("/");
+  //   }
+  //   //console.log("Basic Account");
+  // }
+
+  if (token.value && user_info.user.role_view === "ched") {
+    console.log("Ched Account");
+    if (to.meta.layout === "auth" || to.meta.layout === "admin") {
+      return navigateTo("/");
+    }
+    
+  }
+
+  if (token.value && user_info.user.role_view === "tesda") {
+    console.log("TESDA Account");
+    if (to.meta.layout === "auth" || to.meta.layout === "admin") {
+      return navigateTo("/");
+    }
+  }
+
   if (token.value && user_info.user.role_view === "admin") {
-    //console.log("Admin Account");
+    console.log("Admin Account");
     if (token.value && to.path !== "/admin") {
       return navigateTo("/admin");
     }
-  } else if (token.value && user_info.user.role_view === "ched" && user_info.user.role_view == 'tesda') {
-    //console.log("Basic Account");
-
-    if (
-      to.meta.layout === "admin" ||
-      to.meta.layout === "auth" ||
-      to.meta.layout === "student"
-    ) {
-      return navigateTo("/");
-    }
-    //console.log("Basic Account");
-  } 
+    // if (to.meta.layout === "auth") {
+    //   return navigateTo("/admin");
+    // }
+  }
   // else if (token.value && user_info.user.role_view === "student") {
   //   console.log("Student Account");
   //   // if (to.meta.layout === 'default' || to.meta.layout === 'auth' || to.meta.layout === 'admin') {
