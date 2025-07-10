@@ -85,15 +85,14 @@
         </v-toolbar>
         <div class="mx-7 my-4">
           <v-row no-gutters>
-            <v-col cols="3" class="text-uppercase font-weight-bold text-subtitle-2 text-green">Student No.</v-col>
+            <v-col cols="3" class="text-uppercase font-weight-bold text-subtitle-2 text-green">Code</v-col>
             <v-col cols="1" class="font-weight-bold">:</v-col>
-            <v-col cols="8" class="font-weight-bold">{{ studentno }}</v-col>
+            <v-col cols="8" class="font-weight-bold">{{ subjCode }}</v-col>
           </v-row>
           <v-row no-gutters>
-            <v-col cols="3" class="text-uppercase font-weight-bold text-subtitle-2 text-green">Name</v-col>
+            <v-col cols="3" class="text-uppercase font-weight-bold text-subtitle-2 text-green">Description</v-col>
             <v-col cols="1" class="font-weight-bold">:</v-col>
-            <v-col cols="8" class="font-weight-bold text-subtitle-3">{{ lastname }}, {{ firstname }} {{ middlename
-              }}</v-col>
+            <v-col cols="8" class="font-weight-bold text-subtitle-3">{{ subjDesc }}</v-col>
           </v-row>
         </div>
         <v-divider></v-divider>
@@ -211,6 +210,8 @@ const updateGradeDialog = ref(false);
 // Update student grade
 const addGradeForm = ref(null);
 const studentSubjID = ref(0);
+const subjCode = ref("");
+const subjDesc = ref("");
 const studentno = ref("");
 const lastname = ref("");
 const firstname = ref("");
@@ -268,6 +269,8 @@ async function showUpdateGradeDialog(item) {
   console.log("Student Details: ", studentDetails.value)
   updateGradeDialog.value = true;
   studentSubjID.value = item.document_id;
+  subjCode.value = item.subject_code;
+  subjDesc.value = item.title;
   studentno.value = item.student_no;
   lastname.value = studentDetails.value?.last_name;
   firstname.value = studentDetails.value?.first_name;
